@@ -221,10 +221,16 @@ const calculateRiskScore = (student) => {
 };
 
 const getLevelColor = (level) => {
-    if (level === "SAFE") return "#BFA14A";
-    if (level === "MODERATE") return "#F59E0B";
-    return "#EF4444";
-}
+    if (level === "SAFE") return "#6BBF8A";
+    if (level === "MODERATE") return "#F2B84B";
+    return "#E45757";
+};
+
+const getBadgeStyle = (level) => {
+    if (level === "SAFE") return { background: 'rgba(107,191,138,0.12)', border: '1px solid rgba(107,191,138,0.35)', color: '#E5E7EB' };
+    if (level === "MODERATE") return { background: 'rgba(242,184,75,0.12)', border: '1px solid rgba(242,184,75,0.35)', color: '#E5E7EB' };
+    return { background: 'rgba(228,87,87,0.12)', border: '1px solid rgba(228,87,87,0.35)', color: '#E5E7EB' };
+};
 const HeaderUnderline = ({ title }) => (
     <div className="mb-6">
         <h2 className="text-2xl font-bold tracking-wide">{title}</h2>
@@ -375,9 +381,9 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
         ];
 
         const pieData = [
-            { name: 'Safe', value: safe, color: '#BFA14A' },
-            { name: 'Moderate', value: moderate, color: '#F59E0B' },
-            { name: 'High Risk', value: high, color: '#EF4444' }
+            { name: 'Safe', value: safe, color: '#6BBF8A' },
+            { name: 'Moderate', value: moderate, color: '#F2B84B' },
+            { name: 'High Risk', value: high, color: '#E45757' }
         ];
 
         return { high, moderate, safe, avg, deptChart, dropoutData, pieData };
@@ -410,7 +416,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             </div>
                         </Card>
 
-                        <Card delay={0.2} className="w-full md:w-1/4 risk-pulse relative overflow-hidden bg-red-500/5 border-red-500/20" style={{
+                        <Card delay={0.2} className="w-full md:w-1/4 risk-pulse relative overflow-hidden bg-[#E45757]/5 border-[#E45757]/20" style={{
                             animationName: 'staggerFadeUp',
                             animationDuration: '260ms',
                             animationTimingFunction: 'ease-out',
@@ -418,15 +424,15 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             animationDelay: '0.06s'
                         }}
                             onClick={() => onNavigate('faculty')}>
-                            <div className="absolute -right-4 -top-4 w-16 h-16 bg-red-500/20 rounded-full blur-xl"></div>
+                            <div className="absolute -right-4 -top-4 w-16 h-16 bg-[#E45757]/20 rounded-full blur-xl"></div>
                             <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                                <AlertTriangle className="w-4 h-4 text-red-500" /> High Risk Count
+                                <AlertTriangle className="w-4 h-4 text-[#E45757]" /> High Risk Count
                             </div>
-                            <div className="text-4xl font-bold text-red-500">{data.high}</div>
-                            <div className="text-xs text-red-400 mt-2">+2 since last week</div>
+                            <div className="text-4xl font-bold text-[#E45757]">{data.high}</div>
+                            <div className="text-xs text-[#F87171] mt-2">+2 since last week</div>
                         </Card>
 
-                        <Card delay={0.3} className="w-full md:w-1/5 bg-amber-500/5 border-amber-500/20" style={{
+                        <Card delay={0.3} className="w-full md:w-1/5 bg-[#F2B84B]/5 border-[#F2B84B]/20" style={{
                             animationName: 'staggerFadeUp',
                             animationDuration: '260ms',
                             animationTimingFunction: 'ease-out',
@@ -435,10 +441,10 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                         }}
                             onClick={() => onNavigate('interventions')}>
                             <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                                <Activity className="w-4 h-4 text-amber-500" /> Interventions
+                                <Activity className="w-4 h-4 text-[#F2B84B]" /> Interventions
                             </div>
-                            <div className="text-4xl font-bold text-amber-500">8</div>
-                            <div className="text-xs text-amber-400 mt-2">4 pending review</div>
+                            <div className="text-4xl font-bold text-[#F2B84B]">8</div>
+                            <div className="text-xs text-[#FBBF24] mt-2">4 pending review</div>
                         </Card>
 
                         <Card delay={0.4} className="w-full md:w-1/4" style={{
@@ -469,7 +475,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                             <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
                                             <Bar dataKey="limit" radius={[4, 4, 0, 0]}>
                                                 {data.deptChart.map((entry, index) => (
-                                                    <Cell key={`cell-${index}`} fill={entry.limit > 60 ? '#EF4444' : entry.limit > 40 ? '#F59E0B' : '#BFA14A'} />
+                                                    <Cell key={`cell-${index}`} fill={entry.limit > 60 ? '#E45757' : entry.limit > 40 ? '#F2B84B' : '#BFA14A'} />
                                                 ))}
                                             </Bar>
                                         </BarChart>
@@ -484,15 +490,15 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                         <AreaChart data={data.dropoutData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                                             <defs>
                                                 <linearGradient id="dropoutGradient" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="#EF4444" stopOpacity={0.3} />
-                                                    <stop offset="95%" stopColor="#EF4444" stopOpacity={0} />
+                                                    <stop offset="5%" stopColor="#E45757" stopOpacity={0.3} />
+                                                    <stop offset="95%" stopColor="#E45757" stopOpacity={0} />
                                                 </linearGradient>
                                             </defs>
                                             <CartesianGrid stroke="#1E2A3A" strokeDasharray="3 3" vertical={false} />
                                             <XAxis dataKey="name" stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 12 }} axisLine={false} tickLine={false} />
                                             <YAxis stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 12 }} axisLine={false} tickLine={false} />
                                             <RechartsTooltip content={<CustomTooltip />} />
-                                            <Area type="monotone" dataKey="prob" name="Dropout %" stroke="#EF4444" strokeWidth={2} fillOpacity={1} fill="url(#dropoutGradient)" />
+                                            <Area type="monotone" dataKey="prob" name="Dropout %" stroke="#E45757" strokeWidth={2} fillOpacity={1} fill="url(#dropoutGradient)" />
                                         </AreaChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -536,15 +542,15 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             </Card>
 
                             <Card tier={2} delay={0.8} className="flex-1 h-64 overflow-y-auto">
-                                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><Zap className="w-5 h-5 text-amber-400" /> Recent Alerts</h3>
+                                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><Zap className="w-5 h-5 text-[#FBBF24]" /> Recent Alerts</h3>
                                 <div className="space-y-4">
-                                    <div className="animate-fade-up relative pl-4 border-l-2 border-red-500" style={{ animationDelay: '0.9s' }}>
-                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
+                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#E45757]" style={{ animationDelay: '0.9s' }}>
+                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#E45757] shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
                                         <p className="text-sm font-medium">Aryan Mehta crossed HIGH RISK threshold</p>
                                         <p className="text-xs text-gray-500">2 min ago</p>
                                     </div>
-                                    <div className="animate-fade-up relative pl-4 border-l-2 border-red-500" style={{ animationDelay: '1.0s' }}>
-                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
+                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#E45757]" style={{ animationDelay: '1.0s' }}>
+                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#E45757] shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
                                         <p className="text-sm font-medium">Rehan Shaikh marked 3rd behavioral incident</p>
                                         <p className="text-xs text-gray-500">1 hour ago</p>
                                     </div>
@@ -575,7 +581,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                         return (
                             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
                                 {[
-                                    { label: 'Risk Score', value: score, color: level === 'HIGH' ? '#EF4444' : level === 'MODERATE' ? '#F59E0B' : '#BFA14A' },
+                                    { label: 'Risk Score', value: score, color: level === 'HIGH' ? '#E45757' : level === 'MODERATE' ? '#F2B84B' : '#BFA14A' },
                                     { label: 'Attendance', value: self.attendance[4] + '%', color: '#BFA14A' },
                                     { label: 'Last Test Score', value: self.marks[4], color: 'rgba(255,255,255,0.8)' }
                                 ].map((stat, i) => (
@@ -620,11 +626,11 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #C5192D, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginTop: 8 }}></div>
 
                         <div style={{ display: 'flex', gap: 16, marginTop: 24, flexWrap: 'wrap' }}>
-                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #10B981' }}>
+                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #6BBF8A' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>
-                                    <TrendingDownIcon size={20} color="#10B981" /> Projected Dropout Reduction
+                                    <TrendingDownIcon size={20} color="#6BBF8A" /> Projected Dropout Reduction
                                 </div>
-                                <div style={{ fontFamily: 'Syne', fontSize: 28, color: '#10B981', marginBottom: 4 }}>34%</div>
+                                <div style={{ fontFamily: 'Syne', fontSize: 28, color: '#6BBF8A', marginBottom: 4 }}>34%</div>
                                 <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)' }}>vs. pre-intervention baseline</div>
                             </Card>
 
@@ -652,11 +658,11 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                 <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)' }}>Semester-over-semester growth</div>
                             </Card>
 
-                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #F59E0B' }} title="Based on avg lifetime earning loss per dropout × students stabilized">
+                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #F2B84B' }} title="Based on avg lifetime earning loss per dropout × students stabilized">
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>
-                                    <IndianRupee size={20} color="#F59E0B" /> Economic Impact Prevented
+                                    <IndianRupee size={20} color="#F2B84B" /> Economic Impact Prevented
                                 </div>
-                                <div style={{ fontFamily: 'Syne', fontSize: 28, color: '#F59E0B', marginBottom: 4 }}>₹14.2L</div>
+                                <div style={{ fontFamily: 'Syne', fontSize: 28, color: '#F2B84B', marginBottom: 4 }}>₹14.2L</div>
                                 <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)' }}>Estimated lost productivity avoided</div>
                             </Card>
                         </div>
@@ -778,7 +784,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                                                 <td className="p-4">
                                                     <div className="flex items-center gap-3">
                                                         <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-[#0B0B0C]"
-                                                            style={{ border: `2px solid ${isSafe ? 'rgba(191,161,74,0.26)' : getLevelColor(s.risk.level)}`, color: getLevelColor(s.risk.level) }}>
+                                                            style={getBadgeStyle(s.risk.level)}>
                                                             {s.name.split(' ').map(n => n[0]).join('')}
                                                         </div>
                                                         <div>
@@ -791,21 +797,21 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                                                 <td className="p-4 text-center text-gray-300">{s.sem}</td>
                                                 <td className="p-4 text-center">
                                                     <div className="inline-block px-3 py-1 rounded-full risk-cell font-bold"
-                                                        style={{ backgroundColor: isSafe ? 'rgba(191,161,74,0.18)' : `${getLevelColor(s.risk.level)}20`, color: getLevelColor(s.risk.level) }}>
+                                                        style={getBadgeStyle(s.risk.level)}>
                                                         {s.risk.score}
                                                     </div>
                                                 </td>
                                                 <td className="p-4">
                                                     <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold border ${isHigh ? 'risk-pulse' : ''}`}
-                                                        style={{ borderColor: isSafe ? 'rgba(191,161,74,0.24)' : getLevelColor(s.risk.level), color: getLevelColor(s.risk.level), backgroundColor: isSafe ? 'rgba(191,161,74,0.08)' : `${getLevelColor(s.risk.level)}10` }}>
+                                                        style={getBadgeStyle(s.risk.level)}>
                                                         {s.risk.level}
                                                     </div>
                                                 </td>
                                                 <td className="p-4 text-center">
-                                                    {s.risk.trend === 'declining' && <TrendingDown className="w-5 h-5 mx-auto text-red-500" />}
+                                                    {s.risk.trend === 'declining' && <TrendingDown className="w-5 h-5 mx-auto text-[#E45757]" />}
                                                     {s.risk.trend === 'improving' && <TrendingUp className="w-5 h-5 mx-auto text-[#BFA14A]" />}
                                                     {s.risk.trend === 'stable' && <Minus className="w-5 h-5 mx-auto text-gray-400" />}
-                                                    {s.risk.trend === 'mixed' && <Activity className="w-5 h-5 mx-auto text-amber-500" />}
+                                                    {s.risk.trend === 'mixed' && <Activity className="w-5 h-5 mx-auto text-[#F2B84B]" />}
                                                 </td>
                                                 <td className="p-4 text-center align-middle">
                                                     <button
@@ -840,7 +846,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                             >
                                 <div style={{ fontFamily: 'Syne', fontSize: 16, color: '#fff', marginBottom: 4 }}>{self.name}</div>
                                 <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontFamily: 'DM Sans' }}>{self.dept} · Semester {self.sem}</div>
-                                <div style={{ marginTop: 12, fontSize: 12, color: level === 'HIGH' ? '#EF4444' : level === 'MODERATE' ? '#F59E0B' : '#BFA14A' }}>Risk Score: {score}</div>
+                                <div style={{ marginTop: 12, fontSize: 12, color: level === 'HIGH' ? '#E45757' : level === 'MODERATE' ? '#F2B84B' : '#BFA14A' }}>Risk Score: {score}</div>
                             </div>
                         );
                     })()}
@@ -982,7 +988,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                             <CartesianGrid stroke="#1E2A3A" strokeDasharray="3 3" vertical={false} />
                                             <XAxis dataKey="test" stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
                                             <RechartsTooltip content={<CustomTooltip />} />
-                                            <Line type="monotone" dataKey="val" stroke={risk.breakdown.marks > 10 ? '#EF4444' : '#BFA14A'} strokeWidth={3} dot={{ r: 4 }} />
+                                            <Line type="monotone" dataKey="val" stroke={risk.breakdown.marks > 10 ? '#E45757' : '#BFA14A'} strokeWidth={3} dot={{ r: 4 }} />
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -1000,12 +1006,12 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <h3 className="text-sm font-semibold text-gray-400 mb-2">Behavior & Delays</h3>
                                 <div className="flex justify-around items-center w-full px-4 mt-2">
                                     <div>
-                                        <div className="text-2xl font-bold text-amber-500">{student.assignmentDelays}</div>
+                                        <div className="text-2xl font-bold text-[#F2B84B]">{student.assignmentDelays}</div>
                                         <div className="text-xs text-gray-500">Late Subs</div>
                                     </div>
                                     <div className="w-px h-10 bg-white/10"></div>
                                     <div>
-                                        <div className="text-2xl font-bold text-red-500">{student.behaviorIncidents}</div>
+                                        <div className="text-2xl font-bold text-[#E45757]">{student.behaviorIncidents}</div>
                                         <div className="text-xs text-gray-500">Incidents</div>
                                     </div>
                                 </div>
@@ -1025,7 +1031,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                         <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
                                         <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={20}>
                                             {shapData.map((entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={entry.type === 'risk' ? '#EF4444' : '#BFA14A'} />
+                                                <Cell key={`cell-${index}`} fill={entry.type === 'risk' ? '#E45757' : '#BFA14A'} />
                                             ))}
                                         </Bar>
                                     </BarChart>
@@ -1035,7 +1041,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 {shapData.map((d, i) => (
                                     <div key={i} className="flex items-start gap-3 animate-fade-up" style={{ animationDelay: `${0.7 + i * 0.1}s` }}>
                                         <div className="mt-0.5">
-                                            {d.type === 'risk' ? <TrendingDown className="w-5 h-5 text-red-500" /> : <TrendingUp className="w-5 h-5 text-[#BFA14A]" />}
+                                            {d.type === 'risk' ? <TrendingDown className="w-5 h-5 text-[#E45757]" /> : <TrendingUp className="w-5 h-5 text-[#BFA14A]" />}
                                         </div>
                                         <div>
                                             <div className="text-sm font-medium text-white">{d.factor}</div>
@@ -1061,7 +1067,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <span style={{
                                     background: student.financial.feeStatus === "Paid" ? 'rgba(16,185,129,0.12)' : student.financial.feeStatus === "Pending" ? 'rgba(239,68,68,0.12)' : 'rgba(191,161,74,0.12)',
                                     border: `1px solid ${student.financial.feeStatus === "Paid" ? 'rgba(16,185,129,0.3)' : student.financial.feeStatus === "Pending" ? 'rgba(239,68,68,0.3)' : 'rgba(191,161,74,0.3)'}`,
-                                    color: student.financial.feeStatus === "Paid" ? '#10B981' : student.financial.feeStatus === "Pending" ? '#EF4444' : '#BFA14A',
+                                    color: student.financial.feeStatus === "Paid" ? '#6BBF8A' : student.financial.feeStatus === "Pending" ? '#E45757' : '#BFA14A',
                                     borderRadius: 20, padding: '4px 12px', fontSize: 13, fontWeight: 500, display: 'inline-block'
                                 }}>
                                     {student.financial.feeStatus}
@@ -1072,11 +1078,11 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <div style={{ height: 6, background: 'rgba(255,255,255,0.06)', borderRadius: 3, width: '100%', marginBottom: 4 }}>
                                     <div style={{
                                         height: 6, borderRadius: 3, width: `${student.financial.vulnerabilityScore}%`,
-                                        background: student.financial.vulnerabilityScore <= 30 ? '#10B981' : student.financial.vulnerabilityScore <= 60 ? '#F59E0B' : '#EF4444',
+                                        background: student.financial.vulnerabilityScore <= 30 ? '#6BBF8A' : student.financial.vulnerabilityScore <= 60 ? '#F2B84B' : '#E45757',
                                         transition: 'width 1s ease 0.3s'
                                     }}></div>
                                 </div>
-                                <div style={{ textAlign: 'right', fontSize: 13, color: student.financial.vulnerabilityScore <= 30 ? '#10B981' : student.financial.vulnerabilityScore <= 60 ? '#F59E0B' : '#EF4444' }}>
+                                <div style={{ textAlign: 'right', fontSize: 13, color: student.financial.vulnerabilityScore <= 30 ? '#6BBF8A' : student.financial.vulnerabilityScore <= 60 ? '#F2B84B' : '#E45757' }}>
                                     {student.financial.vulnerabilityScore}
                                 </div>
                             </div>
@@ -1084,7 +1090,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Scholarship Status</div>
                                 {student.financial.scholarshipEligible ? (
                                     <div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#10B981', fontSize: 13 }}><CheckCircle2 size={14} color="#10B981" /> Eligible</div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#6BBF8A', fontSize: 13 }}><CheckCircle2 size={14} color="#6BBF8A" /> Eligible</div>
                                         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{student.financial.scholarshipType}</div>
                                     </div>
                                 ) : (
@@ -1105,7 +1111,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                     <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Parent Income</div>
                                     <div style={{
                                         fontSize: 13,
-                                        color: student.socioEconomic.parentIncomeBracket === "Below 1L" ? '#EF4444' : student.socioEconomic.parentIncomeBracket === "1L-3L" ? '#F59E0B' : student.socioEconomic.parentIncomeBracket === "3L-6L" ? 'rgba(255,255,255,0.7)' : '#10B981'
+                                        color: student.socioEconomic.parentIncomeBracket === "Below 1L" ? '#E45757' : student.socioEconomic.parentIncomeBracket === "1L-3L" ? '#F2B84B' : student.socioEconomic.parentIncomeBracket === "3L-6L" ? 'rgba(255,255,255,0.7)' : '#6BBF8A'
                                     }}>{student.socioEconomic.parentIncomeBracket}</div>
                                 </div>
                             </div>
@@ -1114,7 +1120,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <div>
                                     <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Location</div>
                                     <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)' }}>
-                                        {student.socioEconomic.location === "Rural" && <span style={{ width: 6, height: 6, borderRadius: 3, background: '#F59E0B', display: 'inline-block', marginRight: 6 }}></span>}
+                                        {student.socioEconomic.location === "Rural" && <span style={{ width: 6, height: 6, borderRadius: 3, background: '#F2B84B', display: 'inline-block', marginRight: 6 }}></span>}
                                         {student.socioEconomic.location}
                                     </div>
                                 </div>
@@ -1207,7 +1213,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <svg viewBox="0 0 80 80" width="80" height="80">
                                     <circle cx="40" cy="40" r="30" stroke="rgba(255,255,255,0.06)" strokeWidth="6" fill="none" />
                                     <circle cx="40" cy="40" r="30"
-                                        stroke={student.mentalHealth.behavioralStressIndex <= 30 ? '#10B981' : student.mentalHealth.behavioralStressIndex <= 60 ? '#F59E0B' : '#EF4444'}
+                                        stroke={student.mentalHealth.behavioralStressIndex <= 30 ? '#6BBF8A' : student.mentalHealth.behavioralStressIndex <= 60 ? '#F2B84B' : '#E45757'}
                                         strokeWidth="6" fill="none" strokeDasharray="188"
                                         strokeDashoffset={188 - (student.mentalHealth.behavioralStressIndex / 100 * 188)}
                                         strokeLinecap="round" transform="rotate(-90)" transformOrigin="center"
@@ -1217,7 +1223,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <div style={{
                                     padding: '3px 10px', borderRadius: 12, fontSize: 11, textAlign: 'center', marginTop: 8,
                                     background: student.mentalHealth.stressCategory === "Low" ? 'rgba(16,185,129,0.12)' : student.mentalHealth.stressCategory === "Moderate" ? 'rgba(245,158,11,0.12)' : 'rgba(239,68,68,0.12)',
-                                    color: student.mentalHealth.stressCategory === "Low" ? '#10B981' : student.mentalHealth.stressCategory === "Moderate" ? '#F59E0B' : '#EF4444'
+                                    color: student.mentalHealth.stressCategory === "Low" ? '#6BBF8A' : student.mentalHealth.stressCategory === "Moderate" ? '#F2B84B' : '#E45757'
                                 }}>
                                     {student.mentalHealth.stressCategory}
                                 </div>
@@ -1226,8 +1232,8 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 {student.mentalHealth.counselingRecommended ? (
                                     <div style={{ background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.15)', borderRadius: 12, padding: 16 }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                            <Bell size={14} color="#F59E0B" />
-                                            <div style={{ fontSize: 13, fontWeight: 600, color: '#F59E0B' }}>Counseling Recommended</div>
+                                            <Bell size={14} color="#F2B84B" />
+                                            <div style={{ fontSize: 13, fontWeight: 600, color: '#F2B84B' }}>Counseling Recommended</div>
                                         </div>
                                         <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', lineHeight: 1.5, marginTop: 8 }}>
                                             Student exhibits elevated stress indicators. A counseling session is recommended within the next 2 weeks.
@@ -1236,7 +1242,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                             onClick={() => {
                                                 showToast('✓ Counseling referral logged');
                                             }}
-                                            style={{ marginTop: 12, background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', color: '#F59E0B', borderRadius: 8, padding: '8px 16px', fontSize: 12, cursor: 'pointer', transition: 'background 0.2s ease' }}
+                                            style={{ marginTop: 12, background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', color: '#F2B84B', borderRadius: 8, padding: '8px 16px', fontSize: 12, cursor: 'pointer', transition: 'background 0.2s ease' }}
                                             onMouseOver={(e) => e.target.style.background = 'rgba(245,158,11,0.25)'}
                                             onMouseOut={(e) => e.target.style.background = 'rgba(245,158,11,0.15)'}
                                         >
@@ -1246,8 +1252,8 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 ) : (
                                     <div style={{ background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.12)', borderRadius: 12, padding: 16 }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                            <CheckCircle2 size={14} color="#10B981" />
-                                            <div style={{ fontSize: 13, color: '#10B981' }}>No Immediate Concern</div>
+                                            <CheckCircle2 size={14} color="#6BBF8A" />
+                                            <div style={{ fontSize: 13, color: '#6BBF8A' }}>No Immediate Concern</div>
                                         </div>
                                         <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 8 }}>
                                             Behavioral indicators are within normal range. Continue standard monitoring.
@@ -1263,22 +1269,22 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                         <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
                             {isHigh ? (
                                 <>
-                                    <Card tier={2} delay={0.7} className="min-w-[280px] snap-center border-l-4 border-l-red-500 flex-shrink-0">
+                                    <Card tier={2} delay={0.7} className="min-w-[280px] snap-center border-l-4 border-l-[#E45757] flex-shrink-0">
                                         <div className="flex justify-between items-start mb-2">
-                                            <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
-                                                <Users className="w-5 h-5 text-red-500" />
+                                            <div className="w-10 h-10 rounded-full bg-[#E45757]/20 flex items-center justify-center">
+                                                <Users className="w-5 h-5 text-[#E45757]" />
                                             </div>
-                                            <span className="px-2 py-1 rounded bg-red-500/20 text-red-400 text-xs font-bold">URGENT</span>
+                                            <span className="px-2 py-1 rounded bg-[#E45757]/20 text-[#F87171] text-xs font-bold">URGENT</span>
                                         </div>
                                         <div className="font-bold text-lg mb-1">Parent Meeting</div>
                                         <div className="text-sm text-gray-400">Schedule immediate call with parents regarding attendance drop.</div>
                                     </Card>
                                 </>
                             ) : risk.level === "MODERATE" ? (
-                                <Card tier={2} delay={0.7} className="min-w-[280px] snap-center border-l-4 border-l-amber-500 flex-shrink-0">
+                                <Card tier={2} delay={0.7} className="min-w-[280px] snap-center border-l-4 border-l-[#F2B84B] flex-shrink-0">
                                     <div className="flex justify-between items-start mb-2">
-                                        <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
-                                            <BookOpen className="w-5 h-5 text-amber-500" />
+                                        <div className="w-10 h-10 rounded-full bg-[#F2B84B]/20 flex items-center justify-center">
+                                            <BookOpen className="w-5 h-5 text-[#F2B84B]" />
                                         </div>
                                     </div>
                                     <div className="font-bold text-lg mb-1">Remedial Classes</div>
@@ -1342,7 +1348,7 @@ const InterventionsPanel = ({ students }) => {
                     </div>
                     <div className="text-3xl font-bold text-white">{interventions.length}</div>
                 </Card>
-                <Card delay={0.2} className="flex-1 min-w-[150px] border-amber-500/30" style={{
+                <Card delay={0.2} className="flex-1 min-w-[150px] border-[#F2B84B]/30" style={{
                     animationName: 'staggerFadeUp',
                     animationDuration: '260ms',
                     animationTimingFunction: 'ease-out',
@@ -1350,9 +1356,9 @@ const InterventionsPanel = ({ students }) => {
                     animationDelay: '0.06s'
                 }}>
                     <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-amber-500" /> Pending
+                        <Clock className="w-4 h-4 text-[#F2B84B]" /> Pending
                     </div>
-                    <div className="text-3xl font-bold text-amber-500">{pending}</div>
+                    <div className="text-3xl font-bold text-[#F2B84B]">{pending}</div>
                 </Card>
                 <Card delay={0.3} className="flex-1 min-w-[150px] border-[#BFA14A]/30" style={{
                     animationName: 'staggerFadeUp',
@@ -1366,7 +1372,7 @@ const InterventionsPanel = ({ students }) => {
                     </div>
                     <div className="text-3xl font-bold text-[#BFA14A]">{active}</div>
                 </Card>
-                <Card delay={0.4} className="flex-1 min-w-[150px] border-green-500/30" style={{
+                <Card delay={0.4} className="flex-1 min-w-[150px] border-[#6BBF8A]/30" style={{
                     animationName: 'staggerFadeUp',
                     animationDuration: '260ms',
                     animationTimingFunction: 'ease-out',
@@ -1374,9 +1380,9 @@ const InterventionsPanel = ({ students }) => {
                     animationDelay: '0.18s'
                 }}>
                     <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-green-500" /> Completed
+                        <CheckCircle2 className="w-4 h-4 text-[#6BBF8A]" /> Completed
                     </div>
-                    <div className="text-3xl font-bold text-green-500">{complete}</div>
+                    <div className="text-3xl font-bold text-[#6BBF8A]">{complete}</div>
                 </Card>
             </div>
 
@@ -1417,7 +1423,7 @@ const InterventionsPanel = ({ students }) => {
                                     <td className="p-4 text-gray-300">{inv.assigned}</td>
                                     <td className="p-4 text-gray-300">{inv.date}</td>
                                     <td className="p-4 text-center">
-                                        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${inv.status === "PENDING" ? "text-amber-500 border-amber-500/20 bg-amber-500/10" : inv.status === "ACTIVE" ? "text-[#BFA14A] border-[#BFA14A]/[0.18] bg-[#BFA14A]/[0.08]" : "text-green-500 border-green-500/20 bg-green-500/10"}`}>
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${inv.status === "PENDING" ? "text-[#F2B84B] border-[#F2B84B]/20 bg-[#F2B84B]/10" : inv.status === "ACTIVE" ? "text-[#BFA14A] border-[#BFA14A]/[0.18] bg-[#BFA14A]/[0.08]" : "text-[#6BBF8A] border-[#6BBF8A]/20 bg-[#6BBF8A]/10"}`}>
                                             {inv.status}
                                         </span>
                                     </td>
@@ -1668,17 +1674,17 @@ const App = () => {
                 backdropFilter: 'blur(6px)',
                 animation: 'overlayFadeIn 200ms ease forwards'
             }}>
-            <Card tier={3} className="w-full max-w-lg p-8 relative border-amber-500/30" style={{ animation: 'modalScaleIn 220ms ease forwards' }}>
-                <h3 className="text-2xl font-bold mb-4 flex items-center gap-2"><Zap className="w-6 h-6 text-amber-500" /> Trigger Action</h3>
+            <Card tier={3} className="w-full max-w-lg p-8 relative border-[#F2B84B]/30" style={{ animation: 'modalScaleIn 220ms ease forwards' }}>
+                <h3 className="text-2xl font-bold mb-4 flex items-center gap-2"><Zap className="w-6 h-6 text-[#F2B84B]" /> Trigger Action</h3>
                 <p className="text-gray-400 mb-6">Select automated intervention for {selectedStudent?.name}</p>
 
                 <div className="space-y-3 mb-8">
-                    <button className="w-full text-left p-4 rounded-xl border border-white/10 hover:border-amber-500 flex justify-between items-center bg-white/5 transition-colors">
+                    <button className="w-full text-left p-4 rounded-xl border border-white/10 hover:border-[#F2B84B] flex justify-between items-center bg-white/5 transition-colors">
                         <div>
                             <div className="font-bold text-white">Schedule Parent Meeting</div>
                             <div className="text-xs text-gray-400">Send auto-email to parents and block calendar</div>
                         </div>
-                        <Users className="text-amber-500 w-5 h-5" />
+                        <Users className="text-[#F2B84B] w-5 h-5" />
                     </button>
                     <button className="w-full text-left p-4 rounded-xl border border-white/10 hover:border-[#BFA14A] flex justify-between items-center bg-white/5 transition-colors">
                         <div>
@@ -1693,7 +1699,7 @@ const App = () => {
                     <button onClick={() => setShowInterventionModal(false)} className="flex-1 py-3 rounded-xl border border-white/20 text-white font-bold hover:bg-white/5 transition-colors">
                         Cancel
                     </button>
-                    <button onClick={() => { setShowInterventionModal(false); showToast('✓ Intervention triggered successfully.'); }} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-red-500 text-white font-bold hover:opacity-90 transition-opacity">
+                    <button onClick={() => { setShowInterventionModal(false); showToast('✓ Intervention triggered successfully.'); }} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F2B84B] to-[#E45757] text-white font-bold hover:opacity-90 transition-opacity">
                         Confirm Action
                     </button>
                 </div>
@@ -1761,7 +1767,7 @@ const App = () => {
 
                         <div className="flex items-center gap-4">
                             <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-                                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-amber-400 to-red-500"></div>
+                                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#FBBF24] to-[#E45757]"></div>
                                 <span className="text-xs font-bold uppercase tracking-wider">{role}</span>
                             </div>
                             <button onClick={handleLogout} className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
