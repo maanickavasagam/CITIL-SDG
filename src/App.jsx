@@ -220,11 +220,7 @@ const calculateRiskScore = (student) => {
     };
 };
 
-const getLevelColor = (level) => {
-    if (level === "SAFE") return "#6BBF8A";
-    if (level === "MODERATE") return "#F2B84B";
-    return "#E45757";
-};
+const getLevelColor = (level) => { if (level === "SAFE") return "#4DA3FF"; if (level === "MODERATE") return "#F59E0B"; return "#EF4444"; };
 
 const getBadgeStyle = (level) => {
     if (level === "SAFE") return { background: 'rgba(107,191,138,0.12)', border: '1px solid rgba(107,191,138,0.35)', color: '#E5E7EB' };
@@ -269,7 +265,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const Footer = () => (
     <div style={{
-        borderTop: '1px solid rgba(191,161,74,0.09)',
+        borderTop: '1px solid rgba(77,163,255,0.09)',
         background: 'rgba(255,255,255,0.01)',
         padding: '14px 32px',
         textAlign: 'center',
@@ -279,11 +275,9 @@ const Footer = () => (
         color: 'rgba(255,255,255,0.25)',
         letterSpacing: '0.3px'
     }}>
-        <span style={{ color: 'rgba(197,25,45,0.6)' }}>
-            Supporting SDG 4 – Quality Education
-        </span>
-        {' | '}2030 Agenda for Sustainable Development
-        {' | '}Continuum © 2025
+
+
+        {' | '}Hackspace © 2025
     </div>
 );
 
@@ -295,10 +289,10 @@ const LoginPage = ({ onLogin }) => {
         <div className="min-h-screen flex items-center justify-center relative">
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
                 {[...Array(12)].map((_, i) => (
-                    <div key={i} className="absolute rounded-full" style={{
+                    <div key={i} className="absolute rounded-full subtle-particles" style={{
                         width: `${Math.random() * 4 + 2}px`,
                         height: `${Math.random() * 4 + 2}px`,
-                        backgroundColor: Math.random() > 0.5 ? '#BFA14A' : '#A88C3D',
+                        backgroundColor: Math.random() > 0.5 ? '#4DA3FF' : '#8CC7FF',
                         left: `${Math.random() * 100}%`,
                         top: `${Math.random() * 100}%`,
                         opacity: 0.3 * 0.85,
@@ -309,11 +303,11 @@ const LoginPage = ({ onLogin }) => {
             </div>
 
             <div className="card-tier-3 p-10 w-full max-w-md animate-fade-up z-10 flex flex-col items-center shadow-2xl relative">
-                <div className="absolute -top-12 w-24 h-24 bg-[#BFA14A]/[0.18] rounded-full blur-3xl"></div>
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#BFA14A] to-[#A88C3D] flex items-center justify-center mb-4 relative z-10 block">
+                <div className="absolute -top-12 w-24 h-24 bg-[#4DA3FF]/[0.18] rounded-full blur-3xl"></div>
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#4DA3FF] to-[#8CC7FF] flex items-center justify-center mb-4 relative z-10 block">
                     <Brain className="w-8 h-8 text-white" />
                 </div>
-                <h1 className="text-4xl font-extrabold mb-2 text-gradient tracking-tight relative z-10">Continuum</h1>
+                <h1 className="text-4xl font-extrabold mb-2 text-gradient tracking-tight relative z-10">Hackspace</h1>
                 <p className="text-gray-400 mb-8 font-medium relative z-10">Academic Intelligence Platform</p>
 
                 <div className="flex w-full bg-white/5 p-1 rounded-xl mb-6 relative z-10">
@@ -321,7 +315,7 @@ const LoginPage = ({ onLogin }) => {
                         <button
                             key={r}
                             onClick={() => setRole(r)}
-                            className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-300 ${role === r ? "bg-gradient-to-r from-[#BFA14A] to-[#A88C3D] text-white shadow-lg" : "text-gray-400 hover:text-white"
+                            className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-300 ${role === r ? "bg-gradient-to-r from-[#4DA3FF] to-[#8CC7FF] text-white shadow-lg" : "text-gray-400 hover:text-white"
                                 }`}
                         >
                             {r}
@@ -332,13 +326,13 @@ const LoginPage = ({ onLogin }) => {
                 <div className="w-full space-y-4 mb-8 relative z-10">
                     <div>
                         <input type="text" placeholder="Email Address"
-                            className="w-full bg-[#0B0B0C]/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#BFA14A]/30 transition-colors"
+                            className="w-full bg-[#0B0B0C]/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#4DA3FF]/30 transition-colors"
                             defaultValue={`demo@academiq.edu`}
                         />
                     </div>
                     <div>
                         <input type="password" placeholder="Password"
-                            className="w-full bg-[#0B0B0C]/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#BFA14A]/30 transition-colors"
+                            className="w-full bg-[#0B0B0C]/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#4DA3FF]/30 transition-colors"
                             defaultValue="password"
                         />
                     </div>
@@ -346,7 +340,7 @@ const LoginPage = ({ onLogin }) => {
 
                 <button
                     onClick={() => onLogin(role.toLowerCase())}
-                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.transition = 'all 0.25s ease'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(191,161,74,0.16)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0px)'; e.currentTarget.style.boxShadow = 'none'; }} className="w-full btn-gradient py-3 rounded-xl font-bold text-lg flex items-center justify-center gap-2 relative z-10"
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.transition = 'all 0.25s ease'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(77,163,255,0.16)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0px)'; e.currentTarget.style.boxShadow = 'none'; }} className="w-full btn-gradient py-3 rounded-xl font-bold text-lg flex items-center justify-center gap-2 relative z-10"
                 >
                     Access Platform <ChevronRight className="w-5 h-5" />
                 </button>
@@ -381,9 +375,9 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
         ];
 
         const pieData = [
-            { name: 'Safe', value: safe, color: '#6BBF8A' },
-            { name: 'Moderate', value: moderate, color: '#F2B84B' },
-            { name: 'High Risk', value: high, color: '#E45757' }
+            { name: 'Safe', value: safe, color: '#4DA3FF' },
+            { name: 'Moderate', value: moderate, color: '#F59E0B' },
+            { name: 'High Risk', value: high, color: '#EF4444' }
         ];
 
         return { high, moderate, safe, avg, deptChart, dropoutData, pieData };
@@ -404,19 +398,19 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             animationDelay: '0s'
                         }}>
                             <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                                <Users className="w-4 h-4 text-[#BFA14A]" /> Total Students
+                                <Users className="w-4 h-4 text-[#4DA3FF]" /> Total Students
                             </div>
                             <div className="text-3xl font-bold text-white mb-2">{TOTAL_STUDENTS}</div>
                             <div className="h-10">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <LineChart data={[{ v: 10 }, { v: 12 }, { v: 11 }, { v: 14 }, { v: 15 }]}>
-                                        <Line type="monotone" dataKey="v" stroke="#BFA14A" strokeWidth={2} dot={false} />
+                                        <Line type="monotone" dataKey="v" stroke="#4DA3FF" strokeWidth={2} dot={false} />
                                     </LineChart>
                                 </ResponsiveContainer>
                             </div>
                         </Card>
 
-                        <Card delay={0.2} className="w-full md:w-1/4 risk-pulse relative overflow-hidden bg-[#E45757]/5 border-[#E45757]/20" style={{
+                        <Card delay={0.2} className="w-full md:w-1/4 risk-pulse relative overflow-hidden bg-[#EF4444]/5 border-[#EF4444]/20" style={{
                             animationName: 'staggerFadeUp',
                             animationDuration: '260ms',
                             animationTimingFunction: 'ease-out',
@@ -424,15 +418,15 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             animationDelay: '0.06s'
                         }}
                             onClick={() => onNavigate('faculty')}>
-                            <div className="absolute -right-4 -top-4 w-16 h-16 bg-[#E45757]/20 rounded-full blur-xl"></div>
+                            <div className="absolute -right-4 -top-4 w-16 h-16 bg-[#EF4444]/20 rounded-full blur-xl"></div>
                             <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                                <AlertTriangle className="w-4 h-4 text-[#E45757]" /> High Risk Count
+                                <AlertTriangle className="w-4 h-4 text-[#EF4444]" /> High Risk Count
                             </div>
-                            <div className="text-4xl font-bold text-[#E45757]">{data.high}</div>
+                            <div className="text-4xl font-bold text-[#EF4444]">{data.high}</div>
                             <div className="text-xs text-[#F87171] mt-2">+2 since last week</div>
                         </Card>
 
-                        <Card delay={0.3} className="w-full md:w-1/5 bg-[#F2B84B]/5 border-[#F2B84B]/20" style={{
+                        <Card delay={0.3} className="w-full md:w-1/5 bg-[#F59E0B]/5 border-[#F59E0B]/20" style={{
                             animationName: 'staggerFadeUp',
                             animationDuration: '260ms',
                             animationTimingFunction: 'ease-out',
@@ -441,9 +435,9 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                         }}
                             onClick={() => onNavigate('interventions')}>
                             <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                                <Activity className="w-4 h-4 text-[#F2B84B]" /> Interventions
+                                <Activity className="w-4 h-4 text-[#F59E0B]" /> Interventions
                             </div>
-                            <div className="text-4xl font-bold text-[#F2B84B]">8</div>
+                            <div className="text-4xl font-bold text-[#F59E0B]">8</div>
                             <div className="text-xs text-[#FBBF24] mt-2">4 pending review</div>
                         </Card>
 
@@ -475,7 +469,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                             <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
                                             <Bar dataKey="limit" radius={[4, 4, 0, 0]}>
                                                 {data.deptChart.map((entry, index) => (
-                                                    <Cell key={`cell-${index}`} fill={entry.limit > 60 ? '#E45757' : entry.limit > 40 ? '#F2B84B' : '#BFA14A'} />
+                                                    <Cell key={`cell-${index}`} fill={entry.limit > 60 ? '#EF4444' : entry.limit > 40 ? '#F59E0B' : '#4DA3FF'} />
                                                 ))}
                                             </Bar>
                                         </BarChart>
@@ -490,15 +484,15 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                         <AreaChart data={data.dropoutData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                                             <defs>
                                                 <linearGradient id="dropoutGradient" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="#E45757" stopOpacity={0.3} />
-                                                    <stop offset="95%" stopColor="#E45757" stopOpacity={0} />
+                                                    <stop offset="5%" stopColor="#EF4444" stopOpacity={0.3} />
+                                                    <stop offset="95%" stopColor="#EF4444" stopOpacity={0} />
                                                 </linearGradient>
                                             </defs>
                                             <CartesianGrid stroke="#1E2A3A" strokeDasharray="3 3" vertical={false} />
                                             <XAxis dataKey="name" stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 12 }} axisLine={false} tickLine={false} />
                                             <YAxis stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 12 }} axisLine={false} tickLine={false} />
                                             <RechartsTooltip content={<CustomTooltip />} />
-                                            <Area type="monotone" dataKey="prob" name="Dropout %" stroke="#E45757" strokeWidth={2} fillOpacity={1} fill="url(#dropoutGradient)" />
+                                            <Area type="monotone" dataKey="prob" name="Dropout %" stroke="#EF4444" strokeWidth={2} fillOpacity={1} fill="url(#dropoutGradient)" />
                                         </AreaChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -544,18 +538,18 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             <Card tier={2} delay={0.8} className="flex-1 h-64 overflow-y-auto">
                                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><Zap className="w-5 h-5 text-[#FBBF24]" /> Recent Alerts</h3>
                                 <div className="space-y-4">
-                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#E45757]" style={{ animationDelay: '0.9s' }}>
-                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#E45757] shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
+                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#EF4444]" style={{ animationDelay: '0.9s' }}>
+                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#EF4444] shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
                                         <p className="text-sm font-medium">Aryan Mehta crossed HIGH RISK threshold</p>
                                         <p className="text-xs text-gray-500">2 min ago</p>
                                     </div>
-                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#E45757]" style={{ animationDelay: '1.0s' }}>
-                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#E45757] shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
+                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#EF4444]" style={{ animationDelay: '1.0s' }}>
+                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#EF4444] shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
                                         <p className="text-sm font-medium">Rehan Shaikh marked 3rd behavioral incident</p>
                                         <p className="text-xs text-gray-500">1 hour ago</p>
                                     </div>
-                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#BFA14A]" style={{ animationDelay: '1.1s' }}>
-                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#BFA14A] shadow-[0_0_8px_rgba(191,161,74,1)]"></div>
+                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#4DA3FF]" style={{ animationDelay: '1.1s' }}>
+                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#4DA3FF] shadow-[0_0_8px_rgba(77,163,255,1)]"></div>
                                         <p className="text-sm font-medium">Kavya Nair shows strong recovery trend</p>
                                         <p className="text-xs text-gray-500">3 hours ago</p>
                                     </div>
@@ -581,14 +575,14 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                         return (
                             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
                                 {[
-                                    { label: 'Risk Score', value: score, color: level === 'HIGH' ? '#E45757' : level === 'MODERATE' ? '#F2B84B' : '#BFA14A' },
-                                    { label: 'Attendance', value: self.attendance[4] + '%', color: '#BFA14A' },
+                                    { label: 'Risk Score', value: score, color: level === 'HIGH' ? '#EF4444' : level === 'MODERATE' ? '#F59E0B' : '#4DA3FF' },
+                                    { label: 'Attendance', value: self.attendance[4] + '%', color: '#4DA3FF' },
                                     { label: 'Last Test Score', value: self.marks[4], color: 'rgba(255,255,255,0.8)' }
                                 ].map((stat, i) => (
                                     <div key={i} style={{
                                         flex: '1 1 140px',
                                         background: 'rgba(255,255,255,0.03)',
-                                        border: '1px solid rgba(191,161,74,0.16)',
+                                        border: '1px solid rgba(77,163,255,0.16)',
                                         borderRadius: 14, padding: '20px',
                                         animationName: 'staggerFadeUp',
                                         animationDuration: '260ms',
@@ -621,64 +615,50 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                         animationDelay: '0.20s'
                     }}>
                         <div style={{ fontFamily: 'Syne', fontSize: 18, fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>
-                            SDG 4 Education Impact Metrics
+                            Education Impact Metrics
                         </div>
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #C5192D, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginTop: 8 }}></div>
 
                         <div style={{ display: 'flex', gap: 16, marginTop: 24, flexWrap: 'wrap' }}>
-                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #6BBF8A' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>
-                                    <TrendingDownIcon size={20} color="#6BBF8A" /> Projected Dropout Reduction
+                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #4DA3FF' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(255,255,255,0.65)', marginBottom: 8 }}>
+                                    <TrendingDownIcon size={20} color="#4DA3FF" /> Projected Dropout Reduction
                                 </div>
-                                <div style={{ fontFamily: 'Syne', fontSize: 28, color: '#6BBF8A', marginBottom: 4 }}>34%</div>
+                                <div style={{ fontFamily: 'Syne', fontSize: 28, fontWeight: 600, color: '#8CC7FF', letterSpacing: 0.3, marginBottom: 4 }}>34%</div>
                                 <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)' }}>vs. pre-intervention baseline</div>
                             </Card>
 
-                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #BFA14A' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>
-                                    <Users size={20} color="#BFA14A" /> Stabilized This Quarter
+                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #4DA3FF' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(255,255,255,0.65)', marginBottom: 8 }}>
+                                    <Users size={20} color="#4DA3FF" /> Stabilized This Quarter
                                 </div>
-                                <div style={{ fontFamily: 'Syne', fontSize: 28, color: '#BFA14A', marginBottom: 4 }}>8 Students</div>
+                                <div style={{ fontFamily: 'Syne', fontSize: 28, fontWeight: 600, color: '#8CC7FF', letterSpacing: 0.3, marginBottom: 4 }}>8 Students</div>
                                 <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginBottom: 12 }}>Moved from HIGH/MODERATE → SAFE</div>
 
                                 <div style={{ display: 'flex' }}>
                                     {students.slice(0, 8).map((s, i) => (
-                                        <div key={i} style={{ width: 18, height: 18, borderRadius: '50%', background: 'rgba(191,161,74,0.18)', border: '1px solid rgba(191,161,74,0.3)', fontSize: 8, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: i === 0 ? 0 : -6 }}>
+                                        <div key={i} style={{ width: 18, height: 18, borderRadius: '50%', background: 'rgba(77,163,255,0.18)', border: '1px solid rgba(77,163,255,0.3)', fontSize: 8, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: i === 0 ? 0 : -6 }}>
                                             {s.name[0]}
                                         </div>
                                     ))}
                                 </div>
                             </Card>
 
-                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #A88C3D' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>
-                                    <BarChart2 size={20} color="#A88C3D" /> Retention Improvement
+                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #8CC7FF' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(255,255,255,0.65)', marginBottom: 8 }}>
+                                    <BarChart2 size={20} color="#8CC7FF" /> Retention Improvement
                                 </div>
-                                <div style={{ fontFamily: 'Syne', fontSize: 28, color: '#A88C3D', marginBottom: 4 }}>+18.6%</div>
+                                <div style={{ fontFamily: 'Syne', fontSize: 28, color: '#8CC7FF', marginBottom: 4 }}>+18.6%</div>
                                 <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)' }}>Semester-over-semester growth</div>
                             </Card>
 
-                            <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #F2B84B' }} title="Based on avg lifetime earning loss per dropout × students stabilized">
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>
-                                    <IndianRupee size={20} color="#F2B84B" /> Economic Impact Prevented
-                                </div>
-                                <div style={{ fontFamily: 'Syne', fontSize: 28, color: '#F2B84B', marginBottom: 4 }}>₹14.2L</div>
-                                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)' }}>Estimated lost productivity avoided</div>
-                            </Card>
+
                         </div>
 
                         <div style={{ marginTop: 28, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 16, padding: '20px 24px' }}>
-                            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', marginBottom: 16 }}>SDG 4 Target Progress — Institution Level</div>
+                            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', marginBottom: 16 }}>Hackspace Target Progress — Institution Level</div>
 
-                            <div style={{ marginBottom: 16 }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>
-                                    <span>Equitable Quality Education Access</span>
-                                    <span>68%</span>
-                                </div>
-                                <div style={{ height: 8, borderRadius: 4, background: 'rgba(255,255,255,0.06)', width: '100%' }}>
-                                    <div style={{ height: 8, borderRadius: 4, background: '#C5192D', width: '68%', transition: 'width 1s ease 0.3s' }}></div>
-                                </div>
-                            </div>
+
 
                             <div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>
@@ -686,14 +666,11 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                     <span>74%</span>
                                 </div>
                                 <div style={{ height: 8, borderRadius: 4, background: 'rgba(255,255,255,0.06)', width: '100%' }}>
-                                    <div style={{ height: 8, borderRadius: 4, background: '#C5192D', width: '74%', transition: 'width 1s ease 0.3s' }}></div>
+                                    <div style={{ height: 8, borderRadius: 4, background: '#4DA3FF', width: '74%', transition: 'width 1s ease 0.3s' }}></div>
                                 </div>
                             </div>
 
-                            <div style={{ borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: 12, marginTop: 24, display: 'flex', alignItems: 'center', gap: 8 }}>
-                                <div style={{ width: 24, height: 24, borderRadius: 12, background: '#C5192D', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: 'white', fontFamily: 'Syne' }}>4</div>
-                                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)' }}>Data aligned with UNESCO SDG 4 monitoring framework</div>
-                            </div>
+
                         </div>
                     </div>
                 </>
@@ -730,7 +707,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                             <input
                                 type="text" placeholder="Search by name or ID..."
                                 value={search} onChange={e => setSearch(e.target.value)}
-                                className="w-full bg-[#0B0B0C]/60 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#BFA14A]/50 transition-colors backdrop-blur-md"
+                                className="w-full bg-[#0B0B0C]/60 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#4DA3FF]/50 transition-colors backdrop-blur-md"
                             />
                         </div>
 
@@ -773,7 +750,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                                                 onMouseEnter={e => {
                                                     e.currentTarget.style.transform = 'translateX(3px)';
                                                     e.currentTarget.style.transition = 'all 0.2s ease';
-                                                    e.currentTarget.style.background = 'rgba(191,161,74,0.04)';
+                                                    e.currentTarget.style.background = 'rgba(77,163,255,0.04)';
                                                 }}
                                                 onMouseLeave={e => {
                                                     e.currentTarget.style.transform = 'translateX(0px)';
@@ -808,15 +785,15 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                                                     </div>
                                                 </td>
                                                 <td className="p-4 text-center">
-                                                    {s.risk.trend === 'declining' && <TrendingDown className="w-5 h-5 mx-auto text-[#E45757]" />}
-                                                    {s.risk.trend === 'improving' && <TrendingUp className="w-5 h-5 mx-auto text-[#BFA14A]" />}
+                                                    {s.risk.trend === 'declining' && <TrendingDown className="w-5 h-5 mx-auto text-[#EF4444]" />}
+                                                    {s.risk.trend === 'improving' && <TrendingUp className="w-5 h-5 mx-auto text-[#4DA3FF]" />}
                                                     {s.risk.trend === 'stable' && <Minus className="w-5 h-5 mx-auto text-gray-400" />}
-                                                    {s.risk.trend === 'mixed' && <Activity className="w-5 h-5 mx-auto text-[#F2B84B]" />}
+                                                    {s.risk.trend === 'mixed' && <Activity className="w-5 h-5 mx-auto text-[#F59E0B]" />}
                                                 </td>
                                                 <td className="p-4 text-center align-middle">
                                                     <button
                                                         onClick={() => openStudentDetail && openStudentDetail(s) || onSelectStudent && onSelectStudent(s)}
-                                                        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.transition = 'all 0.25s ease'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(191,161,74,0.16)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0px)'; e.currentTarget.style.boxShadow = 'none'; }} className="action-btn px-4 py-1.5 btn-gradient rounded-lg text-sm font-bold text-white shadow-md mx-auto inline-block opacity-0 transition-opacity"
+                                                        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.transition = 'all 0.25s ease'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(77,163,255,0.16)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0px)'; e.currentTarget.style.boxShadow = 'none'; }} className="action-btn px-4 py-1.5 btn-gradient rounded-lg text-sm font-bold text-white shadow-md mx-auto inline-block opacity-0 transition-opacity"
                                                     >
                                                         View Profile
                                                     </button>
@@ -840,13 +817,13 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                         return (
                             <div
                                 onClick={() => openStudentDetail && openStudentDetail(self) || onSelectStudent && onSelectStudent(self)}
-                                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(191,161,74,0.18)', borderRadius: 16, padding: '20px 24px', cursor: 'pointer', transition: 'all 0.25s ease' }}
-                                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 36px rgba(0,0,0,0.35),0 0 0 1px rgba(191,161,74,0.14)'; }}
+                                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: '20px 24px', cursor: 'pointer', transition: 'all 0.25s ease' }}
+                                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 36px rgba(0,0,0,0.35),0 0 0 1px rgba(77,163,255,0.14)'; }}
                                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
                             >
                                 <div style={{ fontFamily: 'Syne', fontSize: 16, color: '#fff', marginBottom: 4 }}>{self.name}</div>
                                 <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontFamily: 'DM Sans' }}>{self.dept} · Semester {self.sem}</div>
-                                <div style={{ marginTop: 12, fontSize: 12, color: level === 'HIGH' ? '#E45757' : level === 'MODERATE' ? '#F2B84B' : '#BFA14A' }}>Risk Score: {score}</div>
+                                <div style={{ marginTop: 12, fontSize: 12, color: level === 'HIGH' ? '#EF4444' : level === 'MODERATE' ? '#F59E0B' : '#4DA3FF' }}>Risk Score: {score}</div>
                             </div>
                         );
                     })()}
@@ -869,11 +846,10 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
     const strokeDashoffset = skeletonLoading ? circumference : circumference - (displayScore / 100) * circumference;
 
     const shapData = [
-        { factor: 'Attendance', value: risk.breakdown.attendance, type: 'risk' },
-        { factor: 'Recent Marks', value: risk.breakdown.marks, type: 'risk' },
-        { factor: 'LMS Inactivity', value: risk.breakdown.lms, type: 'risk' },
-        { factor: 'Assignments', value: risk.breakdown.assignments, type: 'risk' },
-        { factor: 'Behavior', value: risk.breakdown.behavior, type: 'risk' },
+        { factor: 'Attendance', value: risk.breakdown.attendance, type: 'attendance' },
+        { factor: 'Recent Marks', value: risk.breakdown.marks, type: 'marks' },
+        { factor: 'LMS Inactivity', value: risk.breakdown.lms, type: 'lms' },
+        { factor: 'Assignments', value: risk.breakdown.assignments, type: 'assignments' },
         { factor: 'Co-curriculars', value: -risk.breakdown.competitions, type: 'safe' }
     ].filter(d => d.value !== 0).sort((a, b) => Math.abs(b.value) - Math.abs(a.value));
 
@@ -905,7 +881,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8 relative">
                         <div className="flex items-center gap-6">
                             <div className="w-24 h-24 rounded-full flex items-center justify-center font-bold text-3xl bg-[#0B0B0C] shadow-2xl relative"
-                                style={{ border: `3px solid ${isSafe ? 'rgba(191,161,74,0.26)' : color}`, color: color }}>
+                                style={{ border: `3px solid ${isSafe ? 'rgba(77,163,255,0.26)' : isHigh ? '#F59E0B' : color}`, color: color }}>
                                 {student.name.split(' ').map(n => n[0]).join('')}
                                 {isHigh && <div className="absolute inset-0 rounded-full blur-md opacity-50" style={{ backgroundColor: color }}></div>}
                             </div>
@@ -927,7 +903,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                             </div>
 
                             <div className={`px-6 py-3 rounded-2xl border-2 shadow-lg flex items-center justify-center font-extrabold text-xl tracking-wider ${isHigh ? 'risk-pulse' : ''}`}
-                                style={{ borderColor: isSafe ? 'rgba(191,161,74,0.24)' : color, color: color, backgroundColor: isSafe ? 'rgba(191,161,74,0.10)' : `${color}15`, textShadow: isSafe ? 'none' : `0 0 10px ${color}` }}>
+                                style={{ borderColor: isSafe ? 'rgba(77,163,255,0.24)' : color, color: color, backgroundColor: isSafe ? 'rgba(77,163,255,0.10)' : `${color}15`, textShadow: isSafe ? 'none' : `0 0 10px ${color}` }}>
                                 {risk.level} RISK
                             </div>
                         </div>
@@ -937,7 +913,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                     <div className="flex flex-col lg:flex-row gap-6 mb-8">
                         <Card tier={3} delay={0.1} className="w-full lg:w-1/3 flex flex-col items-center justify-center py-8 relative overflow-hidden">
                             {isHigh && <div className="risk-meter-glow-high"></div>}
-                            {isSafe && <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(191,161,74,0.13)_0%,transparent_70%)] pointer-events-none"></div>}
+                            {isSafe && <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(77,163,255,0.13)_0%,transparent_70%)] pointer-events-none"></div>}
 
                             <div className={`relative w-48 h-48 flex items-center justify-center ${isHigh ? 'risk-vibrate' : ''}`}>
                                 <svg width="200" height="200" className="absolute -rotate-90 transform">
@@ -950,7 +926,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                     />
                                 </svg>
                                 <div className="text-center">
-                                    <div className="text-5xl font-black" style={{ color: color, textShadow: isHigh ? `0 0 15px ${color}` : 'none' }}>
+                                    <div className="text-5xl font-black" style={{ color: isHigh ? '#F59E0B' : color, textShadow: isHigh ? '0 0 25px rgba(245,158,11,0.25)' : 'none' }}>
                                         {displayScore}
                                     </div>
                                     <div className="text-sm text-gray-400 font-bold tracking-widest uppercase mt-1">Score</div>
@@ -974,7 +950,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                             <CartesianGrid stroke="#1E2A3A" strokeDasharray="3 3" vertical={false} />
                                             <XAxis dataKey="week" stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
                                             <RechartsTooltip content={<CustomTooltip />} />
-                                            <Line type="monotone" dataKey="val" stroke="#BFA14A" strokeWidth={3} dot={{ r: 4, fill: '#BFA14A', strokeWidth: 0 }} activeDot={{ r: 6 }} />
+                                            <Line type="monotone" dataKey="val" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4, fill: '#4DA3FF', strokeWidth: 0 }} activeDot={{ r: 6 }} />
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -988,7 +964,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                             <CartesianGrid stroke="#1E2A3A" strokeDasharray="3 3" vertical={false} />
                                             <XAxis dataKey="test" stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
                                             <RechartsTooltip content={<CustomTooltip />} />
-                                            <Line type="monotone" dataKey="val" stroke={risk.breakdown.marks > 10 ? '#E45757' : '#BFA14A'} strokeWidth={3} dot={{ r: 4 }} />
+                                            <Line type="monotone" dataKey="val" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6, fill: "#8CC7FF" }} />
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -1006,12 +982,12 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <h3 className="text-sm font-semibold text-gray-400 mb-2">Behavior & Delays</h3>
                                 <div className="flex justify-around items-center w-full px-4 mt-2">
                                     <div>
-                                        <div className="text-2xl font-bold text-[#F2B84B]">{student.assignmentDelays}</div>
+                                        <div className="text-2xl font-bold text-[#F59E0B]">{student.assignmentDelays}</div>
                                         <div className="text-xs text-gray-500">Late Subs</div>
                                     </div>
                                     <div className="w-px h-10 bg-white/10"></div>
                                     <div>
-                                        <div className="text-2xl font-bold text-[#E45757]">{student.behaviorIncidents}</div>
+                                        <div className="text-2xl font-bold text-[#EF4444]">{student.behaviorIncidents}</div>
                                         <div className="text-xs text-gray-500">Incidents</div>
                                     </div>
                                 </div>
@@ -1031,7 +1007,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                         <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
                                         <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={20}>
                                             {shapData.map((entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={entry.type === 'risk' ? '#E45757' : '#BFA14A'} />
+                                                <Cell key={`cell-${index}`} fill={entry.type === 'attendance' ? '#F59E0B' : entry.type === 'marks' ? '#F59E0B' : entry.type === 'lms' ? '#8CC7FF' : entry.type === 'assignments' ? '#4DA3FF' : '#34D399'} />
                                             ))}
                                         </Bar>
                                     </BarChart>
@@ -1041,7 +1017,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 {shapData.map((d, i) => (
                                     <div key={i} className="flex items-start gap-3 animate-fade-up" style={{ animationDelay: `${0.7 + i * 0.1}s` }}>
                                         <div className="mt-0.5">
-                                            {d.type === 'risk' ? <TrendingDown className="w-5 h-5 text-[#E45757]" /> : <TrendingUp className="w-5 h-5 text-[#BFA14A]" />}
+                                            {d.type === 'risk' ? <TrendingDown className="w-5 h-5 text-[#EF4444]" /> : <TrendingUp className="w-5 h-5 text-[#4DA3FF]" />}
                                         </div>
                                         <div>
                                             <div className="text-sm font-medium text-white">{d.factor}</div>
@@ -1059,15 +1035,15 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
 
                     {/* Panel A: Financial Risk Index */}
                     <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
-                        <div style={{ fontFamily: 'Syne', fontSize: '1.5rem', fontWeight: 700, marginBottom: 8 }}>💰 Financial Risk Index</div>
-                        <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #BFA14A, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
+                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8 }}>💰 Financial Risk Index</div>
+                        <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
                         <div style={{ display: 'flex', flexDirection: 'row', gap: 16 }}>
                             <div style={{ flex: 1, borderRight: '1px solid rgba(255,255,255,0.05)', paddingRight: 16 }}>
                                 <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Fee Status</div>
                                 <span style={{
-                                    background: student.financial.feeStatus === "Paid" ? 'rgba(16,185,129,0.12)' : student.financial.feeStatus === "Pending" ? 'rgba(239,68,68,0.12)' : 'rgba(191,161,74,0.12)',
-                                    border: `1px solid ${student.financial.feeStatus === "Paid" ? 'rgba(16,185,129,0.3)' : student.financial.feeStatus === "Pending" ? 'rgba(239,68,68,0.3)' : 'rgba(191,161,74,0.3)'}`,
-                                    color: student.financial.feeStatus === "Paid" ? '#6BBF8A' : student.financial.feeStatus === "Pending" ? '#E45757' : '#BFA14A',
+                                    background: student.financial.feeStatus === "Paid" ? 'rgba(16,185,129,0.12)' : student.financial.feeStatus === "Pending" ? 'rgba(239,68,68,0.12)' : 'rgba(77,163,255,0.12)',
+                                    border: `1px solid ${student.financial.feeStatus === "Paid" ? 'rgba(16,185,129,0.3)' : student.financial.feeStatus === "Pending" ? 'rgba(239,68,68,0.3)' : 'rgba(77,163,255,0.3)'}`,
+                                    color: student.financial.feeStatus === "Paid" ? '#4DA3FF' : student.financial.feeStatus === "Pending" ? '#EF4444' : '#4DA3FF',
                                     borderRadius: 20, padding: '4px 12px', fontSize: 13, fontWeight: 500, display: 'inline-block'
                                 }}>
                                     {student.financial.feeStatus}
@@ -1075,14 +1051,14 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                             </div>
                             <div style={{ flex: 1, borderRight: '1px solid rgba(255,255,255,0.05)', paddingRight: 16 }}>
                                 <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Financial Vulnerability</div>
-                                <div style={{ height: 6, background: 'rgba(255,255,255,0.06)', borderRadius: 3, width: '100%', marginBottom: 4 }}>
+                                <div style={{ height: 6, background: 'rgba(255,255,255,0.08)', borderRadius: 3, width: '100%', marginBottom: 4 }}>
                                     <div style={{
                                         height: 6, borderRadius: 3, width: `${student.financial.vulnerabilityScore}%`,
-                                        background: student.financial.vulnerabilityScore <= 30 ? '#6BBF8A' : student.financial.vulnerabilityScore <= 60 ? '#F2B84B' : '#E45757',
+                                        background: 'linear-gradient(90deg, #F59E0B, #FFD166)',
                                         transition: 'width 1s ease 0.3s'
                                     }}></div>
                                 </div>
-                                <div style={{ textAlign: 'right', fontSize: 13, color: student.financial.vulnerabilityScore <= 30 ? '#6BBF8A' : student.financial.vulnerabilityScore <= 60 ? '#F2B84B' : '#E45757' }}>
+                                <div style={{ textAlign: 'right', fontSize: 13, color: student.financial.vulnerabilityScore <= 30 ? '#4DA3FF' : student.financial.vulnerabilityScore <= 60 ? '#F59E0B' : '#EF4444' }}>
                                     {student.financial.vulnerabilityScore}
                                 </div>
                             </div>
@@ -1090,8 +1066,8 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Scholarship Status</div>
                                 {student.financial.scholarshipEligible ? (
                                     <div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#6BBF8A', fontSize: 13 }}><CheckCircle2 size={14} color="#6BBF8A" /> Eligible</div>
-                                        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginTop: 2 }}>{student.financial.scholarshipType}</div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#4DA3FF', fontSize: 13 }}><CheckCircle2 size={14} color="#4DA3FF" /> Eligible</div>
+                                        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', marginTop: 2 }}>{student.financial.scholarshipType}</div>
                                     </div>
                                 ) : (
                                     <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: 13 }}>Not Eligible</div>
@@ -1102,35 +1078,35 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
 
                     {/* Panel B: Socio-Economic Profile */}
                     <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
-                        <div style={{ fontFamily: 'Syne', fontSize: '1.5rem', fontWeight: 700, marginBottom: 8 }}>🏘️ Socio-Economic Profile</div>
-                        <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #BFA14A, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
+                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8 }}>🏘️ Socio-Economic Profile</div>
+                        <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                             <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
                                 <Wallet size={16} />
                                 <div>
-                                    <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Parent Income</div>
+                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)' }}>Parent Income</div>
                                     <div style={{
                                         fontSize: 13,
-                                        color: student.socioEconomic.parentIncomeBracket === "Below 1L" ? '#E45757' : student.socioEconomic.parentIncomeBracket === "1L-3L" ? '#F2B84B' : student.socioEconomic.parentIncomeBracket === "3L-6L" ? 'rgba(255,255,255,0.7)' : '#6BBF8A'
+                                        color: student.socioEconomic.parentIncomeBracket === "Below 1L" ? '#EF4444' : student.socioEconomic.parentIncomeBracket === "1L-3L" ? '#F59E0B' : student.socioEconomic.parentIncomeBracket === "3L-6L" ? 'rgba(255,255,255,0.7)' : '#4DA3FF'
                                     }}>{student.socioEconomic.parentIncomeBracket}</div>
                                 </div>
                             </div>
                             <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
                                 <MapPin size={16} />
                                 <div>
-                                    <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Location</div>
+                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)' }}>Location</div>
                                     <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)' }}>
-                                        {student.socioEconomic.location === "Rural" && <span style={{ width: 6, height: 6, borderRadius: 3, background: '#F2B84B', display: 'inline-block', marginRight: 6 }}></span>}
+                                        {student.socioEconomic.location === "Rural" && <span style={{ width: 6, height: 6, borderRadius: 3, background: '#F59E0B', display: 'inline-block', marginRight: 6 }}></span>}
                                         {student.socioEconomic.location}
                                     </div>
                                 </div>
                             </div>
                             {student.socioEconomic.firstGenerationLearner ? (
-                                <div style={{ gridColumn: 'span 2', background: 'rgba(191,161,74,0.07)', border: '1px solid rgba(191,161,74,0.20)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
-                                    <Star size={16} color="#BFA14A" />
+                                <div style={{ gridColumn: 'span 2', background: 'rgba(77,163,255,0.07)', border: '1px solid rgba(77,163,255,0.20)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                                    <Star size={16} color="#4DA3FF" />
                                     <div>
-                                        <div style={{ color: '#BFA14A', fontWeight: 600, fontSize: 13 }}>First-Generation Learner</div>
-                                        <div style={{ fontSize: 11, color: 'rgba(191,161,74,0.45)' }}>Eligible for additional institutional support</div>
+                                        <div style={{ color: '#4DA3FF', fontWeight: 600, fontSize: 13 }}>First-Generation Learner</div>
+                                        <div style={{ fontSize: 11, color: 'rgba(77,163,255,0.45)' }}>Eligible for additional institutional support</div>
                                     </div>
                                 </div>
                             ) : (
@@ -1154,11 +1130,11 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                     {/* Panel C: Dropout Risk Prediction */}
                     <div style={{
                         background: 'rgba(255,255,255,0.02)',
-                        border: `1px solid ${isHigh ? 'rgba(239,68,68,0.25)' : risk.level === "MODERATE" ? 'rgba(245,158,11,0.2)' : 'rgba(191,161,74,0.15)'}`,
+                        border: `1px solid ${isHigh ? 'rgba(239,68,68,0.25)' : risk.level === "MODERATE" ? 'rgba(245,158,11,0.2)' : 'rgba(77,163,255,0.15)'}`,
                         backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24
                     }}>
-                        <div style={{ fontFamily: 'Syne', fontSize: '1.5rem', fontWeight: 700, marginBottom: 8 }}>⏱️ Dropout Risk Prediction</div>
-                        <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #BFA14A, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
+                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8 }}>⏱️ Dropout Risk Prediction</div>
+                        <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
                         <div style={{ display: 'flex', flexDirection: 'row', gap: 16 }}>
                             <div style={{ flex: '0 0 60%' }}>
                                 <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Projected Dropout Risk Window</div>
@@ -1167,7 +1143,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 </div>
                                 <div style={{
                                     fontSize: 12, marginTop: 4,
-                                    color: isHigh ? 'rgba(239,68,68,0.8)' : risk.level === "MODERATE" ? 'rgba(245,158,11,0.8)' : 'rgba(191,161,74,0.8)'
+                                    color: isHigh ? 'rgba(239,68,68,0.8)' : risk.level === "MODERATE" ? 'rgba(245,158,11,0.8)' : 'rgba(77,163,255,0.8)'
                                 }}>
                                     {isHigh ? '⚠ Immediate intervention required' : risk.level === "MODERATE" ? '↑ Monitoring escalation recommended' : '✓ Student trajectory is stable'}
                                 </div>
@@ -1185,7 +1161,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                         <div style={{
                                             width: 10, height: 10, borderRadius: 5, background: color, position: 'absolute', top: -3,
                                             left: student.dropoutRiskWindow === "1–3 Months" ? '20%' : student.dropoutRiskWindow === "3–6 Months" ? '40%' : student.dropoutRiskWindow === "6–12 Months" ? '70%' : '0%',
-                                            boxShadow: isSafe ? 'none' : `0 0 8px ${color}`
+                                            boxShadow: isSafe ? 'none' : '0 0 18px rgba(77,163,255,0.15)'
                                         }}></div>
                                     </div>
                                 </div>
@@ -1193,7 +1169,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                             <div style={{ flex: '0 0 40%' }}>
                                 <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 12, padding: 16, textAlign: 'center' }}>
                                     <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginBottom: 8 }}>Confidence Level</div>
-                                    <div style={{ fontFamily: 'Syne', fontSize: 32, fontWeight: 700, color: color }}>
+                                    <div style={{ fontFamily: 'Syne', fontSize: 28, fontWeight: 600, color: '#8CC7FF', letterSpacing: 0.3 }}>
                                         {isHigh ? '87%' : risk.level === "MODERATE" ? '71%' : '94%'}
                                     </div>
                                     <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginBottom: 4 }}>Model accuracy</div>
@@ -1203,98 +1179,37 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                         </div>
                     </div>
 
-                    {/* Panel D: Mental Health & Wellbeing */}
-                    <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
-                        <div style={{ fontFamily: 'Syne', fontSize: '1.5rem', fontWeight: 700, marginBottom: 8 }}>🧠 Mental Health & Wellbeing</div>
-                        <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #BFA14A, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
-                        <div style={{ display: 'flex', flexDirection: 'row', gap: 16 }}>
-                            <div style={{ flex: '0 0 40%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                                <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 12, textAlign: 'center' }}>Behavioral Stress Index</div>
-                                <svg viewBox="0 0 80 80" width="80" height="80">
-                                    <circle cx="40" cy="40" r="30" stroke="rgba(255,255,255,0.06)" strokeWidth="6" fill="none" />
-                                    <circle cx="40" cy="40" r="30"
-                                        stroke={student.mentalHealth.behavioralStressIndex <= 30 ? '#6BBF8A' : student.mentalHealth.behavioralStressIndex <= 60 ? '#F2B84B' : '#E45757'}
-                                        strokeWidth="6" fill="none" strokeDasharray="188"
-                                        strokeDashoffset={188 - (student.mentalHealth.behavioralStressIndex / 100 * 188)}
-                                        strokeLinecap="round" transform="rotate(-90)" transformOrigin="center"
-                                        style={{ transition: 'stroke-dashoffset 1.2s ease 0.2s' }} />
-                                    <text x="40" y="45" fontSize="16" fontWeight="bold" fill="white" textAnchor="middle">{student.mentalHealth.behavioralStressIndex}</text>
-                                </svg>
-                                <div style={{
-                                    padding: '3px 10px', borderRadius: 12, fontSize: 11, textAlign: 'center', marginTop: 8,
-                                    background: student.mentalHealth.stressCategory === "Low" ? 'rgba(16,185,129,0.12)' : student.mentalHealth.stressCategory === "Moderate" ? 'rgba(245,158,11,0.12)' : 'rgba(239,68,68,0.12)',
-                                    color: student.mentalHealth.stressCategory === "Low" ? '#6BBF8A' : student.mentalHealth.stressCategory === "Moderate" ? '#F2B84B' : '#E45757'
-                                }}>
-                                    {student.mentalHealth.stressCategory}
-                                </div>
-                            </div>
-                            <div style={{ flex: '0 0 60%' }}>
-                                {student.mentalHealth.counselingRecommended ? (
-                                    <div style={{ background: 'rgba(245,158,11,0.06)', border: '1px solid rgba(245,158,11,0.15)', borderRadius: 12, padding: 16 }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                            <Bell size={14} color="#F2B84B" />
-                                            <div style={{ fontSize: 13, fontWeight: 600, color: '#F2B84B' }}>Counseling Recommended</div>
-                                        </div>
-                                        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', lineHeight: 1.5, marginTop: 8 }}>
-                                            Student exhibits elevated stress indicators. A counseling session is recommended within the next 2 weeks.
-                                        </div>
-                                        <button
-                                            onClick={() => {
-                                                showToast('✓ Counseling referral logged');
-                                            }}
-                                            style={{ marginTop: 12, background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', color: '#F2B84B', borderRadius: 8, padding: '8px 16px', fontSize: 12, cursor: 'pointer', transition: 'background 0.2s ease' }}
-                                            onMouseOver={(e) => e.target.style.background = 'rgba(245,158,11,0.25)'}
-                                            onMouseOut={(e) => e.target.style.background = 'rgba(245,158,11,0.15)'}
-                                        >
-                                            Schedule Counseling
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div style={{ background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.12)', borderRadius: 12, padding: 16 }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                                            <CheckCircle2 size={14} color="#6BBF8A" />
-                                            <div style={{ fontSize: 13, color: '#6BBF8A' }}>No Immediate Concern</div>
-                                        </div>
-                                        <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 8 }}>
-                                            Behavioral indicators are within normal range. Continue standard monitoring.
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-
                     <div className="mt-8 relative">
                         <HeaderUnderline title="⚡ Active Interventions" />
                         <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
                             {isHigh ? (
                                 <>
-                                    <Card tier={2} delay={0.7} className="min-w-[280px] snap-center border-l-4 border-l-[#E45757] flex-shrink-0">
+                                    <Card tier={2} delay={0.7} className="min-w-[280px] snap-center border-l-4 border-l-[#EF4444] flex-shrink-0">
                                         <div className="flex justify-between items-start mb-2">
-                                            <div className="w-10 h-10 rounded-full bg-[#E45757]/20 flex items-center justify-center">
-                                                <Users className="w-5 h-5 text-[#E45757]" />
+                                            <div className="w-10 h-10 rounded-full bg-[#EF4444]/20 flex items-center justify-center">
+                                                <Users className="w-5 h-5 text-[#EF4444]" />
                                             </div>
-                                            <span className="px-2 py-1 rounded bg-[#E45757]/20 text-[#F87171] text-xs font-bold">URGENT</span>
+                                            <span className="px-2 py-1 rounded bg-[#EF4444]/20 text-[#F87171] text-xs font-bold">URGENT</span>
                                         </div>
                                         <div className="font-bold text-lg mb-1">Parent Meeting</div>
                                         <div className="text-sm text-gray-400">Schedule immediate call with parents regarding attendance drop.</div>
                                     </Card>
                                 </>
                             ) : risk.level === "MODERATE" ? (
-                                <Card tier={2} delay={0.7} className="min-w-[280px] snap-center border-l-4 border-l-[#F2B84B] flex-shrink-0">
+                                <Card tier={2} delay={0.7} className="min-w-[280px] snap-center border-l-4 border-l-[#F59E0B] flex-shrink-0">
                                     <div className="flex justify-between items-start mb-2">
-                                        <div className="w-10 h-10 rounded-full bg-[#F2B84B]/20 flex items-center justify-center">
-                                            <BookOpen className="w-5 h-5 text-[#F2B84B]" />
+                                        <div className="w-10 h-10 rounded-full bg-[#F59E0B]/20 flex items-center justify-center">
+                                            <BookOpen className="w-5 h-5 text-[#F59E0B]" />
                                         </div>
                                     </div>
                                     <div className="font-bold text-lg mb-1">Remedial Classes</div>
                                     <div className="text-sm text-gray-400">Provide structured study plan for core subjects.</div>
                                 </Card>
                             ) : (
-                                <Card tier={2} delay={0.7} className="min-w-[280px] snap-center border-l-4 border-l-[#BFA14A] flex-shrink-0">
+                                <Card tier={2} delay={0.7} className="min-w-[280px] snap-center border-l-4 border-l-[#4DA3FF] flex-shrink-0">
                                     <div className="flex justify-between items-start mb-2">
-                                        <div className="w-10 h-10 rounded-full bg-[#BFA14A]/[0.18] flex items-center justify-center">
-                                            <ShieldCheck className="w-5 h-5 text-[#BFA14A]" />
+                                        <div className="w-10 h-10 rounded-full bg-[#4DA3FF]/[0.18] flex items-center justify-center">
+                                            <ShieldCheck className="w-5 h-5 text-[#4DA3FF]" />
                                         </div>
                                     </div>
                                     <div className="font-bold text-lg mb-1">General Monitoring</div>
@@ -1302,7 +1217,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 </Card>
                             )}
                         </div>
-                        <button onClick={onInterventionReq} onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.transition = 'all 0.25s ease'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(191,161,74,0.16)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0px)'; e.currentTarget.style.boxShadow = 'none'; }} className="mt-6 btn-gradient px-6 py-3 rounded-xl font-bold flex items-center gap-2">
+                        <button onClick={onInterventionReq} onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.transition = 'all 0.25s ease'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(77,163,255,0.16)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0px)'; e.currentTarget.style.boxShadow = 'none'; }} className="mt-6 btn-gradient px-6 py-3 rounded-xl font-bold flex items-center gap-2">
                             <Zap className="w-5 h-5" /> Trigger New Intervention
                         </button>
                     </div>
@@ -1348,7 +1263,7 @@ const InterventionsPanel = ({ students }) => {
                     </div>
                     <div className="text-3xl font-bold text-white">{interventions.length}</div>
                 </Card>
-                <Card delay={0.2} className="flex-1 min-w-[150px] border-[#F2B84B]/30" style={{
+                <Card delay={0.2} className="flex-1 min-w-[150px] border-[#F59E0B]/30" style={{
                     animationName: 'staggerFadeUp',
                     animationDuration: '260ms',
                     animationTimingFunction: 'ease-out',
@@ -1356,11 +1271,11 @@ const InterventionsPanel = ({ students }) => {
                     animationDelay: '0.06s'
                 }}>
                     <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-[#F2B84B]" /> Pending
+                        <Clock className="w-4 h-4 text-[#F59E0B]" /> Pending
                     </div>
-                    <div className="text-3xl font-bold text-[#F2B84B]">{pending}</div>
+                    <div className="text-3xl font-bold text-[#F59E0B]">{pending}</div>
                 </Card>
-                <Card delay={0.3} className="flex-1 min-w-[150px] border-[#BFA14A]/30" style={{
+                <Card delay={0.3} className="flex-1 min-w-[150px] border-[#4DA3FF]/30" style={{
                     animationName: 'staggerFadeUp',
                     animationDuration: '260ms',
                     animationTimingFunction: 'ease-out',
@@ -1368,11 +1283,11 @@ const InterventionsPanel = ({ students }) => {
                     animationDelay: '0.12s'
                 }}>
                     <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                        <Zap className="w-4 h-4 text-[#BFA14A]" /> Active
+                        <Zap className="w-4 h-4 text-[#4DA3FF]" /> Active
                     </div>
-                    <div className="text-3xl font-bold text-[#BFA14A]">{active}</div>
+                    <div className="text-3xl font-bold text-[#4DA3FF]">{active}</div>
                 </Card>
-                <Card delay={0.4} className="flex-1 min-w-[150px] border-[#6BBF8A]/30" style={{
+                <Card delay={0.4} className="flex-1 min-w-[150px] border-[#4DA3FF]/30" style={{
                     animationName: 'staggerFadeUp',
                     animationDuration: '260ms',
                     animationTimingFunction: 'ease-out',
@@ -1380,9 +1295,9 @@ const InterventionsPanel = ({ students }) => {
                     animationDelay: '0.18s'
                 }}>
                     <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-[#6BBF8A]" /> Completed
+                        <CheckCircle2 className="w-4 h-4 text-[#4DA3FF]" /> Completed
                     </div>
-                    <div className="text-3xl font-bold text-[#6BBF8A]">{complete}</div>
+                    <div className="text-3xl font-bold text-[#4DA3FF]">{complete}</div>
                 </Card>
             </div>
 
@@ -1410,7 +1325,7 @@ const InterventionsPanel = ({ students }) => {
                                     <td className="p-4">
                                         <div className="flex items-center gap-3">
                                             <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs bg-[#0B0B0C] border"
-                                                style={{ borderColor: risk.level === "SAFE" ? 'rgba(191,161,74,0.26)' : color, color: color }}>
+                                                style={{ borderColor: risk.level === "SAFE" ? 'rgba(77,163,255,0.26)' : color, color: color }}>
                                                 {s.name.split(' ').map(n => n[0]).join('')}
                                             </div>
                                             <div className="font-bold text-white">{s.name}</div>
@@ -1423,7 +1338,7 @@ const InterventionsPanel = ({ students }) => {
                                     <td className="p-4 text-gray-300">{inv.assigned}</td>
                                     <td className="p-4 text-gray-300">{inv.date}</td>
                                     <td className="p-4 text-center">
-                                        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${inv.status === "PENDING" ? "text-[#F2B84B] border-[#F2B84B]/20 bg-[#F2B84B]/10" : inv.status === "ACTIVE" ? "text-[#BFA14A] border-[#BFA14A]/[0.18] bg-[#BFA14A]/[0.08]" : "text-[#6BBF8A] border-[#6BBF8A]/20 bg-[#6BBF8A]/10"}`}>
+                                        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${inv.status === "PENDING" ? "text-[#F59E0B] border-[#F59E0B]/20 bg-[#F59E0B]/10" : inv.status === "ACTIVE" ? "text-[#4DA3FF] border-[#4DA3FF]/[0.18] bg-[#4DA3FF]/[0.08]" : "text-[#4DA3FF] border-[#4DA3FF]/20 bg-[#4DA3FF]/10"}`}>
                                             {inv.status}
                                         </span>
                                     </td>
@@ -1505,7 +1420,7 @@ const UploadPage = ({ setStudents, showToast }) => {
         <div className="p-6 animate-page max-w-7xl mx-auto">
             <HeaderUnderline title="Upload Student Dataset" />
             <div style={{ maxWidth: 600, margin: '0 auto', marginTop: 40 }}>
-                <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(191,161,74,0.18)', borderRadius: 16, padding: 24 }}>
+                <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: 24 }}>
                     <h3 className="text-xl font-bold mb-2 text-white">Upload CSV</h3>
                     <p className="text-sm text-gray-400 mb-6">
                         Upload a bulk dataset of student records. Required columns: id, name, dept, semester, riskScore, riskLevel.
@@ -1518,8 +1433,8 @@ const UploadPage = ({ setStudents, showToast }) => {
                                    file:mr-4 file:py-2 file:px-4
                                    file:rounded-xl file:border-0
                                    file:text-sm file:font-semibold
-                                   file:bg-[#BFA14A]/10 file:text-[#BFA14A]
-                                   hover:file:bg-[#BFA14A]/20 transition-all cursor-pointer"
+                                   file:bg-[#4DA3FF]/10 file:text-[#4DA3FF]
+                                   hover:file:bg-[#4DA3FF]/20 transition-all cursor-pointer"
                     />
                 </div>
             </div>
@@ -1674,24 +1589,24 @@ const App = () => {
                 backdropFilter: 'blur(6px)',
                 animation: 'overlayFadeIn 200ms ease forwards'
             }}>
-            <Card tier={3} className="w-full max-w-lg p-8 relative border-[#F2B84B]/30" style={{ animation: 'modalScaleIn 220ms ease forwards' }}>
-                <h3 className="text-2xl font-bold mb-4 flex items-center gap-2"><Zap className="w-6 h-6 text-[#F2B84B]" /> Trigger Action</h3>
+            <Card tier={3} className="w-full max-w-lg p-8 relative border-[#F59E0B]/30" style={{ animation: 'modalScaleIn 220ms ease forwards' }}>
+                <h3 className="text-2xl font-bold mb-4 flex items-center gap-2"><Zap className="w-6 h-6 text-[#F59E0B]" /> Trigger Action</h3>
                 <p className="text-gray-400 mb-6">Select automated intervention for {selectedStudent?.name}</p>
 
                 <div className="space-y-3 mb-8">
-                    <button className="w-full text-left p-4 rounded-xl border border-white/10 hover:border-[#F2B84B] flex justify-between items-center bg-white/5 transition-colors">
+                    <button className="w-full text-left p-4 rounded-xl border border-white/10 hover:border-[#F59E0B] flex justify-between items-center bg-white/5 transition-colors">
                         <div>
                             <div className="font-bold text-white">Schedule Parent Meeting</div>
                             <div className="text-xs text-gray-400">Send auto-email to parents and block calendar</div>
                         </div>
-                        <Users className="text-[#F2B84B] w-5 h-5" />
+                        <Users className="text-[#F59E0B] w-5 h-5" />
                     </button>
-                    <button className="w-full text-left p-4 rounded-xl border border-white/10 hover:border-[#BFA14A] flex justify-between items-center bg-white/5 transition-colors">
+                    <button className="w-full text-left p-4 rounded-xl border border-white/10 hover:border-[#4DA3FF] flex justify-between items-center bg-white/5 transition-colors">
                         <div>
                             <div className="font-bold text-white">Assign to Remedial Cluster</div>
                             <div className="text-xs text-gray-400">Add student to upcoming remedial sessions</div>
                         </div>
-                        <BookOpen className="text-[#BFA14A] w-5 h-5" />
+                        <BookOpen className="text-[#4DA3FF] w-5 h-5" />
                     </button>
                 </div>
 
@@ -1699,7 +1614,7 @@ const App = () => {
                     <button onClick={() => setShowInterventionModal(false)} className="flex-1 py-3 rounded-xl border border-white/20 text-white font-bold hover:bg-white/5 transition-colors">
                         Cancel
                     </button>
-                    <button onClick={() => { setShowInterventionModal(false); showToast('✓ Intervention triggered successfully.'); }} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F2B84B] to-[#E45757] text-white font-bold hover:opacity-90 transition-opacity">
+                    <button onClick={() => { setShowInterventionModal(false); showToast('✓ Intervention triggered successfully.'); }} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#EF4444] text-white font-bold hover:opacity-90 transition-opacity">
                         Confirm Action
                     </button>
                 </div>
@@ -1708,25 +1623,22 @@ const App = () => {
     );
 
     return (
-        <div className="min-h-screen text-white relative">
+        <div className="min-h-screen text-white relative premium-grid-bg">
             <div className="ambient-glow-topLeft"></div>
             <div className="ambient-glow-topRight"></div>
 
             {currentPage !== "login" && (
-                <nav className="w-full border-b border-white/10 bg-[#0B0B0C]/80 backdrop-blur-lg sticky top-0 z-40">
+                <nav className="w-full border-b border-white/10 bg-[#10293F]/80 backdrop-blur-lg sticky top-0 z-40">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                         <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleNavigate('admin')} style={{ display: 'flex', alignItems: 'center' }}>
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#A88C3D] to-[#BFA14A] flex items-center justify-center">
+                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#8CC7FF] to-[#4DA3FF] flex items-center justify-center">
                                 <Brain className="w-5 h-5 text-white" />
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 20, background: 'linear-gradient(135deg,#A88C3D,#BFA14A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1 }}>Continuum</span>
+                                <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 20, background: 'linear-gradient(135deg,#8CC7FF,#4DA3FF)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1 }}>Hackspace</span>
                                 <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontFamily: 'DM Sans', letterSpacing: '0.5px', marginTop: 1, lineHeight: 1 }}>Academic Stability Engine</div>
                             </div>
-                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: 'rgba(197,25,45,0.1)', border: '1px solid rgba(197,25,45,0.3)', borderRadius: 20, padding: '3px 10px', marginLeft: 12 }}>
-                                <span style={{ width: 6, height: 6, borderRadius: 3, background: '#C5192D', display: 'inline-block' }}></span>
-                                <span style={{ fontSize: 10, color: '#C5192D', fontFamily: 'DM Sans', fontWeight: 500, letterSpacing: '0.3px' }}>SDG 4 – Quality Education</span>
-                            </div>
+
                         </div>
 
                         <div className="flex flex-1 justify-center max-w-lg">
@@ -1747,8 +1659,8 @@ const App = () => {
                                             padding: '8px 16px',
                                             fontSize: 13,
                                             fontFamily: 'DM Sans',
-                                            color: currentPage === tab.page ? '#BFA14A' : 'rgba(255,255,255,0.5)',
-                                            borderBottom: currentPage === tab.page ? '2px solid #BFA14A' : '2px solid transparent',
+                                            color: currentPage === tab.page ? '#4DA3FF' : 'rgba(255,255,255,0.5)',
+                                            borderBottom: currentPage === tab.page ? '2px solid #4DA3FF' : '2px solid transparent',
                                             transition: 'color 0.2s ease, border-color 0.2s ease',
                                             letterSpacing: '0.3px'
                                         }}
@@ -1767,7 +1679,7 @@ const App = () => {
 
                         <div className="flex items-center gap-4">
                             <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-                                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#FBBF24] to-[#E45757]"></div>
+                                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#FBBF24] to-[#EF4444]"></div>
                                 <span className="text-xs font-bold uppercase tracking-wider">{role}</span>
                             </div>
                             <button onClick={handleLogout} className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors">
