@@ -4,8 +4,10 @@
 
 @layer base {
   body {
-    background-color: #0B0B0C;
-    color: white;
+    background-color: transparent;
+    @apply bg-gray-50 dark:bg-[#0B0B0C];
+    color: inherit;
+    @apply text-gray-900 dark:text-white;
     font-family: 'DM Sans', sans-serif;
     margin: 0;
     padding: 0;
@@ -80,12 +82,14 @@ body::after {
 
 /* CARD TIER SYSTEMS */
 .card-tier-1, .card-tier-2, .card-tier-3 {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    @apply bg-white border border-gray-200 shadow-sm dark:bg-[rgba(255,255,255,0.04)] dark:border-[rgba(255,255,255,0.08)];
     border-radius: 14px;
     backdrop-filter: blur(12px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
     transition: all 0.25s ease;
+}
+
+.dark .card-tier-1, .dark .card-tier-2, .dark .card-tier-3 {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
 }
 
 /* Hover Lift */
@@ -410,10 +414,16 @@ body::after {
 }
 
 .premium-grid-bg {
-    background-color: #0B1C2C;
+    @apply bg-gray-50 dark:bg-[#0B1C2C];
     background-image:
       linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
       radial-gradient(circle at 20% 30%, rgba(77,163,255,0.15), transparent 60%);
     background-size: 40px 40px, 40px 40px, 100% 100%;
+}
+.light .premium-grid-bg {
+    background-image:
+      linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px),
+      radial-gradient(circle at 20% 30%, rgba(77,163,255,0.1), transparent 60%);
 }

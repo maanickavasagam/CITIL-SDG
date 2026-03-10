@@ -7,7 +7,8 @@ import {
     ShieldAlert, BookOpen, GraduationCap, Users, LayoutDashboard,
     AlertTriangle, TrendingUp, TrendingDown, Minus, ChevronRight,
     ArrowLeft, Brain, Activity, Clock, LogOut, CheckCircle2, Search,
-    Filter, MoreVertical, ShieldCheck, Zap, Wallet, MapPin, Star, Shield, TrendingDown as TrendingDownIcon, BarChart2, IndianRupee, Bell
+    Filter, MoreVertical, ShieldCheck, Zap, Wallet, MapPin, Star, Shield, TrendingDown as TrendingDownIcon, BarChart2, IndianRupee, Bell,
+    Sun, Moon, Eye, EyeOff
 } from 'lucide-react';
 
 const TOTAL_STUDENTS = 15;
@@ -248,7 +249,7 @@ const Card = ({ children, tier = 1, className = "", delay = 0, onClick, title })
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-[#0B0B0C] bg-opacity-90 border border-white/10 backdrop-blur-md rounded-lg p-3 text-white shadow-xl">
+            <div className="bg-white dark:bg-[#0B0B0C] bg-opacity-90 border border-gray-200 dark:border-white/10 backdrop-blur-md rounded-lg p-3 text-gray-900 dark:text-white shadow-xl">
                 <p className="font-semibold mb-1">{label}</p>
                 {payload.map((entry, index) => (
                     <div key={`item-${index}`} className="flex items-center gap-2 text-sm">
@@ -282,8 +283,107 @@ const Footer = () => (
 );
 
 
-const LoginPage = ({ onLogin }) => {
+const ResetPassword = ({ onBack }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [pwdError, setPwdError] = useState('');
+
+    const validatePassword = (pwd) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!regex.test(pwd)) {
+            setPwdError("Password must contain at least 8 characters including uppercase, lowercase, number and special symbol.");
+            return false;
+        }
+        setPwdError("");
+        return true;
+    };
+
+    const handleReset = (e) => {
+        e.preventDefault();
+        if (validatePassword(password) && password === confirmPassword) {
+            console.log("Password reset successful");
+            onBack();
+        }
+    };
+
+    return (
+        <div className="min-h-screen flex items-center justify-center relative">
+            <div className="card-tier-3 p-10 w-full max-w-md animate-fade-up z-10 flex flex-col items-center shadow-2xl relative">
+                <h2 className="text-2xl text-gray-900 dark:text-white font-bold mb-6 text-center">Reset Password</h2>
+                <form onSubmit={handleReset} className="w-full">
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email Address"
+                        className="w-full bg-gray-100 dark:bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-xl mb-4 focus:ring-2 mt-4 transition-colors focus:border-[#4DA3FF]/30 outline-none"
+                        required
+                    />
+                    <div className="relative mb-4">
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            value={password}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                                validatePassword(e.target.value);
+                            }}
+                            placeholder="New Password"
+                            className="w-full bg-gray-100 dark:bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-xl pr-10 focus:ring-2 transition-colors focus:border-[#4DA3FF]/30 outline-none"
+                            required
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-3.5 text-slate-400 hover:text-white transition"
+                        >
+                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                        {pwdError && <p className="text-red-400 text-xs mt-1">{pwdError}</p>}
+                    </div>
+                    <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="Confirm New Password"
+                        className="w-full bg-gray-100 dark:bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-xl mb-6 transition-colors focus:border-[#4DA3FF]/30 outline-none"
+                        required
+                    />
+                    <button
+                        type="submit"
+                        className="w-full btn-gradient py-3 rounded-xl font-bold text-lg mb-3"
+                    >
+                        Update Password
+                    </button>
+                    <button
+                        type="button"
+                        className="w-full bg-slate-700 hover:bg-slate-600 text-gray-900 dark:text-white font-bold py-3 px-4 rounded-xl transition border border-slate-600"
+                        onClick={onBack}
+                    >
+                        Cancel
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+const LoginPage = ({ onLogin, onForgotPassword }) => {
     const [role, setRole] = useState("Admin");
+    const [showPassword, setShowPassword] = useState(false);
+    const [password, setPassword] = useState("");
+    const [pwdError, setPwdError] = useState("");
+
+    const validatePassword = (pwd) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!regex.test(pwd)) {
+            setPwdError("Password must contain at least 8 characters including uppercase, lowercase, number and special symbol.");
+            return false;
+        }
+        setPwdError("");
+        return true;
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center relative">
@@ -311,11 +411,11 @@ const LoginPage = ({ onLogin }) => {
                 <p className="text-gray-400 mb-8 font-medium relative z-10">Academic Intelligence Platform</p>
 
                 <div className="flex w-full bg-white/5 p-1 rounded-xl mb-6 relative z-10">
-                    {["Admin", "Faculty", "Student"].map(r => (
+                    {["Admin", "Faculty", "Parent", "Student"].map(r => (
                         <button
                             key={r}
                             onClick={() => setRole(r)}
-                            className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-300 ${role === r ? "bg-gradient-to-r from-[#4DA3FF] to-[#8CC7FF] text-white shadow-lg" : "text-gray-400 hover:text-white"
+                            className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-300 ${role === r ? "bg-gradient-to-r from-[#4DA3FF] to-[#8CC7FF] text-white shadow-lg" : "text-gray-400 hover:text-gray-900 dark:hover:text-white"
                                 }`}
                         >
                             {r}
@@ -330,19 +430,42 @@ const LoginPage = ({ onLogin }) => {
                             defaultValue={`demo@academiq.edu`}
                         />
                     </div>
-                    <div>
-                        <input type="password" placeholder="Password"
-                            className="w-full bg-[#0B0B0C]/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-[#4DA3FF]/30 transition-colors"
-                            defaultValue="password"
+                    <div className="relative">
+                        <input type={showPassword ? "text" : "password"} placeholder="Password"
+                            className="w-full bg-[#0B0B0C]/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 flex items-center pr-10 focus:outline-none focus:border-[#4DA3FF]/30 transition-colors"
+                            value={password}
+                            onChange={(e) => { setPassword(e.target.value); validatePassword(e.target.value); }}
                         />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-3.5 text-slate-400 hover:text-white transition"
+                        >
+                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
+                        {pwdError && <p className="text-red-400 text-xs mt-1">{pwdError}</p>}
                     </div>
                 </div>
 
                 <button
-                    onClick={() => onLogin(role.toLowerCase())}
-                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.transition = 'all 0.25s ease'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(77,163,255,0.16)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0px)'; e.currentTarget.style.boxShadow = 'none'; }} className="w-full btn-gradient py-3 rounded-xl font-bold text-lg flex items-center justify-center gap-2 relative z-10"
+                    onClick={() => { if (!pwdError && password) onLogin(role.toLowerCase()); }}
+                    disabled={!!pwdError || !password}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.transition = 'all 0.25s ease'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(77,163,255,0.16)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0px)'; e.currentTarget.style.boxShadow = 'none'; }} className={`w-full ${pwdError || !password ? 'bg-gray-600 opacity-60' : 'btn-gradient'} py-3 rounded-xl font-bold text-lg flex items-center justify-center gap-2 relative z-10 mb-3`}
                 >
-                    Access Platform <ChevronRight className="w-5 h-5" />
+                    Login <ChevronRight className="w-5 h-5" />
+                </button>
+                <button
+                    onClick={() => { }}
+                    className="w-full bg-slate-700 hover:bg-slate-600 text-gray-900 dark:text-white font-bold py-3 px-4 rounded-xl transition border border-slate-600 z-10 relative mb-2"
+                >
+                    Sign Up
+                </button>
+                <button
+                    type="button"
+                    className="text-sm text-blue-400 hover:text-blue-300 mt-2 text-center transition z-10 relative"
+                    onClick={onForgotPassword}
+                >
+                    Forgot Password?
                 </button>
             </div>
 
@@ -426,10 +549,10 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
         ];
 
         const monthlyAtt = [
-            { week: "Week 1", attendance: 80 },
-            { week: "Week 2", attendance: 74 },
-            { week: "Week 3", attendance: 68 },
-            { week: "Week 4", attendance: 64 }
+            { week: "Week 1", value: 80 },
+            { week: "Week 2", value: 68 },
+            { week: "Week 3", value: 74 },
+            { week: "Week 4", value: 64 }
         ];
 
         return { high, moderate, safe, avg, deptChart, dropoutData, pieData, monthlyAtt };
@@ -463,7 +586,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
                                 <Users className="w-4 h-4 text-[#4DA3FF]" /> Total Students
                             </div>
-                            <div className="text-3xl font-bold text-white mb-2">{TOTAL_STUDENTS}</div>
+                            <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{TOTAL_STUDENTS}</div>
                         </Card>
 
                         <Card delay={0.2} className="w-full md:w-1/4 risk-pulse relative overflow-hidden bg-[#EF4444]/5 border-[#EF4444]/20" style={{
@@ -493,7 +616,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
                                 <Activity className="w-4 h-4 text-[#4DA3FF]" /> Interventions
                             </div>
-                            <div className="text-3xl font-bold text-white mb-2">8</div>
+                            <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">8</div>
                             <div className="text-xs text-[#4DA3FF] mt-2">4 pending review</div>
                         </Card>
 
@@ -507,13 +630,13 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             <div className="text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
                                 <Brain className="w-4 h-4 text-[#8CC7FF]" /> Avg Risk Score
                             </div>
-                            <div className="text-3xl font-bold text-white mb-2">{data.avg}</div>
+                            <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{data.avg}</div>
                             <div className="text-xs text-[#8CC7FF] mt-2 opacity-80">Overall stability</div>
                         </Card>
                     </div>
 
                     {role === "ADMIN" && (
-                        <Card className="w-full mb-6" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: 20 }}>
+                        <Card className="w-full mb-6 px-6" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: 20 }}>
                             <div className="flex flex-row justify-between items-start mb-4 px-2">
                                 <h3 className="text-lg font-semibold">Monthly Attendance Trend (All Students)</h3>
                                 <div style={{ color: '#EF4444', fontSize: '12px' }}>
@@ -521,12 +644,12 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                 </div>
                             </div>
                             <ResponsiveContainer width="100%" height={220}>
-                                <LineChart data={data.monthlyAtt} margin={{ top: 20, right: 10, left: 0, bottom: 0 }}>
+                                <LineChart data={data.monthlyAtt} margin={{ top: 10, right: 30, left: 30, bottom: 5 }}>
                                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" vertical={false} />
-                                    <XAxis dataKey="week" stroke="#8CC7FF" axisLine={false} tickLine={false} />
-                                    <YAxis stroke="#8CC7FF" axisLine={false} tickLine={false} />
+                                    <XAxis dataKey="week" stroke="#8CC7FF" tick={{ fill: "#9ca3af" }} tickMargin={10} axisLine={false} tickLine={false} />
+                                    <YAxis domain={[60, 85]} stroke="#8CC7FF" axisLine={false} tickLine={false} />
                                     <RechartsTooltip cursor={{ fill: 'rgba(255,255,255,0.05)' }} contentStyle={{ backgroundColor: '#10293F', border: '1px solid rgba(255,255,255,0.1)' }} />
-                                    <Line type="monotone" dataKey="attendance" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4, fill: '#8CC7FF', strokeWidth: 0 }} activeDot={{ r: 6, fill: '#8CC7FF' }} label={{ position: 'top', fill: '#8CC7FF', fontSize: 12, formatter: (value) => `${value}%` }} />
+                                    <Line type="monotone" dataKey="value" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4, fill: '#8CC7FF', strokeWidth: 0 }} activeDot={{ r: 6, fill: '#8CC7FF' }} label={{ position: 'top', fill: '#8CC7FF', fontSize: 12, formatter: (value) => `${value}%` }} />
                                 </LineChart>
                             </ResponsiveContainer>
                         </Card>
@@ -739,10 +862,10 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             <div>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>
                                     <span>Dropout Prevention Effectiveness</span>
-                                    <span>74%</span>
+                                    <span style={{ fontWeight: 600, color: '#4ade80' }}>86.28%</span>
                                 </div>
                                 <div style={{ height: 8, borderRadius: 4, background: 'rgba(255,255,255,0.06)', width: '100%' }}>
-                                    <div style={{ height: 8, borderRadius: 4, background: '#4DA3FF', width: '74%', transition: 'width 1s ease 0.3s' }}></div>
+                                    <div style={{ height: 8, borderRadius: 4, background: '#4ade80', width: '86.28%', transition: 'width 1s ease 0.3s' }}></div>
                                 </div>
                             </div>
 
@@ -754,6 +877,120 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
             }
             <Footer />
         </div >
+    );
+};
+
+const ParentDashboard = ({ students }) => {
+    // Determine the child mapped to this parent. 
+    // In a real application, you'd match by parentId. 
+    // Since mock data lacks parentId, we gracefully pick the first student for demonstration.
+    const child = students[0];
+    const risk = calculateRiskScore(child);
+
+    // Formatted metric blocks
+    const attendancePercent = child.attendance[4];
+    const avgScore = Math.round(child.marks.reduce((a, b) => a + b, 0) / child.marks.length);
+
+    // Recent Performance Data formatting
+    const performanceData = child.marks.map((m, i) => ({ term: `T${i + 1}`, score: m }));
+
+    return (
+        <div className="p-6 animate-page max-w-7xl mx-auto">
+            <HeaderUnderline title={`Parent Portal - ${child.name}`} />
+
+            {/* High Risk Banner Alert */}
+            {risk.level === "HIGH" && (
+                <div className="bg-red-900/30 border border-red-500 text-red-300 rounded-lg p-4 mb-6 animate-fade-up">
+                    <div className="flex items-center gap-2 font-bold mb-1">
+                        <AlertTriangle className="w-5 h-5" />
+                        Attention Required
+                    </div>
+                    ⚠ Your child may be at academic risk. Suggested intervention recommended.
+                </div>
+            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                {/* 1. Student Attendance Card */}
+                <Card tier={1} delay={0.1} className="flex flex-col">
+                    <div className="flex items-center gap-2 text-gray-400 font-semibold text-sm mb-4">
+                        <Clock className="w-5 h-5 text-[#4DA3FF]" /> Attendance Overview
+                    </div>
+                    <div className="flex-1 flex flex-col justify-center">
+                        <div className="text-5xl font-extrabold text-[#4DA3FF] mb-2">{attendancePercent}%</div>
+                        <div className="text-sm text-gray-500">Overall Attendance</div>
+
+                        <div className="mt-6 space-y-3">
+                            <div className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                                <span className="text-gray-400">Classes Attended</span>
+                                <span className="text-gray-900 dark:text-white font-bold">{Math.round((attendancePercent / 100) * 40)}</span>
+                            </div>
+                            <div className="flex justify-between items-center text-sm">
+                                <span className="text-gray-400">Classes Missed</span>
+                                <span className="text-gray-900 dark:text-white font-bold">{40 - Math.round((attendancePercent / 100) * 40)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </Card>
+
+                {/* 2. Academic Performance Card */}
+                <Card tier={2} delay={0.2} className="flex flex-col">
+                    <div className="flex items-center gap-2 text-gray-400 font-semibold text-sm mb-4">
+                        <Star className="w-5 h-5 text-[#F59E0B]" /> Academic Performance
+                    </div>
+
+                    <div className="flex items-baseline gap-2 mb-4">
+                        <div className="text-4xl font-bold text-gray-900 dark:text-white">{avgScore}</div>
+                        <div className="text-xs text-gray-500 font-medium">Avg Marks</div>
+                    </div>
+
+                    <div className="h-24 w-full mt-2">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <LineChart data={performanceData}>
+                                <Line type="monotone" dataKey="score" stroke="#F59E0B" strokeWidth={2} dot={{ r: 3, fill: '#F59E0B' }} />
+                                <RechartsTooltip
+                                    contentStyle={{ backgroundColor: '#10293F', border: '1px solid rgba(255,255,255,0.1)' }}
+                                    formatter={(val) => [`${val} Marks`, 'Score']}
+                                />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    </div>
+
+                    <div className="mt-4 pt-4 border-t border-white/5">
+                        <div className="text-xs text-gray-400 mb-2 font-semibold">Latest Subjects</div>
+                        <div className="flex justify-between items-center text-sm">
+                            <span className="text-gray-300">Mathematics</span>
+                            <span className="text-gray-900 dark:text-white font-bold">78/100</span>
+                        </div>
+                    </div>
+                </Card>
+
+                {/* 3. Risk Prediction Card */}
+                <Card tier={3} delay={0.3} className="flex flex-col">
+                    <div className="flex items-center gap-2 text-gray-400 font-semibold text-sm mb-4">
+                        <Shield className="w-5 h-5 text-indigo-400" /> Academic Health
+                    </div>
+
+                    <div className="text-center flex-1 flex flex-col justify-center items-center py-4">
+                        {/* Dynamic Health Circle */}
+                        <div className="w-32 h-32 rounded-full border-[6px] flex items-center justify-center mb-4 relative shadow-lg"
+                            style={{
+                                borderColor: risk.level === "SAFE" ? "#4ade80" : risk.level === "MODERATE" ? "#F59E0B" : "#EF4444",
+                                backgroundColor: risk.level === "SAFE" ? "rgba(74, 222, 128, 0.1)" : risk.level === "MODERATE" ? "rgba(245, 158, 11, 0.1)" : "rgba(239, 68, 68, 0.1)"
+                            }}>
+                            <div className="text-3xl font-extrabold" style={{ color: risk.level === "SAFE" ? "#4ade80" : risk.level === "MODERATE" ? "#F59E0B" : "#EF4444" }}>
+                                {risk.score}
+                            </div>
+                        </div>
+
+                        <div className="text-lg font-bold" style={{ color: risk.level === "SAFE" ? "#4ade80" : risk.level === "MODERATE" ? "#F59E0B" : "#EF4444" }}>
+                            {risk.level === "SAFE" ? "Low Risk" : risk.level === "MODERATE" ? "Medium Risk" : "High Risk"}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1 uppercase tracking-wider">Prediction Engine Score</div>
+                    </div>
+                </Card>
+            </div>
+        </div>
     );
 };
 
@@ -783,7 +1020,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                             <input
                                 type="text" placeholder="Search by name or ID..."
                                 value={search} onChange={e => setSearch(e.target.value)}
-                                className="w-full bg-[#0B0B0C]/60 border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-white placeholder-gray-500 focus:outline-none focus:border-[#4DA3FF]/50 transition-colors backdrop-blur-md"
+                                className="w-full bg-gray-100 dark:bg-[#0B0B0C]/60 border border-gray-300 dark:border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:border-[#4DA3FF]/50 transition-colors backdrop-blur-md"
                             />
                         </div>
 
@@ -806,7 +1043,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                         <div className="overflow-x-auto w-full">
                             <table className="w-full text-left border-collapse min-w-[800px]">
                                 <thead>
-                                    <tr className="border-b border-white/5 text-gray-400 text-sm">
+                                    <tr className="border-b border-gray-200 dark:border-white/5 text-gray-500 dark:text-gray-400 text-sm">
                                         <th className="p-4 font-semibold w-12 text-center">#</th>
                                         <th className="p-4 font-semibold">Student</th>
                                         <th className="p-4 font-semibold">Dept</th>
@@ -1586,12 +1823,13 @@ const UploadPage = ({ setStudents, showToast, role }) => {
                     <>
                         <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: 24, flex: 1 }}>
                             <h3 className="text-xl font-bold mb-2 text-white">Weekly Attendance</h3>
-                            <p className="text-sm text-gray-400 mb-6">
+                            <p className="text-sm text-gray-400 mb-2">
                                 Upload weekly attendance CSV files for student monitoring. Required columns: studentid, week, attendance.
                             </p>
+                            <p className="text-xs text-slate-400 mt-2 mb-6">Supported files: CSV, PDF, PNG</p>
                             <input
                                 type="file"
-                                accept=".csv"
+                                accept=".csv,.pdf,.png"
                                 onChange={createUploadHandler('attendance')}
                                 className="block w-full text-sm text-gray-400
                                            file:mr-4 file:py-2 file:px-4
@@ -1635,6 +1873,19 @@ const App = () => {
     const [toastVisible, setToastVisible] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const scoreIntervalRef = useRef(null);
+
+    const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('theme') !== 'light');
+
+    useEffect(() => {
+        const root = document.documentElement;
+        if (isDarkMode) {
+            root.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            root.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+    }, [isDarkMode]);
 
     const [role, setRole] = useState(null);
     const [currentStudentId, setCurrentStudentId] = useState("S001");
@@ -1756,7 +2007,8 @@ const App = () => {
         setRole(uRole);
         if (uRole === "ADMIN") setCurrentPage("admin");
         else if (uRole === "FACULTY") setCurrentPage("faculty");
-        else setCurrentPage("admin");
+        else if (uRole === "PARENT") setCurrentPage("parent");
+        else setCurrentPage("student");
     };
 
     const handleLogout = () => {
@@ -1794,10 +2046,10 @@ const App = () => {
                 </div>
 
                 <div className="flex gap-4">
-                    <button onClick={() => setShowInterventionModal(false)} className="flex-1 py-3 rounded-xl border border-white/20 text-white font-bold hover:bg-white/5 transition-colors">
+                    <button onClick={() => setShowInterventionModal(false)} className="flex-1 py-3 rounded-xl border border-white/20 text-gray-900 dark:text-white font-bold hover:bg-white/5 transition-colors">
                         Cancel
                     </button>
-                    <button onClick={() => { setShowInterventionModal(false); showToast('✓ Intervention triggered successfully.'); }} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#EF4444] text-white font-bold hover:opacity-90 transition-opacity">
+                    <button onClick={() => { setShowInterventionModal(false); showToast('✓ Intervention triggered successfully.'); }} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#EF4444] text-gray-900 dark:text-white font-bold hover:opacity-90 transition-opacity">
                         Confirm Action
                     </button>
                 </div>
@@ -1806,12 +2058,12 @@ const App = () => {
     );
 
     return (
-        <div className="min-h-screen text-white relative premium-grid-bg">
+        <div className="min-h-screen text-gray-900 dark:text-white relative premium-grid-bg transition-colors duration-300">
             <div className="ambient-glow-topLeft"></div>
             <div className="ambient-glow-topRight"></div>
 
-            {currentPage !== "login" && (
-                <nav className="w-full border-b border-white/10 bg-[#10293F]/80 backdrop-blur-lg sticky top-0 z-40">
+            {currentPage !== "login" && currentPage !== "reset-password" && (
+                <nav className="w-full border-b border-gray-200 dark:border-white/10 bg-white/90 dark:bg-[#10293F]/80 backdrop-blur-lg sticky top-0 z-40 transition-colors duration-300">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                         <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleNavigate('admin')} style={{ display: 'flex', alignItems: 'center' }}>
                             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#8CC7FF] to-[#4DA3FF] flex items-center justify-center">
@@ -1830,6 +2082,7 @@ const App = () => {
                                     { label: 'Dashboard', page: 'admin', always: true },
                                     { label: 'Students', page: 'faculty', show: can('canAccessStudentsPage') },
                                     { label: 'Interventions', page: 'interventions', show: can('canAccessInterventions') },
+                                    { label: 'Parent Dashboard', page: 'parent', show: role === 'PARENT' },
                                     { label: 'Upload', page: 'upload', show: role === 'ADMIN' || role === 'FACULTY' }
                                 ].filter(tab => tab.always || tab.show).map(tab => (
                                     <button
@@ -1858,6 +2111,13 @@ const App = () => {
                                     </button>
                                 ))}
                             </div>
+                            <button
+                                onClick={() => setIsDarkMode(!isDarkMode)}
+                                className="ml-6 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition flex items-center justify-center text-gray-700 dark:text-white"
+                                aria-label="Toggle Theme"
+                            >
+                                {isDarkMode ? <Sun className="text-yellow-400 w-5 h-5" /> : <Moon className="text-slate-200 w-5 h-5" />}
+                            </button>
                         </div>
 
                         <div className="flex items-center gap-4">
@@ -1881,8 +2141,10 @@ const App = () => {
                     willChange: 'opacity, transform'
                 }}>
 
-                    {currentPage === "login" && <LoginPage onLogin={handleLogin} />}
+                    {currentPage === "login" && <LoginPage onLogin={handleLogin} onForgotPassword={() => setCurrentPage("reset-password")} />}
+                    {currentPage === "reset-password" && <ResetPassword onBack={() => setCurrentPage("login")} />}
                     {currentPage === "admin" && <AdminDashboard students={students} onNavigate={handleNavigate} currentStudentId={currentStudentId} animatedStats={animatedStats} adminLoading={adminLoading} can={can} role={role} />}
+                    {currentPage === "parent" && <ParentDashboard students={students} />}
                     {currentPage === "faculty" && <FacultyDashboard students={students} onSelectStudent={(s) => openStudentDetail(s)} can={can} currentStudentId={currentStudentId} openStudentDetail={openStudentDetail} />}
                     {currentPage === "student" && selectedStudent && <StudentDetail
                         student={selectedStudent}
