@@ -11,7 +11,7 @@ import {
     Sun, Moon, Eye, EyeOff
 } from 'lucide-react';
 
-const TOTAL_STUDENTS = 15;
+
 
 const calculateDropoutWindow = (riskScore) => {
     if (riskScore >= 75) return "1–3 Months";
@@ -22,157 +22,9807 @@ const calculateDropoutWindow = (riskScore) => {
 
 const generateStudents = () => {
     const students = [
-        {
-            id: "S001", name: "Aryan Mehta", dept: "CSE", sem: 6,
-            attendance: [92, 85, 78, 71, 65], marks: [82, 78, 71, 63, 56],
-            lmsLogins: [18, 14, 9, 4, 2], assignmentDelays: 5,
-            behaviorIncidents: 1, competitions: 0, prevGPA: 7.8,
-            facultyAdvisor: "Dr. Ramesh Iyer",
-            financial: { feeStatus: "Pending", vulnerabilityScore: 72, scholarshipEligible: true, scholarshipType: "Need-based" },
-            socioEconomic: { parentIncomeBracket: "1L-3L", location: "Rural", firstGenerationLearner: true, genderRiskFlag: false },
-            mentalHealth: { behavioralStressIndex: 78, counselingRecommended: true, stressCategory: "High" }
+    {
+        "id": "S193",
+        "name": "Ishaan Bhattacharya",
+        "dept": "CIVIL",
+        "sem": 3,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.275115641202325,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
         },
-        {
-            id: "S002", name: "Rehan Shaikh", dept: "ECE", sem: 4,
-            attendance: [68, 65, 62, 60, 58], marks: [45, 48, 42, 44, 41],
-            lmsLogins: [3, 2, 4, 2, 1], assignmentDelays: 7,
-            behaviorIncidents: 3, competitions: 0, prevGPA: 5.2,
-            facultyAdvisor: "Prof. Anjali Desai",
-            financial: { feeStatus: "Pending", vulnerabilityScore: 85, scholarshipEligible: true, scholarshipType: "Need-based" },
-            socioEconomic: { parentIncomeBracket: "Below 1L", location: "Rural", firstGenerationLearner: true, genderRiskFlag: false },
-            mentalHealth: { behavioralStressIndex: 82, counselingRecommended: true, stressCategory: "High" }
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
         },
-        {
-            id: "S003", name: "Sneha Patil", dept: "MECH", sem: 4,
-            attendance: [80, 78, 82, 76, 79], marks: [65, 62, 68, 61, 64],
-            lmsLogins: [10, 8, 11, 7, 9], assignmentDelays: 3,
-            behaviorIncidents: 1, competitions: 1, prevGPA: 6.5,
-            facultyAdvisor: "Dr. Suresh Nair",
-            financial: { feeStatus: "Paid", vulnerabilityScore: 45, scholarshipEligible: false, scholarshipType: "None" },
-            socioEconomic: { parentIncomeBracket: "3L-6L", location: "Semi-Urban", firstGenerationLearner: false, genderRiskFlag: true },
-            mentalHealth: { behavioralStressIndex: 52, counselingRecommended: false, stressCategory: "Moderate" }
-        },
-        {
-            id: "S004", name: "Kavya Nair", dept: "CSE", sem: 2,
-            attendance: [60, 65, 70, 75, 80], marks: [50, 55, 60, 65, 68],
-            lmsLogins: [5, 8, 11, 14, 16], assignmentDelays: 2,
-            behaviorIncidents: 0, competitions: 1, prevGPA: 5.8,
-            facultyAdvisor: "Dr. Ramesh Iyer",
-            financial: { feeStatus: "Paid", vulnerabilityScore: 38, scholarshipEligible: true, scholarshipType: "Merit" },
-            socioEconomic: { parentIncomeBracket: "3L-6L", location: "Semi-Urban", firstGenerationLearner: true, genderRiskFlag: true },
-            mentalHealth: { behavioralStressIndex: 44, counselingRecommended: false, stressCategory: "Moderate" }
-        },
-        {
-            id: "S005", name: "Priya Sharma", dept: "CSE", sem: 6,
-            attendance: [96, 97, 95, 98, 96], marks: [91, 88, 93, 90, 92],
-            lmsLogins: [22, 24, 21, 23, 25], assignmentDelays: 0,
-            behaviorIncidents: 0, competitions: 3, prevGPA: 9.4,
-            facultyAdvisor: "Dr. Meera Pillai",
-            financial: { feeStatus: "Paid", vulnerabilityScore: 10, scholarshipEligible: true, scholarshipType: "Merit" },
-            socioEconomic: { parentIncomeBracket: "Above 6L", location: "Urban", firstGenerationLearner: false, genderRiskFlag: false },
-            mentalHealth: { behavioralStressIndex: 18, counselingRecommended: false, stressCategory: "Low" }
-        },
-        {
-            id: "S006", name: "Rohit Verma", dept: "CIVIL", sem: 4,
-            attendance: [88, 87, 89, 86, 88], marks: [72, 74, 70, 73, 72],
-            lmsLogins: [14, 12, 15, 13, 14], assignmentDelays: 1,
-            behaviorIncidents: 0, competitions: 1, prevGPA: 7.1,
-            facultyAdvisor: "Prof. Kiran Bhat",
-            financial: { feeStatus: "Paid", vulnerabilityScore: 22, scholarshipEligible: false, scholarshipType: "None" },
-            socioEconomic: { parentIncomeBracket: "3L-6L", location: "Urban", firstGenerationLearner: false, genderRiskFlag: false },
-            mentalHealth: { behavioralStressIndex: 25, counselingRecommended: false, stressCategory: "Low" }
-        },
-        {
-            id: "S007", name: "Divya Krishnan", dept: "MBA", sem: 2,
-            attendance: [82, 79, 76, 73, 70], marks: [68, 65, 62, 60, 58],
-            lmsLogins: [12, 10, 8, 6, 5], assignmentDelays: 3,
-            behaviorIncidents: 0, competitions: 0, prevGPA: 6.8,
-            facultyAdvisor: "Dr. Priya Menon",
-            financial: { feeStatus: "Pending", vulnerabilityScore: 55, scholarshipEligible: true, scholarshipType: "Need-based" },
-            socioEconomic: { parentIncomeBracket: "1L-3L", location: "Semi-Urban", firstGenerationLearner: true, genderRiskFlag: true },
-            mentalHealth: { behavioralStressIndex: 60, counselingRecommended: true, stressCategory: "Moderate" }
-        },
-        {
-            id: "S008", name: "Aditya Joshi", dept: "ECE", sem: 6,
-            attendance: [90, 84, 76, 68, 61], marks: [80, 74, 65, 58, 52],
-            lmsLogins: [16, 12, 8, 5, 3], assignmentDelays: 4,
-            behaviorIncidents: 2, competitions: 0, prevGPA: 7.4,
-            facultyAdvisor: "Prof. Anjali Desai",
-            financial: { feeStatus: "Paid", vulnerabilityScore: 40, scholarshipEligible: false, scholarshipType: "None" },
-            socioEconomic: { parentIncomeBracket: "3L-6L", location: "Urban", firstGenerationLearner: false, genderRiskFlag: false },
-            mentalHealth: { behavioralStressIndex: 88, counselingRecommended: true, stressCategory: "High" }
-        },
-        {
-            id: "S009", name: "Meera Nambiar", dept: "CSE", sem: 4,
-            attendance: [93, 94, 92, 95, 93], marks: [85, 87, 83, 88, 86],
-            lmsLogins: [20, 19, 21, 20, 22], assignmentDelays: 0,
-            behaviorIncidents: 0, competitions: 2, prevGPA: 8.7,
-            facultyAdvisor: "Dr. Meera Pillai",
-            financial: { feeStatus: "Paid", vulnerabilityScore: 12, scholarshipEligible: true, scholarshipType: "Merit" },
-            socioEconomic: { parentIncomeBracket: "Above 6L", location: "Urban", firstGenerationLearner: false, genderRiskFlag: false },
-            mentalHealth: { behavioralStressIndex: 15, counselingRecommended: false, stressCategory: "Low" }
-        },
-        {
-            id: "S010", name: "Saurabh Tiwari", dept: "MECH", sem: 6,
-            attendance: [70, 67, 64, 61, 58], marks: [55, 52, 48, 45, 42],
-            lmsLogins: [6, 4, 3, 2, 2], assignmentDelays: 6,
-            behaviorIncidents: 2, competitions: 0, prevGPA: 5.5,
-            facultyAdvisor: "Dr. Suresh Nair",
-            financial: { feeStatus: "Pending", vulnerabilityScore: 80, scholarshipEligible: true, scholarshipType: "Need-based" },
-            socioEconomic: { parentIncomeBracket: "Below 1L", location: "Rural", firstGenerationLearner: true, genderRiskFlag: false },
-            mentalHealth: { behavioralStressIndex: 75, counselingRecommended: true, stressCategory: "High" }
-        },
-        {
-            id: "S011", name: "Ananya Singh", dept: "MBA", sem: 4,
-            attendance: [72, 75, 77, 79, 81], marks: [58, 61, 63, 65, 67],
-            lmsLogins: [7, 9, 11, 12, 14], assignmentDelays: 2,
-            behaviorIncidents: 1, competitions: 1, prevGPA: 6.2,
-            facultyAdvisor: "Dr. Priya Menon",
-            financial: { feeStatus: "Paid", vulnerabilityScore: 35, scholarshipEligible: false, scholarshipType: "None" },
-            socioEconomic: { parentIncomeBracket: "3L-6L", location: "Semi-Urban", firstGenerationLearner: false, genderRiskFlag: true },
-            mentalHealth: { behavioralStressIndex: 42, counselingRecommended: false, stressCategory: "Moderate" }
-        },
-        {
-            id: "S012", name: "Farhan Qureshi", dept: "CIVIL", sem: 2,
-            attendance: [89, 91, 88, 90, 92], marks: [76, 78, 74, 79, 77],
-            lmsLogins: [15, 17, 14, 16, 18], assignmentDelays: 1,
-            behaviorIncidents: 0, competitions: 2, prevGPA: 7.5,
-            facultyAdvisor: "Prof. Kiran Bhat",
-            financial: { feeStatus: "Paid", vulnerabilityScore: 20, scholarshipEligible: false, scholarshipType: "None" },
-            socioEconomic: { parentIncomeBracket: "3L-6L", location: "Urban", firstGenerationLearner: false, genderRiskFlag: false },
-            mentalHealth: { behavioralStressIndex: 22, counselingRecommended: false, stressCategory: "Low" }
-        },
-        {
-            id: "S013", name: "Ishaan Malhotra", dept: "CSE", sem: 2,
-            attendance: [75, 70, 65, 60, 55], marks: [60, 55, 50, 45, 40],
-            lmsLogins: [8, 6, 5, 3, 2], assignmentDelays: 5,
-            behaviorIncidents: 1, competitions: 0, prevGPA: 6.0,
-            facultyAdvisor: "Dr. Ramesh Iyer",
-            financial: { feeStatus: "Pending", vulnerabilityScore: 65, scholarshipEligible: true, scholarshipType: "Need-based" },
-            socioEconomic: { parentIncomeBracket: "1L-3L", location: "Rural", firstGenerationLearner: true, genderRiskFlag: false },
-            mentalHealth: { behavioralStressIndex: 70, counselingRecommended: true, stressCategory: "High" }
-        },
-        {
-            id: "S014", name: "Tanvi Kulkarni", dept: "ECE", sem: 4,
-            attendance: [84, 81, 79, 77, 75], marks: [70, 67, 65, 63, 62],
-            lmsLogins: [11, 9, 8, 7, 6], assignmentDelays: 3,
-            behaviorIncidents: 0, competitions: 1, prevGPA: 6.9,
-            facultyAdvisor: "Prof. Anjali Desai",
-            financial: { feeStatus: "Paid", vulnerabilityScore: 42, scholarshipEligible: false, scholarshipType: "None" },
-            socioEconomic: { parentIncomeBracket: "3L-6L", location: "Semi-Urban", firstGenerationLearner: false, genderRiskFlag: true },
-            mentalHealth: { behavioralStressIndex: 48, counselingRecommended: false, stressCategory: "Moderate" }
-        },
-        {
-            id: "S015", name: "Vikram Reddy", dept: "CIVIL", sem: 6,
-            attendance: [91, 92, 93, 94, 95], marks: [80, 82, 83, 85, 87],
-            lmsLogins: [17, 18, 19, 20, 21], assignmentDelays: 0,
-            behaviorIncidents: 0, competitions: 3, prevGPA: 8.2,
-            facultyAdvisor: "Prof. Kiran Bhat",
-            financial: { feeStatus: "Paid", vulnerabilityScore: 15, scholarshipEligible: true, scholarshipType: "Merit" },
-            socioEconomic: { parentIncomeBracket: "Above 6L", location: "Urban", firstGenerationLearner: false, genderRiskFlag: false },
-            mentalHealth: { behavioralStressIndex: 20, counselingRecommended: false, stressCategory: "Low" }
+        "mentalHealth": {
+            "behavioralStressIndex": 87,
+            "counselingRecommended": false,
+            "stressCategory": "High"
         }
-    ];
+    },
+    {
+        "id": "S152",
+        "name": "Suresh Rao",
+        "dept": "MECH",
+        "sem": 5,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.593350830469319,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 88,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S041",
+        "name": "Simran Gupta",
+        "dept": "MECH",
+        "sem": 8,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.633229203610549,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S200",
+        "name": "Sneha Sharma",
+        "dept": "CIVIL",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.928048312736784,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 88,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S071",
+        "name": "Ayaan Shukla",
+        "dept": "ECE",
+        "sem": 3,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.501627432087994,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 62,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S038",
+        "name": "Karan Dixit",
+        "dept": "ECE",
+        "sem": 7,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.578580208778458,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S167",
+        "name": "Saanvi Pillai",
+        "dept": "CIVIL",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.5415598044372825,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 91,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S188",
+        "name": "Aarti Rao",
+        "dept": "EEE",
+        "sem": 8,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.583478258715394,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 97,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S128",
+        "name": "Ramesh Bansal",
+        "dept": "CSE",
+        "sem": 3,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 6.9253687056132005,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 69,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S158",
+        "name": "Saanvi Iyer",
+        "dept": "CSE",
+        "sem": 3,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.0633842055707,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 89,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S179",
+        "name": "Ananya Nambiar",
+        "dept": "ECE",
+        "sem": 6,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.20703951932464,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 97,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S148",
+        "name": "Sai Das",
+        "dept": "CSE",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.499764653670391,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 83,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S039",
+        "name": "Ramesh Malhotra",
+        "dept": "MECH",
+        "sem": 2,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.807329903479749,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 25,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S094",
+        "name": "Vihaan Bhatia",
+        "dept": "IT",
+        "sem": 6,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 6.7605849908281686,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 60,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S060",
+        "name": "Ayaan Bhattacharya",
+        "dept": "CSE",
+        "sem": 2,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.819277741363088,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S052",
+        "name": "Sneha Rao",
+        "dept": "ECE",
+        "sem": 1,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.477428632208488,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S015",
+        "name": "Myra Grover",
+        "dept": "MECH",
+        "sem": 4,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 8.523861535993921,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S116",
+        "name": "Tanya Pandey",
+        "dept": "CIVIL",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.170597631870679,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 53,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S126",
+        "name": "Priya Ahuja",
+        "dept": "MECH",
+        "sem": 1,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 7.4666815868640235,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 59,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S053",
+        "name": "Rahul Verma",
+        "dept": "CIVIL",
+        "sem": 6,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 8.79847074651553,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 26,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S051",
+        "name": "Suresh Malhotra",
+        "dept": "CSE",
+        "sem": 6,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 9.919239790160272,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 25,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S096",
+        "name": "Arjun Bhattacharya",
+        "dept": "CIVIL",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.143383094039903,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 64,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S191",
+        "name": "Ritika Rao",
+        "dept": "CSE",
+        "sem": 2,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.063094317296761,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 85,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S007",
+        "name": "Ira Pandey",
+        "dept": "ECE",
+        "sem": 5,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.506516887696357,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S125",
+        "name": "Navya Gupta",
+        "dept": "ECE",
+        "sem": 1,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.543248923913433,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 56,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S049",
+        "name": "Rishi Verma",
+        "dept": "IT",
+        "sem": 5,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.150369769733981,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 26,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S013",
+        "name": "Gaurav Rao",
+        "dept": "CSE",
+        "sem": 2,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.91243269332392,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S135",
+        "name": "Priya Bhattacharya",
+        "dept": "CIVIL",
+        "sem": 4,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.867877188313685,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 60,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S050",
+        "name": "Neha Iyer",
+        "dept": "CSE",
+        "sem": 5,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.967005218929762,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S046",
+        "name": "Aditya Awasti",
+        "dept": "CIVIL",
+        "sem": 4,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 8.813826656163055,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 22,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S151",
+        "name": "Shruti Singh",
+        "dept": "CSE",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.6751910993464145,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 81,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S154",
+        "name": "Arjun Yadav",
+        "dept": "ECE",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.132279409387985,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 91,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S085",
+        "name": "Vikas Nair",
+        "dept": "MECH",
+        "sem": 3,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.05707978067691,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 68,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S121",
+        "name": "Simran Dixit",
+        "dept": "CSE",
+        "sem": 7,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 1,
+        "competitions": 1,
+        "prevGPA": 6.563102021452996,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 65,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S172",
+        "name": "Ritika Pillai",
+        "dept": "EEE",
+        "sem": 3,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.47014656126237,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 98,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S068",
+        "name": "Aadhya Bose",
+        "dept": "EEE",
+        "sem": 8,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.071360290910105,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 64,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S163",
+        "name": "Darsh Mehta",
+        "dept": "ECE",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.878556566546818,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 96,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S144",
+        "name": "Arjun Dixit",
+        "dept": "MECH",
+        "sem": 6,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.906751613699303,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 91,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S093",
+        "name": "Pooja Grover",
+        "dept": "MECH",
+        "sem": 1,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.539717355042528,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 67,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S174",
+        "name": "Avni Narang",
+        "dept": "ECE",
+        "sem": 5,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.106264547934719,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 99,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S056",
+        "name": "Tarun Mehta",
+        "dept": "CIVIL",
+        "sem": 1,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.188540172476888,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 21,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S012",
+        "name": "Suresh Bansal",
+        "dept": "MECH",
+        "sem": 3,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.360596205217881,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S196",
+        "name": "Arjun Ahuja",
+        "dept": "EEE",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.452860210199037,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 90,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S123",
+        "name": "Sneha Sinha",
+        "dept": "IT",
+        "sem": 7,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.987839657489022,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 62,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S155",
+        "name": "Shaurya Nair",
+        "dept": "ECE",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.838720641333196,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 93,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S095",
+        "name": "Aria Bose",
+        "dept": "ECE",
+        "sem": 7,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 6.779741100542186,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 68,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S105",
+        "name": "Siddharth Verma",
+        "dept": "CSE",
+        "sem": 4,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 7.41923634660742,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 50,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S143",
+        "name": "Aadhya Kumar",
+        "dept": "ECE",
+        "sem": 6,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.589337286509617,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 94,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S192",
+        "name": "Varun Nambiar",
+        "dept": "EEE",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.2909039366830894,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 81,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S034",
+        "name": "Aditi Sinha",
+        "dept": "EEE",
+        "sem": 2,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.688453145335176,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 22,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S136",
+        "name": "Vihaan Patel",
+        "dept": "CIVIL",
+        "sem": 4,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.464081773639753,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 51,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S088",
+        "name": "Vikas Dixit",
+        "dept": "CIVIL",
+        "sem": 7,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 6.849700456701278,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 67,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S119",
+        "name": "Kabir Iyer",
+        "dept": "ECE",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.615695920831933,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 54,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S142",
+        "name": "Megha Yadav",
+        "dept": "ECE",
+        "sem": 1,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.956893000153023,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 85,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S031",
+        "name": "Aarav Chauhan",
+        "dept": "EEE",
+        "sem": 2,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.426936586954755,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 28,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S009",
+        "name": "Darsh Chauhan",
+        "dept": "CSE",
+        "sem": 3,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.743714320538134,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 27,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S063",
+        "name": "Avni Pandey",
+        "dept": "CIVIL",
+        "sem": 4,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 6.53486871260195,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 64,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S008",
+        "name": "Ayaan Garg",
+        "dept": "EEE",
+        "sem": 1,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 9.244639841137888,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 27,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S189",
+        "name": "Karan Kumar",
+        "dept": "ECE",
+        "sem": 1,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.419664730994656,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 97,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S043",
+        "name": "Vihaan Malhotra",
+        "dept": "CSE",
+        "sem": 6,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.363127383635913,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 21,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S120",
+        "name": "Saanvi Pandey",
+        "dept": "CIVIL",
+        "sem": 6,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 6.745842180554255,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 65,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S027",
+        "name": "Pooja Menon",
+        "dept": "CSE",
+        "sem": 1,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 8.879765472795993,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 27,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S042",
+        "name": "Reyansh Joshi",
+        "dept": "EEE",
+        "sem": 8,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.568323744196691,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 22,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S108",
+        "name": "Abhinav Bansal",
+        "dept": "CIVIL",
+        "sem": 1,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.297104494511241,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 50,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S183",
+        "name": "Aditya Garg",
+        "dept": "ECE",
+        "sem": 2,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.1885078175940205,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 84,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S022",
+        "name": "Rishi Singh",
+        "dept": "CSE",
+        "sem": 6,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.65778512100511,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S178",
+        "name": "Gaurav Arora",
+        "dept": "EEE",
+        "sem": 3,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.875711089992328,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 88,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S079",
+        "name": "Pihu Arora",
+        "dept": "IT",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 6.888195589490707,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 56,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S184",
+        "name": "Arjun Chatterjee",
+        "dept": "ECE",
+        "sem": 8,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.57525244984361,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 81,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S066",
+        "name": "Shivani Rao",
+        "dept": "CSE",
+        "sem": 3,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.570440513193039,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 56,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S074",
+        "name": "Sneha Kapoor",
+        "dept": "CSE",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.102185445576447,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 60,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S026",
+        "name": "Aditi Nair",
+        "dept": "ECE",
+        "sem": 2,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 9.471236110503304,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 27,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S084",
+        "name": "Avni Nair",
+        "dept": "CIVIL",
+        "sem": 7,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.536020209211266,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 65,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S185",
+        "name": "Pihu Mishra",
+        "dept": "CIVIL",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.282670750802495,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 93,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S160",
+        "name": "Suresh Rao",
+        "dept": "ECE",
+        "sem": 3,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.022522267774378,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 93,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S104",
+        "name": "Shivani Yadav",
+        "dept": "MECH",
+        "sem": 3,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 7.5458700385641695,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 51,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S057",
+        "name": "Kavya Rao",
+        "dept": "CSE",
+        "sem": 6,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.300433441034803,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S156",
+        "name": "Diya Malhotra",
+        "dept": "CSE",
+        "sem": 1,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.994287002959462,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 85,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S170",
+        "name": "Varun Nambiar",
+        "dept": "ECE",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.925345890559159,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 92,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S025",
+        "name": "Rahul Reddy",
+        "dept": "IT",
+        "sem": 6,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.945267181727274,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 20,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S062",
+        "name": "Aditya Desai",
+        "dept": "MECH",
+        "sem": 3,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 6.608933931369421,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 51,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S018",
+        "name": "Ritika Dixit",
+        "dept": "CSE",
+        "sem": 4,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.69107425708594,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S177",
+        "name": "Deepak Shukla",
+        "dept": "IT",
+        "sem": 1,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.904978823597133,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 98,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S159",
+        "name": "Sara Narang",
+        "dept": "MECH",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.66201518380019,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 95,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S059",
+        "name": "Aditya Rao",
+        "dept": "CIVIL",
+        "sem": 8,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.236529561529263,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 20,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S197",
+        "name": "Abhinav Ahuja",
+        "dept": "ECE",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.39119365273681,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 80,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S133",
+        "name": "Atharva Rao",
+        "dept": "EEE",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.8251781355870715,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 56,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S153",
+        "name": "Ayaan Shukla",
+        "dept": "EEE",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.763238844341652,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 95,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S162",
+        "name": "Sai Garg",
+        "dept": "ECE",
+        "sem": 1,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.120367729623512,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 85,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S002",
+        "name": "Shruti Verma",
+        "dept": "CSE",
+        "sem": 4,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 9.981217928867606,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S020",
+        "name": "Simran Rao",
+        "dept": "MECH",
+        "sem": 2,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.86732931659265,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 20,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S001",
+        "name": "Siddharth Sethi",
+        "dept": "MECH",
+        "sem": 8,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.598955700692207,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S164",
+        "name": "Karan Rao",
+        "dept": "CSE",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.173007356893745,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 97,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S045",
+        "name": "Avni Sinha",
+        "dept": "IT",
+        "sem": 5,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.96304054189819,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 26,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S081",
+        "name": "Vihaan Kumar",
+        "dept": "CSE",
+        "sem": 8,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.218590665436475,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 64,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S035",
+        "name": "Saanvi Bhatia",
+        "dept": "ECE",
+        "sem": 8,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 9.172216267340312,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 20,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S109",
+        "name": "Rohan Arora",
+        "dept": "IT",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.300194583935984,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 67,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S077",
+        "name": "Krishna Patel",
+        "dept": "CSE",
+        "sem": 1,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 7.863645744669592,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 65,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S102",
+        "name": "Ritik Grover",
+        "dept": "IT",
+        "sem": 4,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.60338383392301,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 62,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S098",
+        "name": "Tarun Sethi",
+        "dept": "ECE",
+        "sem": 4,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 6.677962496338983,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 59,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S092",
+        "name": "Ramesh Das",
+        "dept": "CSE",
+        "sem": 6,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 6.825145516626726,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 58,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S065",
+        "name": "Sneha Pandey",
+        "dept": "CSE",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.838407789621881,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 53,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S021",
+        "name": "Ramesh Malhotra",
+        "dept": "MECH",
+        "sem": 1,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.418312803010112,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 28,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S129",
+        "name": "Megha Narang",
+        "dept": "CSE",
+        "sem": 1,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.8421447845531285,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 67,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S127",
+        "name": "Shruti Joshi",
+        "dept": "EEE",
+        "sem": 1,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 6.55352400061274,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 51,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S149",
+        "name": "Nisha Bansal",
+        "dept": "EEE",
+        "sem": 8,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.209469407085978,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 99,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S171",
+        "name": "Riya Grover",
+        "dept": "IT",
+        "sem": 3,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.3680234583234885,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 98,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S024",
+        "name": "Aman Pandey",
+        "dept": "ECE",
+        "sem": 4,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.766184999731141,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 20,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S112",
+        "name": "Vivaan Dixit",
+        "dept": "EEE",
+        "sem": 7,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.489104709110036,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 69,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S161",
+        "name": "Navya Das",
+        "dept": "CSE",
+        "sem": 2,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.76426973038319,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 86,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S131",
+        "name": "Kirti Patel",
+        "dept": "MECH",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.972256742521827,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 55,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S176",
+        "name": "Aman Yadav",
+        "dept": "MECH",
+        "sem": 3,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.674443904147804,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 88,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S029",
+        "name": "Saanvi Bhattacharya",
+        "dept": "EEE",
+        "sem": 7,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.903692787329806,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 20,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S130",
+        "name": "Aditi Singh",
+        "dept": "MECH",
+        "sem": 8,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 6.521112200022463,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 56,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S145",
+        "name": "Sai Yadav",
+        "dept": "MECH",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.635022647635072,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 96,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S139",
+        "name": "Tanvi Nair",
+        "dept": "MECH",
+        "sem": 8,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 1,
+        "prevGPA": 6.779110362312199,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 64,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S080",
+        "name": "Aadhya Mukherjee",
+        "dept": "CIVIL",
+        "sem": 6,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 6.720049282907774,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 52,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S097",
+        "name": "Ritik Chauhan",
+        "dept": "CSE",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 1,
+        "competitions": 1,
+        "prevGPA": 7.47781172897173,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 55,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S014",
+        "name": "Ishaan Chawla",
+        "dept": "CSE",
+        "sem": 4,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.515531222442526,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 22,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S101",
+        "name": "Kirti Shukla",
+        "dept": "MECH",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 6.635092141659506,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 58,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S037",
+        "name": "Deepak Dixit",
+        "dept": "EEE",
+        "sem": 5,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.761577077875332,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 21,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S181",
+        "name": "Ananya Bhatia",
+        "dept": "ECE",
+        "sem": 1,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.425850871682545,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 97,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S040",
+        "name": "Riya Bhattacharya",
+        "dept": "MECH",
+        "sem": 5,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.855810192997971,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 23,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S199",
+        "name": "Shaurya Singh",
+        "dept": "CSE",
+        "sem": 2,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.920640998014796,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 84,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S106",
+        "name": "Varun Patel",
+        "dept": "MECH",
+        "sem": 6,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 6.755888778640479,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 53,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S186",
+        "name": "Simran Pandey",
+        "dept": "MECH",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.716185815898819,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 96,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S028",
+        "name": "Aman Dixit",
+        "dept": "CSE",
+        "sem": 5,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.519352509224639,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 23,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S165",
+        "name": "Aarti Patel",
+        "dept": "CSE",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.8584227300257385,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 91,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S115",
+        "name": "Ishaan Pillai",
+        "dept": "EEE",
+        "sem": 8,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.783823965853525,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 59,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S036",
+        "name": "Tanya Mukherjee",
+        "dept": "EEE",
+        "sem": 2,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.583607523392471,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 21,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S157",
+        "name": "Ananya Bose",
+        "dept": "EEE",
+        "sem": 2,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.08304059685318,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 87,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S198",
+        "name": "Aditi Joshi",
+        "dept": "ECE",
+        "sem": 6,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.832743325503183,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 84,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S117",
+        "name": "Tanya Kumar",
+        "dept": "CIVIL",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 7.176584219223649,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 52,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S090",
+        "name": "Suresh Pillai",
+        "dept": "CIVIL",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.3424148555414375,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 54,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S114",
+        "name": "Ayaan Narang",
+        "dept": "CSE",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 6.931288268101524,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 59,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S016",
+        "name": "Kabir Desai",
+        "dept": "EEE",
+        "sem": 6,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.17795683240083,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 21,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S004",
+        "name": "Nisha Mishra",
+        "dept": "CIVIL",
+        "sem": 8,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 8.65765324238959,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S166",
+        "name": "Shivani Bansal",
+        "dept": "EEE",
+        "sem": 2,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.753740261293723,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 89,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S173",
+        "name": "Anuj Mukherjee",
+        "dept": "CSE",
+        "sem": 5,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.507634704096033,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 91,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S087",
+        "name": "Sneha Verma",
+        "dept": "MECH",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.213698173569138,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 62,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S100",
+        "name": "Abhinav Sinha",
+        "dept": "EEE",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.187392312641375,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 64,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S067",
+        "name": "Ira Dixit",
+        "dept": "EEE",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.319681899602029,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 66,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S005",
+        "name": "Vivaan Malhotra",
+        "dept": "MECH",
+        "sem": 7,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 8.887346592068434,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S195",
+        "name": "Navya Mishra",
+        "dept": "MECH",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.134292580996561,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 95,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S175",
+        "name": "Abhinav Verma",
+        "dept": "CSE",
+        "sem": 1,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.922651777542292,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 83,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S118",
+        "name": "Sneha Shukla",
+        "dept": "EEE",
+        "sem": 4,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.814613457810696,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 67,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S124",
+        "name": "Reyansh Arora",
+        "dept": "MECH",
+        "sem": 6,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.518589978906887,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 53,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S076",
+        "name": "Shivani Shukla",
+        "dept": "CSE",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 6.811057840434488,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 59,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S003",
+        "name": "Ayaan Malhotra",
+        "dept": "CSE",
+        "sem": 5,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 8.810079159042951,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 22,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S064",
+        "name": "Pihu Chatterjee",
+        "dept": "CSE",
+        "sem": 8,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.9610022224546455,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 67,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S061",
+        "name": "Aditya Nair",
+        "dept": "CSE",
+        "sem": 6,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.919155642969814,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 68,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S147",
+        "name": "Saanvi Yadav",
+        "dept": "EEE",
+        "sem": 4,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.730590494478545,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 98,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S110",
+        "name": "Deepak Awasti",
+        "dept": "CSE",
+        "sem": 7,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 7.86721289914017,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 53,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S030",
+        "name": "Sai Gupta",
+        "dept": "ECE",
+        "sem": 7,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.399082256077616,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 27,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S086",
+        "name": "Arjun Bhattacharya",
+        "dept": "ECE",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 1,
+        "prevGPA": 7.61752408831728,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 61,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S182",
+        "name": "Tarun Patel",
+        "dept": "EEE",
+        "sem": 8,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.515790147187321,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 98,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S180",
+        "name": "Myra Shukla",
+        "dept": "EEE",
+        "sem": 6,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.115922486496736,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 90,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S054",
+        "name": "Tarun Desai",
+        "dept": "ECE",
+        "sem": 7,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 8.758063315704607,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 25,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S047",
+        "name": "Krishna Menon",
+        "dept": "ECE",
+        "sem": 7,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.128548910858562,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S032",
+        "name": "Aditya Das",
+        "dept": "IT",
+        "sem": 2,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.385136073698934,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 27,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S150",
+        "name": "Vikas Bose",
+        "dept": "CIVIL",
+        "sem": 2,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.21935325729853,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 84,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S082",
+        "name": "Reyansh Sinha",
+        "dept": "MECH",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.457803082581638,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 58,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S140",
+        "name": "Shivani Narang",
+        "dept": "ECE",
+        "sem": 3,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.0431134103136275,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 64,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S033",
+        "name": "Saanvi Menon",
+        "dept": "EEE",
+        "sem": 8,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 9.013028666012055,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S069",
+        "name": "Priya Kohli",
+        "dept": "IT",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 6.77960179564252,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 61,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S137",
+        "name": "Shivani Singh",
+        "dept": "EEE",
+        "sem": 6,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 6.887394383774506,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 60,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S010",
+        "name": "Ananya Bose",
+        "dept": "CIVIL",
+        "sem": 5,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.756884660313576,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 25,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S075",
+        "name": "Aarti Reddy",
+        "dept": "CSE",
+        "sem": 4,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.415085121801434,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 66,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S089",
+        "name": "Shruti Kumar",
+        "dept": "IT",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 6.867735644568596,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 53,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S187",
+        "name": "Rahul Chawla",
+        "dept": "CIVIL",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 5.002766562579439,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 99,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S048",
+        "name": "Ramesh Kohli",
+        "dept": "ECE",
+        "sem": 3,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 8.946599756296907,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 22,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S058",
+        "name": "Arjun Verma",
+        "dept": "CSE",
+        "sem": 3,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.597131785705699,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S011",
+        "name": "Aditya Iyer",
+        "dept": "CIVIL",
+        "sem": 8,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 8.52265452350999,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 21,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S132",
+        "name": "Rahul Iyer",
+        "dept": "IT",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 7.141907540859653,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 58,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S017",
+        "name": "Anuj Kapoor",
+        "dept": "MECH",
+        "sem": 7,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.827183997569206,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 25,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S072",
+        "name": "Shivani Iyer",
+        "dept": "CSE",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.211148375319787,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 64,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S078",
+        "name": "Deepak Gupta",
+        "dept": "EEE",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 6.702846870598468,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 55,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S023",
+        "name": "Aditya Bose",
+        "dept": "IT",
+        "sem": 7,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 8.924095117210095,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S107",
+        "name": "Diya Sharma",
+        "dept": "ECE",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.525320470288641,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 53,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S141",
+        "name": "Deepak Reddy",
+        "dept": "IT",
+        "sem": 5,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.676934476620861,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 93,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S044",
+        "name": "Darsh Desai",
+        "dept": "CIVIL",
+        "sem": 3,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 9.717327194557603,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 24,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S006",
+        "name": "Siddharth Rao",
+        "dept": "MECH",
+        "sem": 7,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.411708671617927,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 29,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S083",
+        "name": "Vivaan Grover",
+        "dept": "IT",
+        "sem": 2,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.458133822117063,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 52,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S168",
+        "name": "Aditya Sethi",
+        "dept": "EEE",
+        "sem": 2,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.4985274113396105,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 86,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S091",
+        "name": "Vivaan Rao",
+        "dept": "MECH",
+        "sem": 8,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 6.661601913337867,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 52,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S134",
+        "name": "Reyansh Mishra",
+        "dept": "IT",
+        "sem": 5,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.430094330746316,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 56,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S169",
+        "name": "Ananya Nair",
+        "dept": "ECE",
+        "sem": 7,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 5.4877600588740805,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 85,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S055",
+        "name": "Pihu Iyer",
+        "dept": "EEE",
+        "sem": 5,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 2,
+        "prevGPA": 9.224537627895138,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 26,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S103",
+        "name": "Tarun Joshi",
+        "dept": "CSE",
+        "sem": 4,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.066593638765019,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 54,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S073",
+        "name": "Ramesh Dixit",
+        "dept": "IT",
+        "sem": 1,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 7.382168350182955,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 68,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S138",
+        "name": "Vivaan Nair",
+        "dept": "MECH",
+        "sem": 6,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.890037379575145,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 50,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S099",
+        "name": "Priya Awasti",
+        "dept": "CSE",
+        "sem": 6,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.389411531327443,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 56,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S190",
+        "name": "Ananya Nair",
+        "dept": "MECH",
+        "sem": 1,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 3,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.058808500139027,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 85,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S146",
+        "name": "Vivaan Pandey",
+        "dept": "ECE",
+        "sem": 2,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 4,
+        "behaviorIncidents": 2,
+        "competitions": 0,
+        "prevGPA": 4.939999005547718,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 81,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S019",
+        "name": "Kabir Kohli",
+        "dept": "CSE",
+        "sem": 3,
+        "attendance": [
+            90,
+            92,
+            95,
+            96,
+            98
+        ],
+        "marks": [
+            80,
+            82,
+            85,
+            88,
+            92
+        ],
+        "lmsLogins": [
+            12,
+            14,
+            15,
+            18,
+            20
+        ],
+        "assignmentDelays": 0,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 9.957724800012446,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 23,
+            "counselingRecommended": false,
+            "stressCategory": "Low"
+        }
+    },
+    {
+        "id": "S194",
+        "name": "Megha Ahuja",
+        "dept": "MECH",
+        "sem": 6,
+        "attendance": [
+            65,
+            62,
+            59,
+            58,
+            55
+        ],
+        "marks": [
+            45,
+            42,
+            40,
+            35,
+            30
+        ],
+        "lmsLogins": [
+            2,
+            1,
+            1,
+            0,
+            1
+        ],
+        "assignmentDelays": 5,
+        "behaviorIncidents": 1,
+        "competitions": 0,
+        "prevGPA": 4.459933195353152,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Pending",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 98,
+            "counselingRecommended": false,
+            "stressCategory": "High"
+        }
+    },
+    {
+        "id": "S070",
+        "name": "Aria Malhotra",
+        "dept": "ECE",
+        "sem": 8,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 1,
+        "behaviorIncidents": 0,
+        "competitions": 0,
+        "prevGPA": 7.818894544754462,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 62,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S122",
+        "name": "Megha Kapoor",
+        "dept": "ECE",
+        "sem": 4,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 6.765734243665573,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 57,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S111",
+        "name": "Tanya Chauhan",
+        "dept": "CIVIL",
+        "sem": 1,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 7.9135353469938465,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 59,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    },
+    {
+        "id": "S113",
+        "name": "Tanya Iyer",
+        "dept": "CIVIL",
+        "sem": 1,
+        "attendance": [
+            85,
+            82,
+            80,
+            78,
+            76
+        ],
+        "marks": [
+            68,
+            65,
+            60,
+            58,
+            55
+        ],
+        "lmsLogins": [
+            5,
+            4,
+            6,
+            5,
+            4
+        ],
+        "assignmentDelays": 2,
+        "behaviorIncidents": 0,
+        "competitions": 1,
+        "prevGPA": 6.9893858410384,
+        "facultyAdvisor": "Assigned Faculty",
+        "financial": {
+            "feeStatus": "Paid",
+            "vulnerabilityScore": 10,
+            "scholarshipEligible": false,
+            "scholarshipType": "None"
+        },
+        "socioEconomic": {
+            "parentIncomeBracket": ">6L",
+            "location": "Urban",
+            "firstGenerationLearner": false,
+            "genderRiskFlag": false
+        },
+        "mentalHealth": {
+            "behavioralStressIndex": 64,
+            "counselingRecommended": false,
+            "stressCategory": "Moderate"
+        }
+    }
+];
 
     return students.map(s => {
         let risk = calculateRiskScore(s);
@@ -205,7 +9855,7 @@ const calculateRiskScore = (student) => {
     let cScore = student.competitions === 0 ? 5 : student.competitions === 1 ? 3 : 0;
 
     let total = Math.min(attScore + mScore + lmsScore + aScore + bScore + cScore, 100);
-    let level = total <= 30 ? "SAFE" : total <= 60 ? "MODERATE" : "HIGH";
+    let level = total <= 39 ? "SAFE" : total <= 69 ? "MODERATE" : "HIGH";
 
     let trend = (attDeclining && mDeclining) ? "declining" :
         (!attDeclining && !mDeclining) ? "stable" : "mixed";
@@ -249,15 +9899,19 @@ const Card = ({ children, tier = 1, className = "", delay = 0, onClick, title })
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-white dark:bg-white dark:bg-[#0B0B0C] border border-gray-200 dark:border-white/10 backdrop-blur-md rounded-lg p-3 text-gray-900 dark:text-white shadow-xl">
-                <p className="font-semibold mb-1">{label}</p>
-                {payload.map((entry, index) => (
-                    <div key={`item-${index}`} className="flex items-center gap-2 text-sm">
-                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color || entry.fill }}></div>
-                        <span className="opacity-80">{entry.name || 'Value'}:</span>
-                        <span className="font-bold">{entry.value}</span>
-                    </div>
-                ))}
+            <div className="bg-white/95 dark:bg-[#0A1628]/90 border border-gray-200 dark:border-white/10 backdrop-blur-md rounded-xl p-4 text-gray-900 dark:text-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(77,163,255,0.08)] min-w-[150px] pointer-events-none transition-colors duration-300">
+                <p className="font-bold text-gray-900 dark:text-white mb-3 text-sm">{label}</p>
+                <div className="space-y-2 mt-1">
+                    {payload.map((entry, index) => (
+                        <div key={`item-${index}`} className="flex items-center justify-between text-sm gap-5">
+                            <div className="flex items-center gap-2">
+                                <div className="w-2.5 h-2.5 rounded-full shadow-sm" style={{ backgroundColor: entry.color || entry.fill }}></div>
+                                <span className="text-gray-600 dark:text-gray-400 font-medium">{entry.name || 'Value'}</span>
+                            </div>
+                            <span className="font-bold text-gray-900 dark:text-white">{entry.value}</span>
+                        </div>
+                    ))}
+                </div>
             </div>
         );
     }
@@ -267,13 +9921,13 @@ const CustomTooltip = ({ active, payload, label }) => {
 const Footer = () => (
     <div style={{
         borderTop: '1px solid rgba(77,163,255,0.09)',
-        background: 'rgba(255,255,255,0.01)',
+        background: 'var(--glass-bg-01)',
         padding: '14px 32px',
         textAlign: 'center',
         marginTop: 48,
         fontFamily: 'DM Sans',
         fontSize: 11,
-        color: 'rgba(255,255,255,0.25)',
+        color: 'var(--text-muted-25)',
         letterSpacing: '0.3px'
     }}>
 
@@ -586,7 +10240,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
                                 <Users className="w-4 h-4 text-[#4DA3FF]" /> Total Students
                             </div>
-                            <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{TOTAL_STUDENTS}</div>
+                            <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{students.length}</div>
                         </Card>
 
                         <Card delay={0.2} className="w-full md:w-1/4 risk-pulse relative overflow-hidden bg-[#EF4444]/5 border-[#EF4444]/20" style={{
@@ -636,7 +10290,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                     </div>
 
                     {role === "ADMIN" && (
-                        <Card className="w-full mb-6 px-6" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 14, padding: 20 }}>
+                        <Card className="w-full mb-6 px-6" style={{ background: 'var(--glass-bg-04)', border: '1px solid var(--glass-border-08)', borderRadius: 14, padding: 20 }}>
                             <div className="flex flex-row justify-between items-start mb-4 px-2">
                                 <h3 className="text-lg font-semibold">Monthly Attendance Trend (All Students)</h3>
                                 <div style={{ color: '#EF4444', fontSize: '12px' }}>
@@ -645,10 +10299,10 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             </div>
                             <ResponsiveContainer width="100%" height={220}>
                                 <LineChart data={data.monthlyAtt} margin={{ top: 10, right: 30, left: 30, bottom: 5 }}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" vertical={false} />
+                                    <CartesianGrid strokeDasharray="3 3" stroke="var(--glass-border-08)" vertical={false} />
                                     <XAxis dataKey="week" stroke="#8CC7FF" tick={{ fill: (document.documentElement.classList.contains('dark')) ? "#9ca3af" : "#6b7280" }} tickMargin={10} axisLine={false} tickLine={false} />
                                     <YAxis domain={[60, 85]} stroke="#8CC7FF" tick={{ fill: (document.documentElement.classList.contains('dark')) ? "#9ca3af" : "#6b7280" }} axisLine={false} tickLine={false} />
-                                    <RechartsTooltip cursor={{ fill: 'rgba(255,255,255,0.05)' }} content={<CustomTooltip />} />
+                                    <RechartsTooltip cursor={{ fill: 'var(--glass-bg-05)' }} content={<CustomTooltip />} />
                                     <Line type="monotone" dataKey="value" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4, fill: '#8CC7FF', strokeWidth: 0 }} activeDot={{ r: 6, fill: '#8CC7FF' }} label={{ position: 'top', fill: '#8CC7FF', fontSize: 12, formatter: (value) => `${value}%` }} />
                                 </LineChart>
                             </ResponsiveContainer>
@@ -662,10 +10316,10 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                 <div className="flex-1 animate-chart">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <BarChart data={data.deptChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                            <CartesianGrid stroke="#1E2A3A" strokeDasharray="3 3" vertical={false} />
-                                            <XAxis dataKey="name" stroke="#4A5568" tick={{ fill: (document.documentElement.classList.contains('dark')) ? "#9ca3af" : "#6b7280", fontSize: 12 }} axisLine={false} tickLine={false} />
-                                            <YAxis stroke="#4A5568" tick={{ fill: (document.documentElement.classList.contains('dark')) ? "#9ca3af" : "#6b7280", fontSize: 12 }} axisLine={false} tickLine={false} />
-                                            <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
+                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={false} />
+                                            <XAxis dataKey="name" stroke="var(--glass-border-08)" tick={{ fill: (document.documentElement.classList.contains('dark')) ? "#9ca3af" : "#6b7280", fontSize: 12 }} axisLine={false} tickLine={false} />
+                                            <YAxis stroke="var(--glass-border-08)" tick={{ fill: (document.documentElement.classList.contains('dark')) ? "#9ca3af" : "#6b7280", fontSize: 12 }} axisLine={false} tickLine={false} />
+                                            <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'var(--glass-bg-05)' }} />
                                             <Bar dataKey="limit" radius={[4, 4, 0, 0]}>
                                                 {data.deptChart.map((entry, index) => (
                                                     <Cell key={`cell-${index}`} fill={entry.limit > 60 ? '#EF4444' : entry.limit > 40 ? '#F59E0B' : '#4DA3FF'} />
@@ -687,9 +10341,9 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                                     <stop offset="95%" stopColor="#EF4444" stopOpacity={0} />
                                                 </linearGradient>
                                             </defs>
-                                            <CartesianGrid stroke="#1E2A3A" strokeDasharray="3 3" vertical={false} />
-                                            <XAxis dataKey="name" stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 12 }} axisLine={false} tickLine={false} />
-                                            <YAxis stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 12 }} axisLine={false} tickLine={false} />
+                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={false} />
+                                            <XAxis dataKey="name" stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 12 }} axisLine={false} tickLine={false} />
+                                            <YAxis stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 12 }} axisLine={false} tickLine={false} />
                                             <RechartsTooltip content={<CustomTooltip />} />
                                             <Area type="monotone" dataKey="prob" name="Dropout %" stroke="#EF4444" strokeWidth={2} fillOpacity={1} fill="url(#dropoutGradient)" />
                                         </AreaChart>
@@ -719,7 +10373,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                         </PieChart>
                                     </ResponsiveContainer>
                                     <div className="absolute inset-0 flex items-center justify-center flex-col pointer-events-none pb-8">
-                                        <span className="text-3xl font-bold">{TOTAL_STUDENTS}</span>
+                                        <span className="text-3xl font-bold">{students.length}</span>
                                         <span className="text-xs text-gray-600 dark:text-gray-400">Total</span>
                                     </div>
                                 </div>
@@ -763,7 +10417,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                     <div style={{ fontFamily: 'Syne', fontSize: 18, color: '#fff', marginBottom: 8 }}>
                         My Academic Overview
                     </div>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', fontFamily: 'DM Sans', marginBottom: 28 }}>
+                    <div style={{ fontSize: 12, color: 'var(--text-muted-35)', fontFamily: 'DM Sans', marginBottom: 28 }}>
                         Showing your personal metrics only
                     </div>
                     {(() => {
@@ -776,11 +10430,11 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                 {[
                                     { label: 'Risk Score', value: score, color: level === 'HIGH' ? '#EF4444' : level === 'MODERATE' ? '#F59E0B' : '#4DA3FF' },
                                     { label: 'Attendance', value: self.attendance[4] + '%', color: '#4DA3FF' },
-                                    { label: 'Last Test Score', value: self.marks[4], color: 'rgba(255,255,255,0.8)' }
+                                    { label: 'Last Test Score', value: self.marks[4], color: 'var(--text-normal-8)' }
                                 ].map((stat, i) => (
                                     <div key={i} style={{
                                         flex: '1 1 140px',
-                                        background: 'rgba(255,255,255,0.03)',
+                                        background: 'var(--glass-bg-03)',
                                         border: '1px solid rgba(77,163,255,0.16)',
                                         borderRadius: 14, padding: '20px',
                                         animationName: 'staggerFadeUp',
@@ -789,7 +10443,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                         animationFillMode: 'both',
                                         animationDelay: `${i * 0.08}s`
                                     }}>
-                                        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', fontFamily: 'DM Sans', letterSpacing: '0.4px', marginBottom: 10 }}>
+                                        <div style={{ fontSize: 11, color: 'var(--text-muted-35)', fontFamily: 'DM Sans', letterSpacing: '0.4px', marginBottom: 10 }}>
                                             {stat.label}
                                         </div>
                                         <div style={{ fontFamily: 'Syne', fontSize: 26, fontWeight: 700, color: stat.color }}>
@@ -813,26 +10467,26 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                         animationFillMode: 'both',
                         animationDelay: '0.20s'
                     }}>
-                        <div style={{ fontFamily: 'Syne', fontSize: 18, fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>
+                        <div style={{ fontFamily: 'Syne', fontSize: 18, fontWeight: 600, color: 'var(--text-normal-9)' }}>
                             Education Impact Metrics
                         </div>
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #C5192D, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginTop: 8 }}></div>
 
                         <div style={{ display: 'flex', gap: 16, marginTop: 24, flexWrap: 'wrap' }}>
                             <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #4DA3FF' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(255,255,255,0.65)', marginBottom: 8 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-normal-65)', marginBottom: 8 }}>
                                     <TrendingDownIcon size={20} color="#4DA3FF" /> Projected Dropout Reduction
                                 </div>
                                 <div style={{ fontFamily: 'Syne', fontSize: 28, fontWeight: 600, color: '#8CC7FF', letterSpacing: 0.3, marginBottom: 4 }}>34%</div>
-                                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)' }}>vs. pre-intervention baseline</div>
+                                <div style={{ fontSize: 10, color: 'var(--text-muted-25)' }}>vs. pre-intervention baseline</div>
                             </Card>
 
                             <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #4DA3FF' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(255,255,255,0.65)', marginBottom: 8 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-normal-65)', marginBottom: 8 }}>
                                     <Users size={20} color="#4DA3FF" /> Stabilized This Quarter
                                 </div>
                                 <div style={{ fontFamily: 'Syne', fontSize: 28, fontWeight: 600, color: '#8CC7FF', letterSpacing: 0.3, marginBottom: 4 }}>8 Students</div>
-                                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginBottom: 12 }}>Moved from HIGH/MODERATE → SAFE</div>
+                                <div style={{ fontSize: 10, color: 'var(--text-muted-25)', marginBottom: 12 }}>Moved from HIGH/MODERATE → SAFE</div>
 
                                 <div style={{ display: 'flex' }}>
                                     {students.slice(0, 8).map((s, i) => (
@@ -844,23 +10498,23 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             </Card>
 
                             <Card tier={1} className="flex-1 min-w-[200px]" style={{ borderLeft: '3px solid #8CC7FF' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(255,255,255,0.65)', marginBottom: 8 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-normal-65)', marginBottom: 8 }}>
                                     <BarChart2 size={20} color="#8CC7FF" /> Retention Improvement
                                 </div>
                                 <div style={{ fontFamily: 'Syne', fontSize: 28, color: '#8CC7FF', marginBottom: 4 }}>+18.6%</div>
-                                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)' }}>Semester-over-semester growth</div>
+                                <div style={{ fontSize: 10, color: 'var(--text-muted-25)' }}>Semester-over-semester growth</div>
                             </Card>
 
 
                         </div>
 
-                        <div style={{ marginTop: 28, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 16, padding: '20px 24px' }}>
-                            <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', marginBottom: 16 }}>Hackspace Target Progress — Institution Level</div>
+                        <div style={{ marginTop: 28, background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-05)', borderRadius: 16, padding: '20px 24px' }}>
+                            <div style={{ fontSize: 12, color: 'var(--text-muted-35)', marginBottom: 16 }}>Hackspace Target Progress — Institution Level</div>
 
 
 
                             <div>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginBottom: 4 }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--text-normal-5)', marginBottom: 4 }}>
                                     <span>Dropout Prevention Effectiveness</span>
                                     <span style={{ fontWeight: 600, color: '#4ade80' }}>86.28%</span>
                                 </div>
@@ -995,18 +10649,20 @@ const ParentDashboard = ({ students }) => {
 };
 
 const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, openStudentDetail }) => {
-    const [filterDept, setFilterDept] = useState("All");
     const [filterRisk, setFilterRisk] = useState("All");
     const [search, setSearch] = useState("");
+    const [selectedDepartment, setSelectedDepartment] = useState("All");
+    const [selectedYear, setSelectedYear] = useState("All");
 
-    const processed = useMemo(() => {
+    const filteredStudents = useMemo(() => {
         return students
             .map(s => ({ ...s, risk: calculateRiskScore(s) }))
-            .filter(s => filterDept === "All" || s.dept === filterDept)
             .filter(s => filterRisk === "All" || s.risk.level === filterRisk)
+            .filter(s => selectedDepartment === "All" || s.dept === selectedDepartment)
+            .filter(s => selectedYear === "All" || Math.ceil(s.sem / 2) === parseInt(selectedYear))
             .filter(s => s.name.toLowerCase().includes(search.toLowerCase()) || s.id.toLowerCase().includes(search.toLowerCase()))
             .sort((a, b) => b.risk.score - a.risk.score);
-    }, [students, filterDept, filterRisk, search]);
+    }, [students, filterRisk, search, selectedDepartment, selectedYear]);
 
     return (
         <div className="p-6 animate-page max-w-7xl mx-auto">
@@ -1039,6 +10695,33 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                         </div>
                     </div>
 
+                    <div className="flex flex-wrap gap-3 mb-4 ml-4">
+                        <select
+                            value={selectedDepartment}
+                            onChange={(e) => setSelectedDepartment(e.target.value)}
+                            className="bg-slate-800 dark:bg-slate-800 bg-white border border-gray-700 dark:border-gray-700 border-gray-300 text-gray-100 dark:text-gray-100 text-gray-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="All">All Departments</option>
+                            <option value="CSE">CSE</option>
+                            <option value="IT">IT</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EEE">EEE</option>
+                            <option value="MECH">MECH</option>
+                            <option value="CIVIL">CIVIL</option>
+                        </select>
+                        <select
+                            value={selectedYear}
+                            onChange={(e) => setSelectedYear(e.target.value)}
+                            className="bg-slate-800 dark:bg-slate-800 bg-white border border-gray-700 dark:border-gray-700 border-gray-300 text-gray-100 dark:text-gray-100 text-gray-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="All">All Years</option>
+                            <option value="1">Year 1</option>
+                            <option value="2">Year 2</option>
+                            <option value="3">Year 3</option>
+                            <option value="4">Year 4</option>
+                        </select>
+                    </div>
+
                     <Card tier={2} className="p-0 overflow-hidden ml-4">
                         <div className="overflow-x-auto w-full">
                             <table className="w-full text-left border-collapse min-w-[800px]">
@@ -1055,7 +10738,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {processed.map((s, idx) => {
+                                    {filteredStudents.map((s, idx) => {
                                         const isHigh = s.risk.level === "HIGH";
                                         const isSafe = s.risk.level === "SAFE";
                                         return (
@@ -1121,7 +10804,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                 </>
             ) : (
                 <div style={{ maxWidth: 600, margin: '0 auto', padding: '32px 0' }}>
-                    <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.35)', fontFamily: 'DM Sans', marginBottom: 16, letterSpacing: '0.3px' }}>YOUR PROFILE</div>
+                    <div style={{ fontSize: 12, color: 'var(--text-muted-35)', fontFamily: 'DM Sans', marginBottom: 16, letterSpacing: '0.3px' }}>YOUR PROFILE</div>
                     {(() => {
                         const self = students.find(s => s.id === currentStudentId);
                         if (!self) return null;
@@ -1130,12 +10813,12 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                         return (
                             <div
                                 onClick={() => openStudentDetail && openStudentDetail(self) || onSelectStudent && onSelectStudent(self)}
-                                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: '20px 24px', cursor: 'pointer', transition: 'all 0.25s ease' }}
+                                style={{ background: 'var(--glass-bg-03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: '20px 24px', cursor: 'pointer', transition: 'all 0.25s ease' }}
                                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 36px rgba(0,0,0,0.35),0 0 0 1px rgba(77,163,255,0.14)'; }}
                                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
                             >
                                 <div style={{ fontFamily: 'Syne', fontSize: 16, color: '#fff', marginBottom: 4 }}>{self.name}</div>
-                                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', fontFamily: 'DM Sans' }}>{self.dept} · Semester {self.sem}</div>
+                                <div style={{ fontSize: 12, color: 'var(--text-muted-4)', fontFamily: 'DM Sans' }}>{self.dept} · Semester {self.sem}</div>
                                 <div style={{ marginTop: 12, fontSize: 12, color: level === 'HIGH' ? '#EF4444' : level === 'MODERATE' ? '#F59E0B' : '#4DA3FF' }}>Risk Score: {score}</div>
                             </div>
                         );
@@ -1230,7 +10913,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
 
                             <div className={`relative w-48 h-48 flex items-center justify-center ${isHigh ? 'risk-vibrate' : ''}`}>
                                 <svg width="200" height="200" className="absolute -rotate-90 transform">
-                                    <circle cx="100" cy="100" r={radius} fill="none" stroke="#1E2A3A" strokeWidth="12" />
+                                    <circle cx="100" cy="100" r={radius} fill="none" stroke="var(--glass-border-08)" strokeWidth="12" />
                                     <circle
                                         cx="100" cy="100" r={radius} fill="none"
                                         stroke={color} strokeWidth="12" strokeLinecap="round"
@@ -1260,8 +10943,8 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <div className="flex-1 -ml-4">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <LineChart data={attData}>
-                                            <CartesianGrid stroke="#1E2A3A" strokeDasharray="3 3" vertical={false} />
-                                            <XAxis dataKey="week" stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
+                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={false} />
+                                            <XAxis dataKey="week" stroke="var(--glass-border-08)" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
                                             <RechartsTooltip content={<CustomTooltip />} />
                                             <Line type="monotone" dataKey="val" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4, fill: '#4DA3FF', strokeWidth: 0 }} activeDot={{ r: 6 }} />
                                         </LineChart>
@@ -1274,8 +10957,8 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 <div className="flex-1 -ml-4">
                                     <ResponsiveContainer width="100%" height="100%">
                                         <LineChart data={marksData}>
-                                            <CartesianGrid stroke="#1E2A3A" strokeDasharray="3 3" vertical={false} />
-                                            <XAxis dataKey="test" stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
+                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={false} />
+                                            <XAxis dataKey="test" stroke="var(--glass-border-08)" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
                                             <RechartsTooltip content={<CustomTooltip />} />
                                             <Line type="monotone" dataKey="val" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6, fill: "#8CC7FF" }} />
                                         </LineChart>
@@ -1314,10 +10997,10 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                             <div className="w-full lg:w-1/2 h-64 animate-chart">
                                 <ResponsiveContainer width="100%" height="100%">
                                     <BarChart data={shapData} layout="vertical" margin={{ top: 0, right: 30, left: 10, bottom: 0 }}>
-                                        <CartesianGrid stroke="#1E2A3A" strokeDasharray="3 3" horizontal={true} vertical={false} />
-                                        <XAxis type="number" stroke="#4A5568" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
-                                        <YAxis dataKey="factor" type="category" stroke="#4A5568" width={120} tick={{ fill: '#D1D5DB', fontSize: 11 }} axisLine={false} tickLine={false} />
-                                        <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
+                                        <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" horizontal={true} vertical={false} />
+                                        <XAxis type="number" stroke="var(--glass-border-08)" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
+                                        <YAxis dataKey="factor" type="category" stroke="var(--glass-border-08)" width={120} tick={{ fill: '#D1D5DB', fontSize: 11 }} axisLine={false} tickLine={false} />
+                                        <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'var(--glass-bg-05)' }} />
                                         <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={20}>
                                             {shapData.map((entry, index) => (
                                                 <Cell key={`cell-${index}`} fill={entry.type === 'attendance' ? '#F59E0B' : entry.type === 'marks' ? '#F59E0B' : entry.type === 'lms' ? '#8CC7FF' : entry.type === 'assignments' ? '#4DA3FF' : '#34D399'} />
@@ -1347,12 +11030,12 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                     {/* NEW WAVE 1 PANELS */}
 
                     {/* Panel A: Financial Risk Index */}
-                    <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
+                    <div style={{ background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
                         <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8 }}>💰 Financial Risk Index</div>
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
                         <div style={{ display: 'flex', flexDirection: 'row', gap: 16 }}>
-                            <div style={{ flex: 1, borderRight: '1px solid rgba(255,255,255,0.05)', paddingRight: 16 }}>
-                                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Fee Status</div>
+                            <div style={{ flex: 1, borderRight: '1px solid var(--glass-border-05)', paddingRight: 16 }}>
+                                <div style={{ fontSize: 12, color: 'var(--text-muted-4)', marginBottom: 8 }}>Fee Status</div>
                                 <span style={{
                                     background: student.financial.feeStatus === "Paid" ? 'rgba(16,185,129,0.12)' : student.financial.feeStatus === "Pending" ? 'rgba(239,68,68,0.12)' : 'rgba(77,163,255,0.12)',
                                     border: `1px solid ${student.financial.feeStatus === "Paid" ? 'rgba(16,185,129,0.3)' : student.financial.feeStatus === "Pending" ? 'rgba(239,68,68,0.3)' : 'rgba(77,163,255,0.3)'}`,
@@ -1362,8 +11045,8 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                     {student.financial.feeStatus}
                                 </span>
                             </div>
-                            <div style={{ flex: 1, borderRight: '1px solid rgba(255,255,255,0.05)', paddingRight: 16 }}>
-                                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Financial Vulnerability</div>
+                            <div style={{ flex: 1, borderRight: '1px solid var(--glass-border-05)', paddingRight: 16 }}>
+                                <div style={{ fontSize: 12, color: 'var(--text-muted-4)', marginBottom: 8 }}>Financial Vulnerability</div>
                                 <div style={{ height: 6, background: 'rgba(255,255,255,0.08)', borderRadius: 3, width: '100%', marginBottom: 4 }}>
                                     <div style={{
                                         height: 6, borderRadius: 3, width: `${student.financial.vulnerabilityScore}%`,
@@ -1376,39 +11059,39 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 </div>
                             </div>
                             <div style={{ flex: 1 }}>
-                                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Scholarship Status</div>
+                                <div style={{ fontSize: 12, color: 'var(--text-muted-4)', marginBottom: 8 }}>Scholarship Status</div>
                                 {student.financial.scholarshipEligible ? (
                                     <div>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#4DA3FF', fontSize: 13 }}><CheckCircle2 size={14} color="#4DA3FF" /> Eligible</div>
-                                        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', marginTop: 2 }}>{student.financial.scholarshipType}</div>
+                                        <div style={{ fontSize: 13, color: 'var(--text-normal-65)', marginTop: 2 }}>{student.financial.scholarshipType}</div>
                                     </div>
                                 ) : (
-                                    <div style={{ color: 'rgba(255,255,255,0.25)', fontSize: 13 }}>Not Eligible</div>
+                                    <div style={{ color: 'var(--text-muted-25)', fontSize: 13 }}>Not Eligible</div>
                                 )}
                             </div>
                         </div>
                     </div>
 
                     {/* Panel B: Socio-Economic Profile */}
-                    <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
+                    <div style={{ background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
                         <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8 }}>🏘️ Socio-Economic Profile</div>
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                            <div style={{ background: 'var(--glass-bg-03)', border: '1px solid var(--glass-border-06)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
                                 <Wallet size={16} />
                                 <div>
-                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)' }}>Parent Income</div>
+                                    <div style={{ fontSize: 13, color: 'var(--text-normal-65)' }}>Parent Income</div>
                                     <div style={{
                                         fontSize: 13,
                                         color: student.socioEconomic.parentIncomeBracket === "Below 1L" ? '#EF4444' : student.socioEconomic.parentIncomeBracket === "1L-3L" ? '#F59E0B' : student.socioEconomic.parentIncomeBracket === "3L-6L" ? 'rgba(255,255,255,0.7)' : '#4DA3FF'
                                     }}>{student.socioEconomic.parentIncomeBracket}</div>
                                 </div>
                             </div>
-                            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                            <div style={{ background: 'var(--glass-bg-03)', border: '1px solid var(--glass-border-06)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
                                 <MapPin size={16} />
                                 <div>
-                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)' }}>Location</div>
-                                    <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)' }}>
+                                    <div style={{ fontSize: 13, color: 'var(--text-normal-65)' }}>Location</div>
+                                    <div style={{ fontSize: 13, color: 'var(--text-normal-8)' }}>
                                         {student.socioEconomic.location === "Rural" && <span style={{ width: 6, height: 6, borderRadius: 3, background: '#F59E0B', display: 'inline-block', marginRight: 6 }}></span>}
                                         {student.socioEconomic.location}
                                     </div>
@@ -1423,9 +11106,9 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                     </div>
                                 </div>
                             ) : (
-                                <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
+                                <div style={{ background: 'var(--glass-bg-03)', border: '1px solid var(--glass-border-06)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
                                     <Users size={16} color="rgba(255,255,255,0.3)" />
-                                    <div style={{ color: 'rgba(255,255,255,0.3)', fontSize: 13 }}>Standard Enrollment</div>
+                                    <div style={{ color: 'var(--text-muted-3)', fontSize: 13 }}>Standard Enrollment</div>
                                 </div>
                             )}
                             {student.socioEconomic.genderRiskFlag && (
@@ -1442,7 +11125,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
 
                     {/* Panel C: Dropout Risk Prediction */}
                     <div style={{
-                        background: 'rgba(255,255,255,0.02)',
+                        background: 'var(--glass-bg-02)',
                         border: `1px solid ${isHigh ? 'rgba(239,68,68,0.25)' : risk.level === "MODERATE" ? 'rgba(245,158,11,0.2)' : 'rgba(77,163,255,0.15)'}`,
                         backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24
                     }}>
@@ -1450,7 +11133,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
                         <div style={{ display: 'flex', flexDirection: 'row', gap: 16 }}>
                             <div style={{ flex: '0 0 60%' }}>
-                                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginBottom: 8 }}>Projected Dropout Risk Window</div>
+                                <div style={{ fontSize: 12, color: 'var(--text-muted-4)', marginBottom: 8 }}>Projected Dropout Risk Window</div>
                                 <div style={{ fontFamily: 'Syne', fontSize: 28, fontWeight: 700, color: color }}>
                                     {student.dropoutRiskWindow}
                                 </div>
@@ -1461,7 +11144,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                     {isHigh ? '⚠ Immediate intervention required' : risk.level === "MODERATE" ? '↑ Monitoring escalation recommended' : '✓ Student trajectory is stable'}
                                 </div>
                                 <div style={{ marginTop: 16 }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'var(--text-muted-4)' }}>
                                         <span>Now</span>
                                         <span>12 months</span>
                                     </div>
@@ -1480,24 +11163,24 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                 </div>
                             </div>
                             <div style={{ flex: '0 0 40%' }}>
-                                <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 12, padding: 16, textAlign: 'center' }}>
-                                    <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', marginBottom: 8 }}>Confidence Level</div>
+                                <div style={{ background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-05)', borderRadius: 12, padding: 16, textAlign: 'center' }}>
+                                    <div style={{ fontSize: 11, color: 'var(--text-muted-35)', marginBottom: 8 }}>Confidence Level</div>
                                     <div style={{ fontFamily: 'Syne', fontSize: 28, fontWeight: 600, color: '#8CC7FF', letterSpacing: 0.3 }}>
                                         {isHigh ? '87%' : risk.level === "MODERATE" ? '71%' : '94%'}
                                     </div>
-                                    <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.25)', marginBottom: 4 }}>Model accuracy</div>
-                                    <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.2)' }}>Based on 6-dimension analysis</div>
+                                    <div style={{ fontSize: 10, color: 'var(--text-muted-25)', marginBottom: 4 }}>Model accuracy</div>
+                                    <div style={{ fontSize: 10, color: 'var(--text-muted-2)' }}>Based on 6-dimension analysis</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* Panel D: Stress Score */}
-                    <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
+                    <div style={{ background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
                         <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8 }}>🧠 Stress Score</div>
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', marginBottom: 4 }}>Mental Stress Index</div>
+                            <div style={{ fontSize: 13, color: 'var(--text-muted-4)', marginBottom: 4 }}>Mental Stress Index</div>
                             <div style={{ fontSize: 28, fontWeight: 700, fontFamily: 'Syne', color: (typeof student.mentalHealth === 'object' ? student.mentalHealth.behavioralStressIndex : student.mentalHealth) <= 40 ? '#34D399' : (typeof student.mentalHealth === 'object' ? student.mentalHealth.behavioralStressIndex : student.mentalHealth) <= 70 ? '#F59E0B' : '#EF4444' }}>
                                 {typeof student.mentalHealth === 'object' ? student.mentalHealth.behavioralStressIndex : student.mentalHealth} / 100
                             </div>
@@ -1802,7 +11485,7 @@ const UploadPage = ({ setStudents, showToast, role }) => {
             <HeaderUnderline title={isDataset ? "Upload Student Dataset" : "Upload Academic Data"} />
             <div style={{ maxWidth: 800, margin: '0 auto', marginTop: 40, display: 'flex', flexDirection: isDataset ? 'column' : 'row', gap: 24 }}>
                 {isDataset ? (
-                    <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: 24, flex: 1 }}>
+                    <div style={{ background: 'var(--glass-bg-03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: 24, flex: 1 }}>
                         <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Upload CSV</h3>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
                             Upload a bulk dataset of student records. Required columns: id, name, dept, semester, riskScore, riskLevel.
@@ -1821,7 +11504,7 @@ const UploadPage = ({ setStudents, showToast, role }) => {
                     </div>
                 ) : (
                     <>
-                        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: 24, flex: 1 }}>
+                        <div style={{ background: 'var(--glass-bg-03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: 24, flex: 1 }}>
                             <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Weekly Attendance</h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
                                 Upload weekly attendance CSV files for student monitoring. Required columns: studentid, week, attendance.
@@ -1839,7 +11522,7 @@ const UploadPage = ({ setStudents, showToast, role }) => {
                                            hover:file:bg-[#4DA3FF]/20 transition-all cursor-pointer"
                             />
                         </div>
-                        <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: 24, flex: 1 }}>
+                        <div style={{ background: 'var(--glass-bg-03)', border: '1px solid rgba(77,163,255,0.18)', borderRadius: 16, padding: 24, flex: 1 }}>
                             <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">Internal Assessment</h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
                                 Upload assessment marks for student evaluation. Required columns: studentid, subject, marks.
@@ -2071,7 +11754,7 @@ const App = () => {
                             </div>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 20, background: 'linear-gradient(135deg,#8CC7FF,#4DA3FF)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1 }}>Hackspace</span>
-                                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', fontFamily: 'DM Sans', letterSpacing: '0.5px', marginTop: 1, lineHeight: 1 }}>Academic Stability Engine</div>
+                                <div style={{ fontSize: 10, color: 'var(--text-muted-3)', fontFamily: 'DM Sans', letterSpacing: '0.5px', marginTop: 1, lineHeight: 1 }}>Academic Stability Engine</div>
                             </div>
 
                         </div>
@@ -2095,16 +11778,16 @@ const App = () => {
                                             padding: '8px 16px',
                                             fontSize: 13,
                                             fontFamily: 'DM Sans',
-                                            color: currentPage === tab.page ? '#4DA3FF' : 'rgba(255,255,255,0.5)',
+                                            color: currentPage === tab.page ? '#4DA3FF' : 'var(--text-normal-5)',
                                             borderBottom: currentPage === tab.page ? '2px solid #4DA3FF' : '2px solid transparent',
                                             transition: 'color 0.2s ease, border-color 0.2s ease',
                                             letterSpacing: '0.3px'
                                         }}
                                         onMouseEnter={e => {
-                                            if (currentPage !== tab.page) e.currentTarget.style.color = 'rgba(255,255,255,0.8)';
+                                            if (currentPage !== tab.page) e.currentTarget.style.color = 'var(--text-normal-8)';
                                         }}
                                         onMouseLeave={e => {
-                                            if (currentPage !== tab.page) e.currentTarget.style.color = 'rgba(255,255,255,0.5)';
+                                            if (currentPage !== tab.page) e.currentTarget.style.color = 'var(--text-normal-5)';
                                         }}
                                     >
                                         {tab.label}

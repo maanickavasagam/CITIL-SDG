@@ -1,3 +1,42 @@
+
+:root {
+  --glass-bg-01: rgba(0,0,0,0.02);
+  --glass-bg-02: rgba(0,0,0,0.03);
+  --glass-bg-03: rgba(0,0,0,0.04);
+  --glass-bg-04: rgba(0,0,0,0.06);
+  --glass-bg-05: rgba(0,0,0,0.08);
+  --glass-border-05: rgba(0,0,0,0.08);
+  --glass-border-06: rgba(0,0,0,0.10);
+  --glass-border-08: rgba(0,0,0,0.12);
+  --text-muted-2: rgba(0,0,0,0.40);
+  --text-muted-25: rgba(0,0,0,0.50);
+  --text-muted-3: rgba(0,0,0,0.55);
+  --text-muted-35: rgba(0,0,0,0.60);
+  --text-muted-4: rgba(0,0,0,0.65);
+  --text-normal-5: rgba(0,0,0,0.70);
+  --text-normal-65: rgba(0,0,0,0.75);
+  --text-normal-8: rgba(0,0,0,0.85);
+  --text-normal-9: rgba(0,0,0,0.95);
+}
+.dark {
+  --glass-bg-01: rgba(255,255,255,0.01);
+  --glass-bg-02: rgba(255,255,255,0.02);
+  --glass-bg-03: rgba(255,255,255,0.03);
+  --glass-bg-04: rgba(255,255,255,0.04);
+  --glass-bg-05: rgba(255,255,255,0.05);
+  --glass-border-05: rgba(255,255,255,0.05);
+  --glass-border-06: rgba(255,255,255,0.06);
+  --glass-border-08: rgba(255,255,255,0.08);
+  --text-muted-2: rgba(255,255,255,0.20);
+  --text-muted-25: rgba(255,255,255,0.25);
+  --text-muted-3: rgba(255,255,255,0.30);
+  --text-muted-35: rgba(255,255,255,0.35);
+  --text-muted-4: rgba(255,255,255,0.40);
+  --text-normal-5: rgba(255,255,255,0.50);
+  --text-normal-65: rgba(255,255,255,0.65);
+  --text-normal-8: rgba(255,255,255,0.80);
+  --text-normal-9: rgba(255,255,255,0.90);
+}
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
 
 @import "tailwindcss";
