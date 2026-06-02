@@ -10178,15 +10178,34 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
         let high = risks.filter(r => r.level === "HIGH").length;
         let moderate = risks.filter(r => r.level === "MODERATE").length;
         let safe = risks.filter(r => r.level === "SAFE").length;
-        let avg = Math.round(risks.reduce((acc, r) => acc + r.score, 0) / risks.length);
+        let avg = risks.length > 0 ? Math.round(risks.reduce((acc, r) => acc + r.score, 0) / risks.length) : 0;
 
-        let depts = {};
-        students.forEach((s, i) => {
-            depts[s.dept] = depts[s.dept] || { name: s.dept, score: 0, count: 0 };
-            depts[s.dept].score += risks[i].score;
-            depts[s.dept].count += 1;
-        });
-        let deptChart = Object.values(depts).map(d => ({ name: d.name, limit: Math.round(d.score / d.count) }));
+        let deptChart = [];
+        if (role === 'FACULTY') {
+            let sections = {
+                "CSE Year 1": { name: "CSE Year 1", score: 0, count: 0 },
+                "CSE Year 2": { name: "CSE Year 2", score: 0, count: 0 }
+            };
+            students.forEach((s, i) => {
+                const year = Math.ceil(s.sem / 2);
+                const key = `CSE Year ${year}`;
+                if (sections[key]) {
+                    sections[key].score += risks[i].score;
+                    sections[key].count += 1;
+                }
+            });
+            deptChart = Object.values(sections)
+                .filter(sec => sec.count > 0)
+                .map(sec => ({ name: sec.name, limit: Math.round(sec.score / sec.count) }));
+        } else {
+            let depts = {};
+            students.forEach((s, i) => {
+                depts[s.dept] = depts[s.dept] || { name: s.dept, score: 0, count: 0 };
+                depts[s.dept].score += risks[i].score;
+                depts[s.dept].count += 1;
+            });
+            deptChart = Object.values(depts).map(d => ({ name: d.name, limit: Math.round(d.score / d.count) }));
+        }
 
         const dropoutData = [
             { name: 'Aug', prob: 2 }, { name: 'Sep', prob: 4 }, { name: 'Oct', prob: 7 },
@@ -10227,7 +10246,11 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
         // Compute Department Intelligence metrics
         let deptMetrics = {};
         students.forEach((s, idx) => {
-            const dept = s.dept || "Unknown";
+            let groupName = s.dept || "Unknown";
+            if (role === 'FACULTY') {
+                const year = Math.ceil(s.sem / 2);
+                groupName = `CSE Year ${year}`;
+            }
             const r = risks[idx];
             const score = r.score;
 
@@ -10241,9 +10264,9 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
             const studentGrowth = (attGrowth + marksGrowth) / 2;
             const studentCombined = (attEnd + marksEnd) / 2;
 
-            if (!deptMetrics[dept]) {
-                deptMetrics[dept] = {
-                    name: dept,
+            if (!deptMetrics[groupName]) {
+                deptMetrics[groupName] = {
+                    name: groupName,
                     totalRiskScore: 0,
                     totalCombined: 0,
                     totalGrowth: 0,
@@ -10254,14 +10277,14 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                 };
             }
 
-            deptMetrics[dept].totalRiskScore += score;
-            deptMetrics[dept].totalCombined += studentCombined;
-            deptMetrics[dept].totalGrowth += studentGrowth;
-            deptMetrics[dept].studentCount += 1;
+            deptMetrics[groupName].totalRiskScore += score;
+            deptMetrics[groupName].totalCombined += studentCombined;
+            deptMetrics[groupName].totalGrowth += studentGrowth;
+            deptMetrics[groupName].studentCount += 1;
 
-            if (r.level === "SAFE") deptMetrics[dept].safeCount += 1;
-            else if (r.level === "MODERATE") deptMetrics[dept].moderateCount += 1;
-            else if (r.level === "HIGH") deptMetrics[dept].highCount += 1;
+            if (r.level === "SAFE") deptMetrics[groupName].safeCount += 1;
+            else if (r.level === "MODERATE") deptMetrics[groupName].moderateCount += 1;
+            else if (r.level === "HIGH") deptMetrics[groupName].highCount += 1;
         });
 
         let highestRiskDept = { name: "N/A", value: 0 };
@@ -10305,15 +10328,15 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
         const activeInterventionsCount = interventions ? interventions.filter(i => i.status !== "Resolved").length : 6;
 
         const recoveryCount = students.filter(s => s.marks[s.marks.length - 1] > s.marks[0]).length;
-        const academicRecoveryRate = Math.round((recoveryCount / students.length) * 100);
+        const academicRecoveryRate = students.length > 0 ? Math.round((recoveryCount / students.length) * 100) : 0;
 
         const mentoredCount = students.filter(s => s.assignmentDelays >= 2).length;
         const successCount = students.filter(s => s.assignmentDelays >= 2 && calculateRiskScore(s).score < 70).length;
         const mentorshipSuccessRate = Math.round((successCount / (mentoredCount || 1)) * 100);
 
-        const parentEngagementRate = Math.round((students.filter(s => s.attendance[s.attendance.length - 1] >= 75).length / students.length) * 100);
+        const parentEngagementRate = students.length > 0 ? Math.round((students.filter(s => s.attendance[s.attendance.length - 1] >= 75).length / students.length) * 100) : 0;
 
-        const dropoutPreventionRate = Number((100 - (high / students.length) * 100).toFixed(1));
+        const dropoutPreventionRate = students.length > 0 ? Number((100 - (high / students.length) * 100).toFixed(1)) : 0;
 
         return { 
             high, moderate, safe, avg, deptChart, dropoutData, pieData, monthlyAtt,
@@ -10321,7 +10344,7 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
             deptAverages, highestRiskDept, bestPerformingDept, mostImprovedDept,
             savedCount, activeInterventionsCount, academicRecoveryRate, mentorshipSuccessRate, parentEngagementRate, dropoutPreventionRate
         };
-    }, [students, interventions]);
+    }, [students, interventions, role]);
 
     return (
         <div className="p-6 animate-page max-w-7xl mx-auto">
@@ -10545,12 +10568,12 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                     <div className="flex flex-col lg:flex-row gap-6 items-start mb-6">
                         <div className="w-full lg:w-[60%]">
                             <Card tier={2} delay={0.5} className="flex flex-col">
-                                <h3 className="text-lg font-semibold mb-4 px-2">Department Risk Profile (Avg Score)</h3>
+                                <h3 className="text-lg font-semibold mb-4 px-2">{role === 'FACULTY' ? 'Section Risk Profile (Avg Score)' : 'Department Risk Profile (Avg Score)'}</h3>
                                 <div className="flex-1 animate-chart">
                                     <ResponsiveContainer width="100%" height={220}>
                                         <BarChart data={data.deptChart} margin={{ top: 20, right: 10, left: 10, bottom: 15 }}>
                                             <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={true} />
-                                            <XAxis dataKey="name" stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 11, fontFamily: "'DM Sans', sans-serif" }} axisLine={{ stroke: 'var(--glass-border-08)' }} tickLine={{ stroke: 'var(--glass-border-08)' }} label={{ value: 'Departments', position: 'insideBottom', offset: -5, fill: 'var(--text-muted-4)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }} />
+                                            <XAxis dataKey="name" stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 11, fontFamily: "'DM Sans', sans-serif" }} axisLine={{ stroke: 'var(--glass-border-08)' }} tickLine={{ stroke: 'var(--glass-border-08)' }} label={{ value: role === 'FACULTY' ? 'Sections' : 'Departments', position: 'insideBottom', offset: -5, fill: 'var(--text-muted-4)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }} />
                                             <YAxis stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 11, fontFamily: "'DM Sans', sans-serif" }} axisLine={{ stroke: 'var(--glass-border-08)' }} tickLine={{ stroke: 'var(--glass-border-08)' }} label={{ value: 'Avg Risk Score', angle: -90, position: 'insideLeft', offset: -2, fill: 'var(--text-muted-4)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }} />
                                             <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'var(--glass-bg-05)' }} />
                                             <Bar dataKey="limit" radius={[4, 4, 0, 0]}>
@@ -10924,14 +10947,14 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                         animationDelay: '0.15s'
                     }}>
                         <div style={{ fontFamily: 'Syne', fontSize: 18, fontWeight: 600, color: 'var(--text-normal-9)' }}>
-                            Department Intelligence
+                            {role === 'FACULTY' ? 'Section Intelligence' : 'Department Intelligence'}
                         </div>
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginTop: 8 }}></div>
 
                         <div style={{ display: 'flex', gap: 16, marginTop: 24, flexWrap: 'wrap' }}>
                             <Card tier={1} className="flex-1 min-w-[220px]" style={{ borderLeft: '3px solid #EF4444' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-normal-65)', marginBottom: 8 }}>
-                                    <AlertTriangle size={18} color="#EF4444" /> Highest Risk Department
+                                    <AlertTriangle size={18} color="#EF4444" /> {role === 'FACULTY' ? 'Highest Risk Section' : 'Highest Risk Department'}
                                 </div>
                                 <div style={{ fontFamily: 'Syne', fontSize: 24, fontWeight: 600, color: '#EF4444', marginBottom: 8 }}>
                                     {data.highestRiskDept.name}
@@ -10943,7 +10966,7 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
 
                             <Card tier={1} className="flex-1 min-w-[220px]" style={{ borderLeft: '3px solid #4DA3FF' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-normal-65)', marginBottom: 8 }}>
-                                    <TrendingUp size={18} color="#4DA3FF" /> Best Performing Department
+                                    <TrendingUp size={18} color="#4DA3FF" /> {role === 'FACULTY' ? 'Best Performing Section' : 'Best Performing Department'}
                                 </div>
                                 <div style={{ fontFamily: 'Syne', fontSize: 24, fontWeight: 600, color: '#4DA3FF', marginBottom: 8 }}>
                                     {data.bestPerformingDept.name}
@@ -10955,7 +10978,7 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
 
                             <Card tier={1} className="flex-1 min-w-[220px]" style={{ borderLeft: '3px solid #8CC7FF' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-normal-65)', marginBottom: 8 }}>
-                                    <Zap size={18} color="#8CC7FF" /> Most Improved Department
+                                    <Zap size={18} color="#8CC7FF" /> {role === 'FACULTY' ? 'Most Improved Section' : 'Most Improved Department'}
                                 </div>
                                 <div style={{ fontFamily: 'Syne', fontSize: 24, fontWeight: 600, color: '#8CC7FF', marginBottom: 8 }}>
                                     {data.mostImprovedDept.name}
@@ -11385,7 +11408,7 @@ const ParentDashboard = ({ students, child }) => {
     );
 };
 
-const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, openStudentDetail }) => {
+const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, openStudentDetail, role }) => {
     const [filterRisk, setFilterRisk] = useState("All");
     const [search, setSearch] = useState("");
     const [selectedDepartment, setSelectedDepartment] = useState("All");
@@ -11433,29 +11456,39 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                     </div>
 
                     <div className="flex flex-wrap gap-3 mb-4 ml-4 items-center">
-                        <select
-                            value={selectedDepartment}
-                            onChange={(e) => setSelectedDepartment(e.target.value)}
-                            className="bg-slate-800 dark:bg-slate-800 bg-white border border-gray-700 dark:border-gray-700 border-gray-300 text-gray-100 dark:text-gray-100 text-gray-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                            <option value="All">All Departments</option>
-                            <option value="CSE">CSE</option>
-                            <option value="IT">IT</option>
-                            <option value="ECE">ECE</option>
-                            <option value="EEE">EEE</option>
-                            <option value="MECH">MECH</option>
-                            <option value="CIVIL">CIVIL</option>
-                        </select>
+                        {role === 'FACULTY' ? (
+                            <div className="bg-[#4DA3FF]/10 text-[#4DA3FF] border border-[#4DA3FF]/20 px-3 py-2 rounded-lg text-sm font-bold tracking-wide">
+                                Department: CSE
+                            </div>
+                        ) : (
+                            <select
+                                value={selectedDepartment}
+                                onChange={(e) => setSelectedDepartment(e.target.value)}
+                                className="bg-slate-800 dark:bg-slate-800 bg-white border border-gray-700 dark:border-gray-700 border-gray-300 text-gray-100 dark:text-gray-100 text-gray-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="All">All Departments</option>
+                                <option value="CSE">CSE</option>
+                                <option value="IT">IT</option>
+                                <option value="ECE">ECE</option>
+                                <option value="EEE">EEE</option>
+                                <option value="MECH">MECH</option>
+                                <option value="CIVIL">CIVIL</option>
+                            </select>
+                        )}
                         <select
                             value={selectedYear}
                             onChange={(e) => setSelectedYear(e.target.value)}
                             className="bg-slate-800 dark:bg-slate-800 bg-white border border-gray-700 dark:border-gray-700 border-gray-300 text-gray-100 dark:text-gray-100 text-gray-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
-                            <option value="All">All Years</option>
+                            <option value="All">{role === 'FACULTY' ? 'All Scoped Years' : 'All Years'}</option>
                             <option value="1">Year 1</option>
                             <option value="2">Year 2</option>
-                            <option value="3">Year 3</option>
-                            <option value="4">Year 4</option>
+                            {role !== 'FACULTY' && (
+                                <>
+                                    <option value="3">Year 3</option>
+                                    <option value="4">Year 4</option>
+                                </>
+                            )}
                         </select>
 
                         <span className="text-xs font-semibold ml-2">
@@ -13142,11 +13175,18 @@ const App = () => {
 
     const [students, setStudents] = useState(() => generateStudents());
 
+    const scopedStudents = useMemo(() => {
+        if (role === 'FACULTY') {
+            return students.filter(s => s.dept === "CSE" && (s.sem === 1 || s.sem === 2 || s.sem === 3 || s.sem === 4));
+        }
+        return students;
+    }, [students, role]);
+
     const highestRiskStudent = useMemo(() => {
-        if (!students || students.length === 0) return null;
-        let highest = students[0];
+        if (!scopedStudents || scopedStudents.length === 0) return null;
+        let highest = scopedStudents[0];
         let maxScore = -1;
-        students.forEach(s => {
+        scopedStudents.forEach(s => {
             const score = calculateRiskScore(s).score;
             if (score > maxScore) {
                 maxScore = score;
@@ -13154,9 +13194,9 @@ const App = () => {
             }
         });
         return highest;
-    }, [students]);
+    }, [scopedStudents]);
 
-    const activeStudent = selectedStudent || highestRiskStudent || students[0];
+    const activeStudent = selectedStudent || highestRiskStudent || scopedStudents[0];
 
     useEffect(() => {
         if (activeStudent) {
@@ -13173,6 +13213,14 @@ const App = () => {
     ]);
 
     const [selectedInterventionType, setSelectedInterventionType] = useState("Parent Meeting");
+
+    const scopedInterventions = useMemo(() => {
+        if (role === 'FACULTY') {
+            const studentIds = new Set(scopedStudents.map(s => s.id));
+            return interventions.filter(i => studentIds.has(i.studentId));
+        }
+        return interventions;
+    }, [interventions, scopedStudents, role]);
 
     const PERMISSIONS = {
         ADMIN: {
@@ -13438,9 +13486,9 @@ const App = () => {
 
                     {currentPage === "login" && <LoginPage onLogin={handleLogin} onForgotPassword={() => setCurrentPage("reset-password")} />}
                     {currentPage === "reset-password" && <ResetPassword onBack={() => setCurrentPage("login")} />}
-                    {currentPage === "admin" && <AdminDashboard students={students} interventions={interventions} onNavigate={handleNavigate} currentStudentId={currentStudentId} animatedStats={animatedStats} adminLoading={adminLoading} can={can} role={role} openStudentDetail={openStudentDetail} />}
-                    {currentPage === "parent" && <ParentDashboard students={students} child={activeStudent} />}
-                    {currentPage === "faculty" && <FacultyDashboard students={students} onSelectStudent={(s) => openStudentDetail(s)} can={can} currentStudentId={currentStudentId} openStudentDetail={openStudentDetail} />}
+                    {currentPage === "admin" && <AdminDashboard students={scopedStudents} interventions={scopedInterventions} onNavigate={handleNavigate} currentStudentId={currentStudentId} animatedStats={animatedStats} adminLoading={adminLoading} can={can} role={role} openStudentDetail={openStudentDetail} />}
+                    {currentPage === "parent" && <ParentDashboard students={scopedStudents} child={activeStudent} />}
+                    {currentPage === "faculty" && <FacultyDashboard students={scopedStudents} onSelectStudent={(s) => openStudentDetail(s)} can={can} currentStudentId={currentStudentId} openStudentDetail={openStudentDetail} role={role} />}
                     {currentPage === "student" && activeStudent && (
                         role === "STUDENT" ? (
                             <div className="p-6 animate-page max-w-7xl mx-auto">
@@ -13496,7 +13544,7 @@ const App = () => {
                             />
                         )
                     )}
-                    {currentPage === "interventions" && <InterventionsPanel students={students} interventions={interventions} setInterventions={setInterventions} />}
+                    {currentPage === "interventions" && <InterventionsPanel students={scopedStudents} interventions={scopedInterventions} setInterventions={setInterventions} />}
                     {currentPage === "upload" && (role === "ADMIN" || role === "FACULTY") && <UploadPage setStudents={setStudents} showToast={showToast} role={role} />}
 
                 </div>
