@@ -10130,8 +10130,9 @@ const LoginPage = ({ onLogin, onForgotPassword }) => {
     );
 };
 
-const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats, adminLoading, can, role }) => {
+const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats, adminLoading, can, role, openStudentDetail }) => {
     const [loading, setLoading] = useState(false);
+    const [expandedAction, setExpandedAction] = useState(null);
 
     const handleSync = async () => {
         setLoading(true);
@@ -10209,7 +10210,101 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
             { week: "Week 4", value: 64 }
         ];
 
-        return { high, moderate, safe, avg, deptChart, dropoutData, pieData, monthlyAtt };
+        // Dynamic Recommended Actions Today lists
+        const needingParentList = students.filter(s => {
+            const r = calculateRiskScore(s);
+            return r.level === "HIGH" || s.attendance[s.attendance.length - 1] < 75;
+        });
+
+        const requiringMentorList = students.filter(s => {
+            const r = calculateRiskScore(s);
+            return (r.level === "HIGH" || r.level === "MODERATE") && s.assignmentDelays >= 3;
+        });
+
+        const requiringRemedialList = students.filter(s => s.marks[s.marks.length - 1] < 55);
+
+        const immediateAttentionList = students.filter(s => {
+            const r = calculateRiskScore(s);
+            return r.score >= 70;
+        });
+
+        // Compute Department Intelligence metrics
+        let deptMetrics = {};
+        students.forEach((s, idx) => {
+            const dept = s.dept || "Unknown";
+            const r = risks[idx];
+            const score = r.score;
+
+            const attStart = s.attendance && s.attendance.length ? s.attendance[0] : 0;
+            const attEnd = s.attendance && s.attendance.length ? s.attendance[s.attendance.length - 1] : 0;
+            const marksStart = s.marks && s.marks.length ? s.marks[0] : 0;
+            const marksEnd = s.marks && s.marks.length ? s.marks[s.marks.length - 1] : 0;
+
+            const attGrowth = attEnd - attStart;
+            const marksGrowth = marksEnd - marksStart;
+            const studentGrowth = (attGrowth + marksGrowth) / 2;
+            const studentCombined = (attEnd + marksEnd) / 2;
+
+            if (!deptMetrics[dept]) {
+                deptMetrics[dept] = {
+                    name: dept,
+                    totalRiskScore: 0,
+                    totalCombined: 0,
+                    totalGrowth: 0,
+                    studentCount: 0,
+                    safeCount: 0,
+                    moderateCount: 0,
+                    highCount: 0
+                };
+            }
+
+            deptMetrics[dept].totalRiskScore += score;
+            deptMetrics[dept].totalCombined += studentCombined;
+            deptMetrics[dept].totalGrowth += studentGrowth;
+            deptMetrics[dept].studentCount += 1;
+
+            if (r.level === "SAFE") deptMetrics[dept].safeCount += 1;
+            else if (r.level === "MODERATE") deptMetrics[dept].moderateCount += 1;
+            else if (r.level === "HIGH") deptMetrics[dept].highCount += 1;
+        });
+
+        let highestRiskDept = { name: "N/A", value: 0 };
+        let bestPerformingDept = { name: "N/A", value: 0 };
+        let mostImprovedDept = { name: "N/A", value: 0 };
+
+        const deptAverages = Object.values(deptMetrics).map(d => {
+            const avgRisk = d.studentCount > 0 ? Math.round(d.totalRiskScore / d.studentCount) : 0;
+            const avgCombined = d.studentCount > 0 ? Math.round(d.totalCombined / d.studentCount) : 0;
+            const avgGrowth = d.studentCount > 0 ? Number((d.totalGrowth / d.studentCount).toFixed(1)) : 0;
+
+            return {
+                name: d.name,
+                avgRisk,
+                avgCombined,
+                avgGrowth,
+                safeCount: d.safeCount,
+                moderateCount: d.moderateCount,
+                highCount: d.highCount,
+                studentCount: d.studentCount
+            };
+        });
+
+        if (deptAverages.length > 0) {
+            const sortedByRisk = [...deptAverages].sort((a, b) => b.avgRisk - a.avgRisk);
+            highestRiskDept = { name: sortedByRisk[0].name, value: sortedByRisk[0].avgRisk };
+
+            const sortedByPerformance = [...deptAverages].sort((a, b) => b.avgCombined - a.avgCombined);
+            bestPerformingDept = { name: sortedByPerformance[0].name, value: sortedByPerformance[0].avgCombined };
+
+            const sortedByImprovement = [...deptAverages].sort((a, b) => b.avgGrowth - a.avgGrowth);
+            mostImprovedDept = { name: sortedByImprovement[0].name, value: sortedByImprovement[0].avgGrowth };
+        }
+
+        return { 
+            high, moderate, safe, avg, deptChart, dropoutData, pieData, monthlyAtt,
+            needingParentList, requiringMentorList, requiringRemedialList, immediateAttentionList,
+            deptAverages, highestRiskDept, bestPerformingDept, mostImprovedDept
+        };
     }, [students]);
 
     return (
@@ -10388,6 +10483,155 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                 </div>
                             </Card>
 
+                            {/* Recommended Actions Today */}
+                            <Card tier={2} delay={0.75} className="flex flex-col" style={{ minHeight: '20rem', maxHeight: '28rem' }}>
+                                <h3 className="text-lg font-semibold mb-4 px-2 flex items-center gap-2">
+                                    <Bell className="w-5 h-5 text-[#4DA3FF]" />
+                                    Recommended Actions Today
+                                </h3>
+                                <div className="space-y-3 overflow-y-auto pr-1 flex-1">
+                                    {/* Action 1: Parent Notification */}
+                                    <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
+                                        <div 
+                                            onClick={() => setExpandedAction(expandedAction === 'parent' ? null : 'parent')}
+                                            className="p-3.5 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                        >
+                                            <div className="flex flex-col">
+                                                <span className="text-xs font-bold text-gray-900 dark:text-white">Needing Parent Notification</span>
+                                                <span className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Attendance &lt; 75% or High Risk</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20 uppercase">High</span>
+                                                <span className="w-6 h-6 rounded-full bg-[#EF4444]/15 text-[#EF4444] flex items-center justify-center text-xs font-bold">{data.needingParentList.length}</span>
+                                            </div>
+                                        </div>
+                                        {expandedAction === 'parent' && (
+                                            <div className="p-3 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1.5 max-h-48 overflow-y-auto">
+                                                {data.needingParentList.length > 0 ? (
+                                                    data.needingParentList.map(s => (
+                                                        <div 
+                                                            key={s.id} 
+                                                            onClick={() => openStudentDetail && openStudentDetail(s)}
+                                                            className="flex justify-between items-center text-xs p-2 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                        >
+                                                            <span>{s.name} ({s.dept})</span>
+                                                            <span className="text-gray-500 dark:text-gray-400 font-normal">Score: {calculateRiskScore(s).score}</span>
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <div className="text-xs text-gray-500 text-center py-2">No recommendations in this category</div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Action 2: Mentor Assignment */}
+                                    <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
+                                        <div 
+                                            onClick={() => setExpandedAction(expandedAction === 'mentor' ? null : 'mentor')}
+                                            className="p-3.5 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                        >
+                                            <div className="flex flex-col">
+                                                <span className="text-xs font-bold text-gray-900 dark:text-white">Requiring Mentor Assignment</span>
+                                                <span className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Moderate/High Risk with 3+ delays</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20 uppercase">Medium</span>
+                                                <span className="w-6 h-6 rounded-full bg-[#F59E0B]/15 text-[#F59E0B] flex items-center justify-center text-xs font-bold">{data.requiringMentorList.length}</span>
+                                            </div>
+                                        </div>
+                                        {expandedAction === 'mentor' && (
+                                            <div className="p-3 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1.5 max-h-48 overflow-y-auto">
+                                                {data.requiringMentorList.length > 0 ? (
+                                                    data.requiringMentorList.map(s => (
+                                                        <div 
+                                                            key={s.id} 
+                                                            onClick={() => openStudentDetail && openStudentDetail(s)}
+                                                            className="flex justify-between items-center text-xs p-2 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                        >
+                                                            <span>{s.name} ({s.dept})</span>
+                                                            <span className="text-gray-500 dark:text-gray-400 font-normal">Delays: {s.assignmentDelays}</span>
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <div className="text-xs text-gray-500 text-center py-2">No recommendations in this category</div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Action 3: Remedial Support */}
+                                    <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
+                                        <div 
+                                            onClick={() => setExpandedAction(expandedAction === 'remedial' ? null : 'remedial')}
+                                            className="p-3.5 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                        >
+                                            <div className="flex flex-col">
+                                                <span className="text-xs font-bold text-gray-900 dark:text-white">Requiring Remedial Support</span>
+                                                <span className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Recent marks below 55%</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20 uppercase">Medium</span>
+                                                <span className="w-6 h-6 rounded-full bg-[#F59E0B]/15 text-[#F59E0B] flex items-center justify-center text-xs font-bold">{data.requiringRemedialList.length}</span>
+                                            </div>
+                                        </div>
+                                        {expandedAction === 'remedial' && (
+                                            <div className="p-3 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1.5 max-h-48 overflow-y-auto">
+                                                {data.requiringRemedialList.length > 0 ? (
+                                                    data.requiringRemedialList.map(s => (
+                                                        <div 
+                                                            key={s.id} 
+                                                            onClick={() => openStudentDetail && openStudentDetail(s)}
+                                                            className="flex justify-between items-center text-xs p-2 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                        >
+                                                            <span>{s.name} ({s.dept})</span>
+                                                            <span className="text-gray-500 dark:text-gray-400 font-normal">Marks: {s.marks[s.marks.length - 1]}%</span>
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <div className="text-xs text-gray-500 text-center py-2">No recommendations in this category</div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Action 4: Immediate Attention */}
+                                    <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
+                                        <div 
+                                            onClick={() => setExpandedAction(expandedAction === 'immediate' ? null : 'immediate')}
+                                            className="p-3.5 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                        >
+                                            <div className="flex flex-col">
+                                                <span className="text-xs font-bold text-gray-900 dark:text-white">Requiring Immediate Attention</span>
+                                                <span className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Overall risk score &ge; 70</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20 uppercase animate-pulse">Critical</span>
+                                                <span className="w-6 h-6 rounded-full bg-[#EF4444]/15 text-[#EF4444] flex items-center justify-center text-xs font-bold animate-pulse">{data.immediateAttentionList.length}</span>
+                                            </div>
+                                        </div>
+                                        {expandedAction === 'immediate' && (
+                                            <div className="p-3 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1.5 max-h-48 overflow-y-auto">
+                                                {data.immediateAttentionList.length > 0 ? (
+                                                    data.immediateAttentionList.map(s => (
+                                                        <div 
+                                                            key={s.id} 
+                                                            onClick={() => openStudentDetail && openStudentDetail(s)}
+                                                            className="flex justify-between items-center text-xs p-2 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                        >
+                                                            <span>{s.name} ({s.dept})</span>
+                                                            <span className="text-gray-500 dark:text-gray-400 font-normal text-[#EF4444]">Risk: {calculateRiskScore(s).score}</span>
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <div className="text-xs text-gray-500 text-center py-2">No recommendations in this category</div>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </Card>
+
                             <Card tier={2} delay={0.8} className="flex-1 h-64 overflow-y-auto">
                                 <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><Zap className="w-5 h-5 text-[#FBBF24]" /> Recent Alerts</h3>
                                 <div className="space-y-4">
@@ -10459,6 +10703,166 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
 
             {can('canViewFullAnalytics') && (
                 <>
+                    {/* Department Intelligence */}
+                    <div style={{
+                        marginTop: 48,
+                        animationName: 'staggerFadeUp',
+                        animationDuration: '300ms',
+                        animationTimingFunction: 'ease-out',
+                        animationFillMode: 'both',
+                        animationDelay: '0.15s'
+                    }}>
+                        <div style={{ fontFamily: 'Syne', fontSize: 18, fontWeight: 600, color: 'var(--text-normal-9)' }}>
+                            Department Intelligence
+                        </div>
+                        <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginTop: 8 }}></div>
+
+                        <div style={{ display: 'flex', gap: 16, marginTop: 24, flexWrap: 'wrap' }}>
+                            <Card tier={1} className="flex-1 min-w-[220px]" style={{ borderLeft: '3px solid #EF4444' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-normal-65)', marginBottom: 8 }}>
+                                    <AlertTriangle size={18} color="#EF4444" /> Highest Risk Department
+                                </div>
+                                <div style={{ fontFamily: 'Syne', fontSize: 24, fontWeight: 600, color: '#EF4444', marginBottom: 8 }}>
+                                    {data.highestRiskDept.name}
+                                </div>
+                                <div style={{ fontSize: 11, color: 'var(--text-muted-25)' }}>
+                                    Avg Risk Score: <span className="font-semibold text-gray-900 dark:text-white">{data.highestRiskDept.value}</span>
+                                </div>
+                            </Card>
+
+                            <Card tier={1} className="flex-1 min-w-[220px]" style={{ borderLeft: '3px solid #4DA3FF' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-normal-65)', marginBottom: 8 }}>
+                                    <TrendingUp size={18} color="#4DA3FF" /> Best Performing Department
+                                </div>
+                                <div style={{ fontFamily: 'Syne', fontSize: 24, fontWeight: 600, color: '#4DA3FF', marginBottom: 8 }}>
+                                    {data.bestPerformingDept.name}
+                                </div>
+                                <div style={{ fontSize: 11, color: 'var(--text-muted-25)' }}>
+                                    Avg Performance: <span className="font-semibold text-gray-900 dark:text-white">{data.bestPerformingDept.value}%</span>
+                                </div>
+                            </Card>
+
+                            <Card tier={1} className="flex-1 min-w-[220px]" style={{ borderLeft: '3px solid #8CC7FF' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-normal-65)', marginBottom: 8 }}>
+                                    <Zap size={18} color="#8CC7FF" /> Most Improved Department
+                                </div>
+                                <div style={{ fontFamily: 'Syne', fontSize: 24, fontWeight: 600, color: '#8CC7FF', marginBottom: 8 }}>
+                                    {data.mostImprovedDept.name}
+                                </div>
+                                <div style={{ fontSize: 11, color: 'var(--text-muted-25)' }}>
+                                    Avg Growth: <span className={`font-semibold ${data.mostImprovedDept.value >= 0 ? 'text-[#4ade80]' : 'text-[#EF4444]'}`}>
+                                        {data.mostImprovedDept.value > 0 ? `+${data.mostImprovedDept.value}` : data.mostImprovedDept.value}%
+                                    </span>
+                                </div>
+                            </Card>
+                        </div>
+
+                        <div style={{ marginTop: 24, background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-05)', borderRadius: 16, padding: '24px', overflowX: 'auto' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                                <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-normal-8)' }}>Department Risk Distribution Heatmap</div>
+                                <div style={{ display: 'flex', gap: 12, fontSize: 10 }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                                        <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#4DA3FF' }}></div>
+                                        <span style={{ color: 'var(--text-muted-35)' }}>Safe</span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                                        <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#F59E0B' }}></div>
+                                        <span style={{ color: 'var(--text-muted-35)' }}>Moderate</span>
+                                    </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                                        <div style={{ width: 8, height: 8, borderRadius: '50%', backgroundColor: '#EF4444' }}></div>
+                                        <span style={{ color: 'var(--text-muted-35)' }}>High Risk</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, minWidth: '500px' }}>
+                                <thead>
+                                    <tr style={{ borderBottom: '1px solid var(--glass-border-08)', color: 'var(--text-muted-35)', textAlign: 'left' }}>
+                                        <th style={{ padding: '12px 16px', fontWeight: 500 }}>Department</th>
+                                        <th style={{ padding: '12px 16px', fontWeight: 500, textAlign: 'center' }}>Safe</th>
+                                        <th style={{ padding: '12px 16px', fontWeight: 500, textAlign: 'center' }}>Moderate</th>
+                                        <th style={{ padding: '12px 16px', fontWeight: 500, textAlign: 'center' }}>High Risk</th>
+                                        <th style={{ padding: '12px 16px', fontWeight: 500, textAlign: 'center' }}>Total Students</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {data.deptAverages.map((dept, index) => (
+                                        <tr key={index} className="hover:bg-black/5 dark:hover:bg-white/5 transition-colors" style={{ borderBottom: '1px solid var(--glass-border-05)' }}>
+                                            <td style={{ padding: '16px', fontWeight: 600, color: 'var(--text-normal-9)' }}>
+                                                {dept.name}
+                                            </td>
+                                            
+                                            {/* Safe Cell */}
+                                            <td style={{ 
+                                                padding: '12px',
+                                                textAlign: 'center',
+                                                background: `rgba(77, 163, 255, ${dept.studentCount > 0 ? (dept.safeCount / dept.studentCount) * 0.25 : 0.02})`,
+                                                border: '1px solid var(--glass-border-08)',
+                                                transition: 'all 0.2s'
+                                            }}>
+                                                <span style={{ 
+                                                    display: 'inline-block',
+                                                    padding: '4px 8px',
+                                                    borderRadius: '8px',
+                                                    fontWeight: 600,
+                                                    color: dept.safeCount > 0 ? '#4DA3FF' : 'var(--text-muted-25)',
+                                                    fontSize: 12
+                                                }}>
+                                                    {dept.safeCount}
+                                                </span>
+                                            </td>
+
+                                            {/* Moderate Cell */}
+                                            <td style={{ 
+                                                padding: '12px',
+                                                textAlign: 'center',
+                                                background: `rgba(245, 158, 11, ${dept.studentCount > 0 ? (dept.moderateCount / dept.studentCount) * 0.25 : 0.02})`,
+                                                border: '1px solid var(--glass-border-08)',
+                                                transition: 'all 0.2s'
+                                            }}>
+                                                <span style={{ 
+                                                    display: 'inline-block',
+                                                    padding: '4px 8px',
+                                                    borderRadius: '8px',
+                                                    fontWeight: 600,
+                                                    color: dept.moderateCount > 0 ? '#F59E0B' : 'var(--text-muted-25)',
+                                                    fontSize: 12
+                                                }}>
+                                                    {dept.moderateCount}
+                                                </span>
+                                            </td>
+
+                                            {/* High Risk Cell */}
+                                            <td style={{ 
+                                                padding: '12px',
+                                                textAlign: 'center',
+                                                background: `rgba(239, 68, 68, ${dept.studentCount > 0 ? (dept.highCount / dept.studentCount) * 0.25 : 0.02})`,
+                                                border: '1px solid var(--glass-border-08)',
+                                                transition: 'all 0.2s'
+                                            }}>
+                                                <span style={{ 
+                                                    display: 'inline-block',
+                                                    padding: '4px 8px',
+                                                    borderRadius: '8px',
+                                                    fontWeight: 600,
+                                                    color: dept.highCount > 0 ? '#EF4444' : 'var(--text-muted-25)',
+                                                    fontSize: 12
+                                                }}>
+                                                    {dept.highCount}
+                                                </span>
+                                            </td>
+
+                                            <td style={{ padding: '16px', textAlign: 'center', fontWeight: 500, color: 'var(--text-normal-7)' }}>
+                                                {dept.studentCount}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                     <div style={{
                         marginTop: 48,
                         animationName: 'staggerFadeUp',
@@ -10852,6 +11256,100 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
     const attData = student.attendance.map((v, i) => ({ week: `W${i + 1}`, val: v }));
     const marksData = student.marks.map((v, i) => ({ test: `T${i + 1}`, val: v }));
 
+    const aiAnalysis = useMemo(() => {
+        const factors = [];
+        const actions = [];
+        
+        const currentAtt = student.attendance[student.attendance.length - 1];
+        if (currentAtt < 75) {
+            factors.push("Low Attendance");
+            actions.push({
+                type: "Attendance Counseling",
+                desc: "Recommend mandatory attendance counseling session.",
+                icon: "Users"
+            });
+        }
+        
+        const currentMark = student.marks[student.marks.length - 1];
+        if (currentMark < 50) {
+            factors.push("Multiple Backlogs");
+            actions.push({
+                type: "Schedule Remedial Sessions",
+                desc: "Enroll in remedial tutoring for subjects below 50%.",
+                icon: "BookOpen"
+            });
+        }
+        
+        const isAttDeclining = student.attendance[2] > student.attendance[3] && student.attendance[3] > student.attendance[4];
+        const isMarksDeclining = student.marks[2] > student.marks[3] && student.marks[3] > student.marks[4];
+        if (isAttDeclining || isMarksDeclining) {
+            factors.push("Declining Performance Trend");
+            actions.push({
+                type: "Weekly Academic Monitoring",
+                desc: "Set up weekly status monitoring check-ins with mentor.",
+                icon: "Clock"
+            });
+        }
+        
+        const recentLms = (student.lmsLogins[3] + student.lmsLogins[4]) / 2;
+        if (recentLms < 5) {
+            factors.push("Low LMS Engagement");
+        }
+        
+        if (risk.score >= 60) {
+            factors.push("High Risk Score");
+            actions.push({
+                type: "Assign Faculty Mentor",
+                desc: "Appoint senior advisor to supervise immediate stability measures.",
+                icon: "GraduationCap"
+            });
+            actions.push({
+                type: "Notify Parent",
+                desc: "Alert parents regarding critical drop in performance indicators.",
+                icon: "ShieldAlert"
+            });
+        } else if (risk.score >= 35) {
+            actions.push({
+                type: "Assign Faculty Mentor",
+                desc: "Appoint mentor to guide student on performance recovery.",
+                icon: "GraduationCap"
+            });
+        }
+        
+        if (actions.length === 0) {
+            actions.push({
+                type: "Encourage Co-curriculars",
+                desc: "Encourage active participation in student technical clubs and events.",
+                icon: "Star"
+            });
+        }
+
+        let summaryText = "";
+        if (risk.level === "HIGH") {
+            summaryText = `${student.name} is classified as High Risk primarily due to `;
+            const issues = [];
+            if (currentAtt < 75) issues.push(`severely low attendance (${currentAtt}%)`);
+            if (currentMark < 50) issues.push(`poor exam marks (${currentMark}%)`);
+            if (isAttDeclining || isMarksDeclining) issues.push("a steady downward performance trend");
+            if (recentLms < 5) issues.push("critically low LMS activity");
+            if (student.behaviorIncidents >= 1) issues.push("recent behavioral incidents");
+            summaryText += issues.join(", ") + ". Immediate preventive intervention is strongly advised to prevent academic failure.";
+        } else if (risk.level === "MODERATE") {
+            summaryText = `${student.name} shows Moderate Risk characteristics. This is driven by `;
+            const issues = [];
+            if (currentAtt < 85 && currentAtt >= 75) issues.push(`sub-optimal attendance (${currentAtt}%)`);
+            if (currentMark < 65 && currentMark >= 50) issues.push(`moderate marks (${currentMark}%)`);
+            if (recentLms < 10) issues.push("reduced digital activity in the LMS portal");
+            if (student.assignmentDelays > 0) issues.push(`${student.assignmentDelays} late assignment submissions`);
+            if (issues.length === 0) issues.push("minor shifts in engagement indicators");
+            summaryText += issues.join(", ") + ". Preventive support is recommended to stabilize their performance.";
+        } else {
+            summaryText = `${student.name} maintains a Safe standing. Attendance (${currentAtt}%) and academic indicators (${currentMark}%) are strong, with healthy LMS logins and minimal delays. Trajectory remains stable and positive.`;
+        }
+        
+        return { factors, actions, summaryText };
+    }, [student, risk]);
+
     return (
         <div className="p-6 animate-page max-w-7xl mx-auto pb-20">
             <button onClick={onBack} className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white mb-6 transition-colors">
@@ -10906,6 +11404,85 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                     </div>
 
                     <HeaderUnderline title="Risk Intelligence" />
+
+                    {/* AI Insights Section */}
+                    <div className="card-tier-3 p-6 mb-8 relative overflow-hidden bg-gradient-to-br from-[#4DA3FF]/5 to-indigo-500/5 dark:from-[#4DA3FF]/10 dark:to-purple-500/5 border-[#4DA3FF]/20 animate-fade-up">
+                        <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+                            <Brain className="w-28 h-28 text-[#4DA3FF]" />
+                        </div>
+                        
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="p-2 bg-[#4DA3FF]/10 rounded-xl text-[#4DA3FF]">
+                                <Brain className="w-6 h-6" />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                    AI Insights Engine
+                                    <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-[#4DA3FF]/10 text-[#4DA3FF]">Active</span>
+                                </h3>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">Automated diagnostic and recommended path</p>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div className="lg:col-span-2 space-y-4">
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+                                    <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Automated Executive Summary</div>
+                                    <p className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed font-medium">
+                                        {aiAnalysis.summaryText}
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">AI Identified Risk Factors</div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {aiAnalysis.factors.length > 0 ? (
+                                            aiAnalysis.factors.map((factor, i) => (
+                                                <span key={i} className="px-3 py-1 rounded-full text-xs font-semibold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20 flex items-center gap-1.5 animate-fade-up" style={{ animationDelay: `${i * 0.05}s` }}>
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-[#EF4444]"></span>
+                                                    {factor}
+                                                </span>
+                                            ))
+                                        ) : (
+                                            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-500/10 text-green-500 border border-green-500/20 flex items-center gap-1.5">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                                No Risk Factors Identified
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between">
+                                <div>
+                                    <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">AI Recommended Actions</div>
+                                    <div className="space-y-3">
+                                        {aiAnalysis.actions.map((act, i) => {
+                                            let IconComp = Zap;
+                                            if (act.icon === "Users") IconComp = Users;
+                                            else if (act.icon === "BookOpen") IconComp = BookOpen;
+                                            else if (act.icon === "Clock") IconComp = Clock;
+                                            else if (act.icon === "GraduationCap") IconComp = GraduationCap;
+                                            else if (act.icon === "ShieldAlert") IconComp = ShieldAlert;
+                                            else if (act.icon === "Star") IconComp = Star;
+                                            
+                                            return (
+                                                <div key={i} className="flex gap-3 text-xs">
+                                                    <div className="mt-0.5 p-1 bg-white/5 rounded text-[#4DA3FF] flex-shrink-0">
+                                                        <IconComp className="w-3.5 h-3.5" />
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-bold text-gray-900 dark:text-white">{act.type}</div>
+                                                        <div className="text-gray-500 dark:text-gray-400 mt-0.5 leading-relaxed">{act.desc}</div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="flex flex-col lg:flex-row gap-6 mb-8">
                         <Card tier={3} delay={0.1} className="w-full lg:w-1/3 flex flex-col items-center justify-center py-8 relative overflow-hidden">
                             {isHigh && <div className="risk-meter-glow-high"></div>}
@@ -11240,22 +11817,67 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
 };
 
 
-const InterventionsPanel = ({ students }) => {
-    const [interventions, setInterventions] = useState([
-        { id: 1, studentId: "S001", type: "Parent Meeting", status: "PENDING", date: "Today", assigned: "Dr. Ramesh Iyer" },
-        { id: 2, studentId: "S002", type: "Counseling", status: "ACTIVE", date: "Tomorrow", assigned: "Prof. Anjali Desai" },
-        { id: 3, studentId: "S008", type: "Study Plan", status: "PENDING", date: "Oct 12", assigned: "Prof. Anjali Desai" },
-        { id: 4, studentId: "S010", type: "Remedial Class", status: "COMPLETE", date: "Oct 05", assigned: "Dr. Suresh Nair" },
-        { id: 5, studentId: "S013", type: "Mentor Check-in", status: "ACTIVE", date: "Oct 15", assigned: "Dr. Ramesh Iyer" }
-    ]);
+const InterventionsPanel = ({ students, interventions, setInterventions }) => {
+    const [expandedId, setExpandedId] = useState(null);
 
-    const markComplete = (id) => {
-        setInterventions(prev => prev.map(inv => inv.id === id ? { ...inv, status: "COMPLETE" } : inv));
+    const STATUS_LIFECYCLE = [
+        "Pending",
+        "Parent Notified",
+        "Mentor Assigned",
+        "Remedial Scheduled",
+        "Follow-Up Scheduled",
+        "Resolved"
+    ];
+
+    const getStatusIndex = (status) => {
+        const idx = STATUS_LIFECYCLE.indexOf(status);
+        return idx !== -1 ? idx : 0;
     };
 
-    const active = interventions.filter(i => i.status === "ACTIVE").length;
-    const pending = interventions.filter(i => i.status === "PENDING").length;
-    const complete = interventions.filter(i => i.status === "COMPLETE").length;
+    const getStatusPercent = (status) => {
+        const idx = getStatusIndex(status);
+        return Math.round((idx / (STATUS_LIFECYCLE.length - 1)) * 100);
+    };
+
+    const advanceStatus = (id) => {
+        setInterventions(prev => prev.map(inv => {
+            if (inv.id !== id) return inv;
+            const currentIdx = getStatusIndex(inv.status);
+            const nextStatus = STATUS_LIFECYCLE[Math.min(currentIdx + 1, STATUS_LIFECYCLE.length - 1)];
+            return { ...inv, status: nextStatus };
+        }));
+    };
+
+    const resolveIntervention = (id) => {
+        setInterventions(prev => prev.map(inv => inv.id === id ? { ...inv, status: "Resolved" } : inv));
+    };
+
+    const resetIntervention = (id) => {
+        setInterventions(prev => prev.map(inv => inv.id === id ? { ...inv, status: "Pending" } : inv));
+    };
+
+    const active = interventions.filter(i => i.status !== "Resolved" && i.status !== "Pending").length;
+    const pending = interventions.filter(i => i.status === "Pending").length;
+    const complete = interventions.filter(i => i.status === "Resolved").length;
+
+    const getStatusBadgeClass = (status) => {
+        switch (status) {
+            case "Pending":
+                return "text-gray-500 border-gray-500/20 bg-gray-500/10";
+            case "Parent Notified":
+                return "text-amber-500 border-amber-500/20 bg-amber-500/10";
+            case "Mentor Assigned":
+                return "text-[#4DA3FF] border-[#4DA3FF]/20 bg-[#4DA3FF]/10";
+            case "Remedial Scheduled":
+                return "text-purple-400 border-purple-400/20 bg-purple-400/10";
+            case "Follow-Up Scheduled":
+                return "text-indigo-400 border-indigo-400/20 bg-indigo-400/10";
+            case "Resolved":
+                return "text-green-500 border-green-500/20 bg-green-500/10";
+            default:
+                return "text-gray-500 border-gray-500/20 bg-gray-500/10";
+        }
+    };
 
     return (
         <div className="p-6 animate-page max-w-7xl mx-auto">
@@ -11294,11 +11916,11 @@ const InterventionsPanel = ({ students }) => {
                     animationDelay: '0.12s'
                 }}>
                     <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                        <Zap className="w-4 h-4 text-[#4DA3FF]" /> Active
+                        <Zap className="w-4 h-4 text-[#4DA3FF]" /> Active Tracker
                     </div>
                     <div className="text-3xl font-bold text-[#4DA3FF]">{active}</div>
                 </Card>
-                <Card delay={0.4} className="flex-1 min-w-[150px] border-[#4DA3FF]/30" style={{
+                <Card delay={0.4} className="flex-1 min-w-[150px] border-green-500/30" style={{
                     animationName: 'staggerFadeUp',
                     animationDuration: '260ms',
                     animationTimingFunction: 'ease-out',
@@ -11306,9 +11928,9 @@ const InterventionsPanel = ({ students }) => {
                     animationDelay: '0.18s'
                 }}>
                     <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-[#4DA3FF]" /> Completed
+                        <CheckCircle2 className="w-4 h-4 text-green-500" /> Resolved
                     </div>
-                    <div className="text-3xl font-bold text-[#4DA3FF]">{complete}</div>
+                    <div className="text-3xl font-bold text-green-500">{complete}</div>
                 </Card>
             </div>
 
@@ -11316,6 +11938,7 @@ const InterventionsPanel = ({ students }) => {
                 <table className="w-full text-left border-collapse min-w-[800px]">
                     <thead>
                         <tr className="border-b border-white/5 text-gray-600 dark:text-gray-400 text-sm">
+                            <th className="p-4 font-semibold w-12"></th>
                             <th className="p-4 font-semibold">Student</th>
                             <th className="p-4 font-semibold">Risk Level</th>
                             <th className="p-4 font-semibold">Intervention Type</th>
@@ -11331,38 +11954,163 @@ const InterventionsPanel = ({ students }) => {
                             if (!s) return null;
                             const risk = calculateRiskScore(s);
                             const color = getLevelColor(risk.level);
+                            const isExpanded = expandedId === inv.id;
+                            const currentIdx = getStatusIndex(inv.status);
+                            const percent = getStatusPercent(inv.status);
+
                             return (
-                                <tr key={inv.id} className={`border-b border-white/5 transition-all duration-500 hover:bg-white/5 ${inv.status === "COMPLETE" ? "opacity-50" : ""}`}>
-                                    <td className="p-4">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs bg-[#0B0B0C] border"
-                                                style={{ borderColor: risk.level === "SAFE" ? 'rgba(77,163,255,0.26)' : color, color: color }}>
-                                                {s.name.split(' ').map(n => n[0]).join('')}
+                                <React.Fragment key={inv.id}>
+                                    <tr 
+                                        className={`border-b border-white/5 transition-all duration-300 hover:bg-white/5 cursor-pointer ${inv.status === "Resolved" ? "opacity-70" : ""} ${isExpanded ? "bg-white/5 border-b-0" : ""}`}
+                                        onClick={() => setExpandedId(isExpanded ? null : inv.id)}
+                                    >
+                                        <td className="p-4 text-center">
+                                            <span className="text-gray-400 text-xs transition-transform inline-block" style={{ transform: isExpanded ? 'rotate(90deg)' : 'none' }}>
+                                                ▶
+                                            </span>
+                                        </td>
+                                        <td className="p-4">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs bg-[#0B0B0C] border"
+                                                    style={{ borderColor: risk.level === "SAFE" ? 'rgba(77,163,255,0.26)' : color, color: color }}>
+                                                    {s.name.split(' ').map(n => n[0]).join('')}
+                                                </div>
+                                                <div className="font-bold text-gray-900 dark:text-white">{s.name}</div>
                                             </div>
-                                            <div className="font-bold text-gray-900 dark:text-white">{s.name}</div>
-                                        </div>
-                                    </td>
-                                    <td className="p-4">
-                                        <div className="text-xs font-bold" style={{ color: color }}>{risk.level}</div>
-                                    </td>
-                                    <td className="p-4 font-medium">{inv.type}</td>
-                                    <td className="p-4 text-gray-700 dark:text-gray-300">{inv.assigned}</td>
-                                    <td className="p-4 text-gray-700 dark:text-gray-300">{inv.date}</td>
-                                    <td className="p-4 text-center">
-                                        <span className={`px-3 py-1 rounded-full text-xs font-bold border ${inv.status === "PENDING" ? "text-[#F59E0B] border-[#F59E0B]/20 bg-[#F59E0B]/10" : inv.status === "ACTIVE" ? "text-[#4DA3FF] border-[#4DA3FF]/[0.18] bg-[#4DA3FF]/[0.08]" : "text-[#4DA3FF] border-[#4DA3FF]/20 bg-[#4DA3FF]/10"}`}>
-                                            {inv.status}
-                                        </span>
-                                    </td>
-                                    <td className="p-4 text-center">
-                                        {inv.status !== "COMPLETE" ? (
-                                            <button onClick={() => markComplete(inv.id)} className="px-3 py-1.5 rounded-lg border border-white/10 text-xs font-semibold hover:bg-white/10 transition-colors flex items-center gap-1 mx-auto text-gray-900 dark:text-white">
-                                                <CheckCircle2 className="w-4 h-4" /> Resolve
-                                            </button>
-                                        ) : (
-                                            <span className="text-xs text-gray-500 font-semibold px-3 py-1.5 inline-block">RESOLVED</span>
-                                        )}
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td className="p-4">
+                                            <div className="text-xs font-bold" style={{ color: color }}>{risk.level}</div>
+                                        </td>
+                                        <td className="p-4 font-medium">{inv.type}</td>
+                                        <td className="p-4 text-gray-700 dark:text-gray-300">{inv.assigned}</td>
+                                        <td className="p-4 text-gray-700 dark:text-gray-300">{inv.date}</td>
+                                        <td className="p-4 text-center">
+                                            <span className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors ${getStatusBadgeClass(inv.status)}`}>
+                                                {inv.status}
+                                            </span>
+                                        </td>
+                                        <td className="p-4 text-center" onClick={e => e.stopPropagation()}>
+                                            {inv.status !== "Resolved" ? (
+                                                <button 
+                                                    onClick={() => resolveIntervention(inv.id)} 
+                                                    className="px-3 py-1.5 rounded-lg border border-white/10 text-xs font-semibold hover:bg-white/10 transition-colors flex items-center gap-1 mx-auto text-gray-900 dark:text-white"
+                                                >
+                                                    <CheckCircle2 className="w-4 h-4 text-green-500" /> Resolve
+                                                </button>
+                                            ) : (
+                                                <span className="text-xs text-green-500 font-semibold px-3 py-1.5 inline-block">RESOLVED</span>
+                                            )}
+                                        </td>
+                                    </tr>
+                                    {isExpanded && (
+                                        <tr className="bg-white/5 border-b border-white/5">
+                                            <td colSpan={8} className="p-0">
+                                                <div className="p-6 bg-[#10293F]/30 dark:bg-black/30 rounded-b-xl flex flex-col lg:flex-row gap-8 items-stretch border-t border-white/5">
+                                                    {/* Stepper block */}
+                                                    <div className="flex-1 space-y-6">
+                                                        <div className="flex justify-between items-center">
+                                                            <span className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Intervention Progress ({percent}%)</span>
+                                                        </div>
+
+                                                        {/* Horizontal Stepper Line */}
+                                                        <div className="relative flex justify-between items-center w-full px-6 mb-8 mt-4">
+                                                            <div className="absolute left-10 right-10 top-[14px] h-[3px] bg-gray-300 dark:bg-white/10 z-0">
+                                                                <div 
+                                                                    className="h-full bg-gradient-to-r from-[#4DA3FF] to-green-500 transition-all duration-500" 
+                                                                    style={{ width: `${percent}%` }}
+                                                                />
+                                                            </div>
+
+                                                            {STATUS_LIFECYCLE.map((step, idx) => {
+                                                                const isCompleted = idx < currentIdx;
+                                                                const isActive = idx === currentIdx;
+                                                                const isFuture = idx > currentIdx;
+
+                                                                return (
+                                                                    <div key={idx} className="flex flex-col items-center relative z-10 w-12">
+                                                                        <div 
+                                                                            className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-bold transition-all duration-300 border-2
+                                                                            ${isCompleted ? "bg-green-500 border-green-500 text-white" : 
+                                                                              isActive ? "bg-gray-900 dark:bg-white border-[#4DA3FF] text-[#4DA3FF] shadow-[0_0_12px_rgba(77,163,255,0.4)] scale-110" : 
+                                                                              "bg-[#0B0B0C] border-gray-300 dark:border-white/10 text-gray-500"}`}
+                                                                        >
+                                                                            {isCompleted ? "✓" : idx + 1}
+                                                                        </div>
+                                                                        <span className={`text-[9px] mt-2 text-center font-bold tracking-tight absolute top-8 whitespace-nowrap
+                                                                            ${isActive ? "text-[#4DA3FF]" : isCompleted ? "text-green-500" : "text-gray-500"}`}
+                                                                        >
+                                                                            {step}
+                                                                        </span>
+                                                                    </div>
+                                                                );
+                                                            })}
+                                                        </div>
+
+                                                        {/* Steps Checklist */}
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-12 pt-6 border-t border-white/5 text-xs text-gray-600 dark:text-gray-400">
+                                                            <div className="space-y-2">
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className={currentIdx >= 0 ? "text-green-500" : "text-gray-500"}>{currentIdx >= 0 ? "✓" : "○"}</span>
+                                                                    <span className={currentIdx === 0 ? "font-bold text-[#4DA3FF]" : ""}>1. Logged: Case opened for student</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className={currentIdx >= 1 ? "text-green-500" : "text-gray-500"}>{currentIdx >= 1 ? "✓" : "○"}</span>
+                                                                    <span className={currentIdx === 1 ? "font-bold text-[#4DA3FF]" : ""}>2. Parent Contacted: Alerts dispatched</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className={currentIdx >= 2 ? "text-green-500" : "text-gray-500"}>{currentIdx >= 2 ? "✓" : "○"}</span>
+                                                                    <span className={currentIdx === 2 ? "font-bold text-[#4DA3FF]" : ""}>3. Mentor Assigned: Faculty briefing completed</span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="space-y-2">
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className={currentIdx >= 3 ? "text-green-500" : "text-gray-500"}>{currentIdx >= 3 ? "✓" : "○"}</span>
+                                                                    <span className={currentIdx === 3 ? "font-bold text-[#4DA3FF]" : ""}>4. Remedial Scheduled: Session slot assigned</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className={currentIdx >= 4 ? "text-green-500" : "text-gray-500"}>{currentIdx >= 4 ? "✓" : "○"}</span>
+                                                                    <span className={currentIdx === 4 ? "font-bold text-[#4DA3FF]" : ""}>5. Follow-up: Recovery milestone set</span>
+                                                                </div>
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className={currentIdx >= 5 ? "text-green-500" : "text-gray-500"}>{currentIdx >= 5 ? "✓" : "○"}</span>
+                                                                    <span className={currentIdx === 5 ? "font-bold text-[#4DA3FF]" : ""}>6. Case Resolved: Trajectory stabilized</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Control block */}
+                                                    <div className="w-full lg:w-60 border-l border-white/5 lg:pl-6 flex flex-col justify-center gap-3">
+                                                        <div className="text-xs font-bold text-gray-500 dark:text-gray-400 mb-1">Operational Actions</div>
+                                                        {inv.status !== "Resolved" ? (
+                                                            <>
+                                                                <button 
+                                                                    onClick={() => advanceStatus(inv.id)} 
+                                                                    className="w-full py-2 rounded-xl bg-[#4DA3FF]/10 border border-[#4DA3FF]/30 text-[#4DA3FF] hover:bg-[#4DA3FF]/20 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                                                                >
+                                                                    <ChevronRight className="w-4 h-4" /> Advance to Next Stage
+                                                                </button>
+                                                                <button 
+                                                                    onClick={() => resolveIntervention(inv.id)} 
+                                                                    className="w-full py-2 rounded-xl bg-green-500/10 border border-green-500/30 text-green-500 hover:bg-green-500/20 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                                                                >
+                                                                    <CheckCircle2 className="w-4 h-4" /> Resolve Case Directly
+                                                                </button>
+                                                            </>
+                                                        ) : (
+                                                            <button 
+                                                                onClick={() => resetIntervention(inv.id)} 
+                                                                className="w-full py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-500 hover:bg-amber-500/20 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                                                            >
+                                                                Re-open Case
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </React.Fragment>
                             );
                         })}
                     </tbody>
@@ -11581,6 +12329,16 @@ const App = () => {
 
     const [students, setStudents] = useState(() => generateStudents());
 
+    const [interventions, setInterventions] = useState([
+        { id: 1, studentId: "S001", type: "Parent Meeting", status: "Pending", date: "Today", assigned: "Dr. Ramesh Iyer" },
+        { id: 2, studentId: "S002", type: "Counseling", status: "Parent Notified", date: "Tomorrow", assigned: "Prof. Anjali Desai" },
+        { id: 3, studentId: "S008", type: "Study Plan", status: "Pending", date: "Oct 12", assigned: "Prof. Anjali Desai" },
+        { id: 4, studentId: "S010", type: "Remedial Class", status: "Resolved", date: "Oct 05", assigned: "Dr. Suresh Nair" },
+        { id: 5, studentId: "S013", type: "Mentor Check-in", status: "Remedial Scheduled", date: "Oct 15", assigned: "Dr. Ramesh Iyer" }
+    ]);
+
+    const [selectedInterventionType, setSelectedInterventionType] = useState("Parent Meeting");
+
     const PERMISSIONS = {
         ADMIN: {
             canViewAllStudents: true,
@@ -11712,14 +12470,20 @@ const App = () => {
                 <p className="text-gray-600 dark:text-gray-400 mb-6">Select automated intervention for {selectedStudent?.name}</p>
 
                 <div className="space-y-3 mb-8">
-                    <button className="w-full text-left p-4 rounded-xl border border-white/10 hover:border-[#F59E0B] flex justify-between items-center bg-white/5 transition-colors">
+                    <button 
+                        onClick={() => setSelectedInterventionType("Parent Meeting")}
+                        className={`w-full text-left p-4 rounded-xl border flex justify-between items-center transition-all ${selectedInterventionType === "Parent Meeting" ? "border-[#F59E0B] bg-[#F59E0B]/10" : "border-white/10 bg-white/5 hover:border-white/20"}`}
+                    >
                         <div>
                             <div className="font-bold text-gray-900 dark:text-white">Schedule Parent Meeting</div>
                             <div className="text-xs text-gray-600 dark:text-gray-400">Send auto-email to parents and block calendar</div>
                         </div>
                         <Users className="text-[#F59E0B] w-5 h-5" />
                     </button>
-                    <button className="w-full text-left p-4 rounded-xl border border-white/10 hover:border-[#4DA3FF] flex justify-between items-center bg-white/5 transition-colors">
+                    <button 
+                        onClick={() => setSelectedInterventionType("Remedial Session")}
+                        className={`w-full text-left p-4 rounded-xl border flex justify-between items-center transition-all ${selectedInterventionType === "Remedial Session" ? "border-[#4DA3FF] bg-[#4DA3FF]/10" : "border-white/10 bg-white/5 hover:border-white/20"}`}
+                    >
                         <div>
                             <div className="font-bold text-gray-900 dark:text-white">Assign to Remedial Cluster</div>
                             <div className="text-xs text-gray-600 dark:text-gray-400">Add student to upcoming remedial sessions</div>
@@ -11732,7 +12496,22 @@ const App = () => {
                     <button onClick={() => setShowInterventionModal(false)} className="flex-1 py-3 rounded-xl border border-white/20 text-gray-900 dark:text-white font-bold hover:bg-white/5 transition-colors">
                         Cancel
                     </button>
-                    <button onClick={() => { setShowInterventionModal(false); showToast('✓ Intervention triggered successfully.'); }} className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#EF4444] text-gray-900 dark:text-white font-bold hover:opacity-90 transition-opacity">
+                    <button 
+                        onClick={() => {
+                            const newInv = {
+                                id: Date.now(),
+                                studentId: selectedStudent.id,
+                                type: selectedInterventionType,
+                                status: "Pending",
+                                date: "Today",
+                                assigned: selectedStudent.facultyAdvisor || "Assigned Advisor"
+                            };
+                            setInterventions(prev => [newInv, ...prev]);
+                            setShowInterventionModal(false);
+                            showToast(`✓ Triggered '${selectedInterventionType}' for ${selectedStudent.name}`);
+                        }}
+                        className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#EF4444] text-gray-900 dark:text-white font-bold hover:opacity-90 transition-opacity"
+                    >
                         Confirm Action
                     </button>
                 </div>
@@ -11826,7 +12605,7 @@ const App = () => {
 
                     {currentPage === "login" && <LoginPage onLogin={handleLogin} onForgotPassword={() => setCurrentPage("reset-password")} />}
                     {currentPage === "reset-password" && <ResetPassword onBack={() => setCurrentPage("login")} />}
-                    {currentPage === "admin" && <AdminDashboard students={students} onNavigate={handleNavigate} currentStudentId={currentStudentId} animatedStats={animatedStats} adminLoading={adminLoading} can={can} role={role} />}
+                    {currentPage === "admin" && <AdminDashboard students={students} onNavigate={handleNavigate} currentStudentId={currentStudentId} animatedStats={animatedStats} adminLoading={adminLoading} can={can} role={role} openStudentDetail={openStudentDetail} />}
                     {currentPage === "parent" && <ParentDashboard students={students} />}
                     {currentPage === "faculty" && <FacultyDashboard students={students} onSelectStudent={(s) => openStudentDetail(s)} can={can} currentStudentId={currentStudentId} openStudentDetail={openStudentDetail} />}
                     {currentPage === "student" && selectedStudent && <StudentDetail
@@ -11837,7 +12616,7 @@ const App = () => {
                         skeletonLoading={skeletonLoading}
                         displayScore={displayScore}
                     />}
-                    {currentPage === "interventions" && <InterventionsPanel students={students} />}
+                    {currentPage === "interventions" && <InterventionsPanel students={students} interventions={interventions} setInterventions={setInterventions} />}
                     {currentPage === "upload" && (role === "ADMIN" || role === "FACULTY") && <UploadPage setStudents={setStudents} showToast={showToast} role={role} />}
 
                 </div>
