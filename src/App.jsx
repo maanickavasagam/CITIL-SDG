@@ -6,9 +6,9 @@ import {
 import {
     ShieldAlert, BookOpen, GraduationCap, Users, LayoutDashboard,
     AlertTriangle, TrendingUp, TrendingDown, Minus, ChevronRight,
-    ArrowLeft, Brain, Activity, Clock, LogOut, CheckCircle2, Search,
+    ArrowLeft, Activity, Clock, LogOut, CheckCircle2, Search,
     Filter, MoreVertical, ShieldCheck, Zap, Wallet, MapPin, Star, Shield, TrendingDown as TrendingDownIcon, BarChart2, IndianRupee, Bell,
-    Sun, Moon, Eye, EyeOff
+    Sun, Moon, Eye, EyeOff, Cpu, Calendar, Sparkles, Building2, BarChart3
 } from 'lucide-react';
 
 
@@ -9899,14 +9899,14 @@ const Card = ({ children, tier = 1, className = "", delay = 0, onClick, title })
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
         return (
-            <div className="bg-white/95 dark:bg-[#0A1628]/90 border border-gray-200 dark:border-white/10 backdrop-blur-md rounded-xl p-4 text-gray-900 dark:text-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(77,163,255,0.08)] min-w-[150px] pointer-events-none transition-colors duration-300">
-                <p className="font-bold text-gray-900 dark:text-white mb-3 text-sm">{label}</p>
-                <div className="space-y-2 mt-1">
+            <div className="bg-white/90 dark:bg-black/85 border border-slate-200/60 dark:border-white/5 backdrop-blur-md rounded-lg p-3 text-gray-900 dark:text-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.1)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)] min-w-[140px] pointer-events-none transition-colors duration-300">
+                <p className="font-bold text-gray-900 dark:text-white mb-2 text-xs tracking-tight">{label}</p>
+                <div className="space-y-1.5">
                     {payload.map((entry, index) => (
-                        <div key={`item-${index}`} className="flex items-center justify-between text-sm gap-5">
-                            <div className="flex items-center gap-2">
-                                <div className="w-2.5 h-2.5 rounded-full shadow-sm" style={{ backgroundColor: entry.color || entry.fill }}></div>
-                                <span className="text-gray-600 dark:text-gray-400 font-medium">{entry.name || 'Value'}</span>
+                        <div key={`item-${index}`} className="flex items-center justify-between text-xs gap-4">
+                            <div className="flex items-center gap-1.5">
+                                <div className="w-2 h-2 rounded-full shadow-sm" style={{ backgroundColor: entry.color || entry.fill }}></div>
+                                <span className="text-gray-500 dark:text-gray-400 font-medium">{entry.name || 'Value'}</span>
                             </div>
                             <span className="font-bold text-gray-900 dark:text-white">{entry.value}</span>
                         </div>
@@ -9930,9 +9930,8 @@ const Footer = () => (
         color: 'var(--text-muted-25)',
         letterSpacing: '0.3px'
     }}>
-
-
-        {' | '}Hackspace © 2025
+        <div>HackSpace © 2026</div>
+        <div style={{ fontSize: 9, opacity: 0.8, marginTop: 2 }}>Academic Stability Engine</div>
     </div>
 );
 
@@ -10058,11 +10057,7 @@ const LoginPage = ({ onLogin, onForgotPassword }) => {
 
             <div className="card-tier-3 p-10 w-full max-w-md animate-fade-up z-10 flex flex-col items-center shadow-2xl relative">
                 <div className="absolute -top-12 w-24 h-24 bg-[#4DA3FF]/[0.18] rounded-full blur-3xl"></div>
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#4DA3FF] to-[#8CC7FF] flex items-center justify-center mb-4 relative z-10 block">
-                    <Brain className="w-8 h-8 text-gray-900 dark:text-white" />
-                </div>
-                <h1 className="text-4xl font-extrabold mb-2 text-gradient tracking-tight relative z-10">Hackspace</h1>
-                <p className="text-gray-600 dark:text-gray-400 mb-8 font-medium relative z-10">Academic Intelligence Platform</p>
+                <HackSpaceLogo size="large" variant="full" className="mb-8 relative z-10" />
 
                 <div className="flex w-full bg-white/5 p-1 rounded-xl mb-6 relative z-10">
                     {["Admin", "Faculty", "Parent", "Student"].map(r => (
@@ -10130,9 +10125,10 @@ const LoginPage = ({ onLogin, onForgotPassword }) => {
     );
 };
 
-const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats, adminLoading, can, role, openStudentDetail }) => {
+const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId, animatedStats, adminLoading, can, role, openStudentDetail }) => {
     const [loading, setLoading] = useState(false);
     const [expandedAction, setExpandedAction] = useState(null);
+    const [demoPanelExpanded, setDemoPanelExpanded] = useState(true);
 
     const handleSync = async () => {
         setLoading(true);
@@ -10300,12 +10296,32 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
             mostImprovedDept = { name: sortedByImprovement[0].name, value: sortedByImprovement[0].avgGrowth };
         }
 
+        // Mock / dynamic Demo Mode KPIs
+        const savedCount = students.filter(s => {
+            const score = calculateRiskScore(s).score;
+            return score < 50 && (s.attendance[s.attendance.length - 1] > s.attendance[0] || s.marks[s.marks.length - 1] > s.marks[0]);
+        }).length;
+
+        const activeInterventionsCount = interventions ? interventions.filter(i => i.status !== "Resolved").length : 6;
+
+        const recoveryCount = students.filter(s => s.marks[s.marks.length - 1] > s.marks[0]).length;
+        const academicRecoveryRate = Math.round((recoveryCount / students.length) * 100);
+
+        const mentoredCount = students.filter(s => s.assignmentDelays >= 2).length;
+        const successCount = students.filter(s => s.assignmentDelays >= 2 && calculateRiskScore(s).score < 70).length;
+        const mentorshipSuccessRate = Math.round((successCount / (mentoredCount || 1)) * 100);
+
+        const parentEngagementRate = Math.round((students.filter(s => s.attendance[s.attendance.length - 1] >= 75).length / students.length) * 100);
+
+        const dropoutPreventionRate = Number((100 - (high / students.length) * 100).toFixed(1));
+
         return { 
             high, moderate, safe, avg, deptChart, dropoutData, pieData, monthlyAtt,
             needingParentList, requiringMentorList, requiringRemedialList, immediateAttentionList,
-            deptAverages, highestRiskDept, bestPerformingDept, mostImprovedDept
+            deptAverages, highestRiskDept, bestPerformingDept, mostImprovedDept,
+            savedCount, activeInterventionsCount, academicRecoveryRate, mentorshipSuccessRate, parentEngagementRate, dropoutPreventionRate
         };
-    }, [students]);
+    }, [students, interventions]);
 
     return (
         <div className="p-6 animate-page max-w-7xl mx-auto">
@@ -10332,12 +10348,19 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             animationFillMode: 'both',
                             animationDelay: '0s'
                         }}>
-                            <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                                <Users className="w-4 h-4 text-[#4DA3FF]" /> Total Students
+                            <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex justify-between items-center">
+                                <span className="flex items-center gap-2">
+                                    <Users className="w-4 h-4 text-[#4DA3FF]" /> Total Students
+                                </span>
+                                <span className="text-xs font-bold text-green-500 flex items-center gap-0.5">↑ +1.2%</span>
                             </div>
                             <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{students.length}</div>
+                            <div className="text-[10px] text-gray-500 mt-2 font-medium border-t border-gray-200 dark:border-white/5 pt-2 flex items-center gap-1">
+                                <Zap className="w-3 h-3 text-[#4DA3FF]" />
+                                AI: ECE department registers the highest proportion of students in elevated risk categories.
+                            </div>
                         </Card>
-
+ 
                         <Card delay={0.2} className="w-full md:w-1/4 risk-pulse relative overflow-hidden bg-[#EF4444]/5 border-[#EF4444]/20" style={{
                             animationName: 'staggerFadeUp',
                             animationDuration: '260ms',
@@ -10347,13 +10370,19 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                         }}
                             onClick={() => onNavigate('faculty')}>
                             <div className="absolute -right-4 -top-4 w-16 h-16 bg-[#EF4444]/20 rounded-full blur-xl"></div>
-                            <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                                <AlertTriangle className="w-4 h-4 text-[#EF4444]" /> High Risk Count
+                            <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex justify-between items-center">
+                                <span className="flex items-center gap-2">
+                                    <AlertTriangle className="w-4 h-4 text-[#EF4444]" /> High Risk Count
+                                </span>
+                                <span className="text-xs font-bold text-[#EF4444] flex items-center gap-0.5">↑ +2</span>
                             </div>
                             <div className="text-4xl font-bold text-[#EF4444]">{data.high}</div>
-                            <div className="text-xs text-[#F87171] mt-2">+2 since last week</div>
+                            <div className="text-[10px] text-[#EF4444] mt-2 font-medium border-t border-gray-200 dark:border-white/5 pt-2 flex items-center gap-1">
+                                <Zap className="w-3 h-3 text-[#EF4444]" />
+                                AI: Cohort analysis indicates attendance under 75% correlates with most academic stability alerts.
+                            </div>
                         </Card>
-
+ 
                         <Card delay={0.3} className="w-full md:w-1/5 bg-[#F59E0B]/5 border-[#F59E0B]/20" style={{
                             animationName: 'staggerFadeUp',
                             animationDuration: '260ms',
@@ -10362,13 +10391,19 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             animationDelay: '0.12s'
                         }}
                             onClick={() => onNavigate('interventions')}>
-                            <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                                <Activity className="w-4 h-4 text-[#4DA3FF]" /> Interventions
+                            <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex justify-between items-center">
+                                <span className="flex items-center gap-2">
+                                    <Activity className="w-4 h-4 text-[#4DA3FF]" /> Interventions
+                                </span>
+                                <span className="text-xs font-bold text-green-500 flex items-center gap-0.5">↑ +3</span>
                             </div>
                             <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">8</div>
-                            <div className="text-xs text-[#4DA3FF] mt-2">4 pending review</div>
+                            <div className="text-[10px] text-gray-500 mt-2 font-medium border-t border-gray-200 dark:border-white/5 pt-2 flex items-center gap-1">
+                                <Zap className="w-3 h-3 text-[#4DA3FF]" />
+                                AI: Proactive parent notifications correspond to a 12% improvement in academic intervention completion.
+                            </div>
                         </Card>
-
+ 
                         <Card delay={0.4} className="w-full md:w-1/4" style={{
                             animationName: 'staggerFadeUp',
                             animationDuration: '260ms',
@@ -10376,12 +10411,94 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                             animationFillMode: 'both',
                             animationDelay: '0.18s'
                         }}>
-                            <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex items-center gap-2">
-                                <Brain className="w-4 h-4 text-[#8CC7FF]" /> Avg Risk Score
+                            <div className="text-gray-600 dark:text-gray-400 text-sm font-semibold mb-1 flex justify-between items-center">
+                                <span className="flex items-center gap-2">
+                                    <Zap className="w-4 h-4 text-[#8CC7FF]" /> Avg Risk Score
+                                </span>
+                                <span className="text-xs font-bold text-green-500 flex items-center gap-0.5">↓ -1.5%</span>
                             </div>
                             <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{data.avg}</div>
-                            <div className="text-xs text-[#8CC7FF] mt-2 opacity-80">Overall stability</div>
+                            <div className="text-[10px] text-gray-500 mt-2 font-medium border-t border-gray-200 dark:border-white/5 pt-2 flex items-center gap-1">
+                                <Zap className="w-3 h-3 text-[#4DA3FF]" />
+                                AI: Cohort risk indices declined 4% following implementation of structured remedial support.
+                            </div>
                         </Card>
+                    </div>
+
+                    {/* Executive Insights Center Panel */}
+                    <div style={{ background: 'var(--glass-bg-02)', border: '1px solid rgba(77,163,255,0.18)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 20, marginBottom: 24 }} className="animate-fade-up">
+                        <div className="flex justify-between items-center">
+                            <div style={{ fontFamily: 'Syne', fontSize: 18, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <Zap className="w-5 h-5 text-[#F59E0B] animate-pulse" />
+                                Executive Insights Center
+                            </div>
+                            <button
+                                onClick={() => setDemoPanelExpanded(!demoPanelExpanded)}
+                                className="text-xs text-[#4DA3FF] hover:underline flex items-center gap-1 font-semibold"
+                            >
+                                {demoPanelExpanded ? "Hide Insights" : "Show Insights"}
+                                <ChevronRight className={`w-3.5 h-3.5 transform transition-transform ${demoPanelExpanded ? 'rotate-90' : ''}`} />
+                            </button>
+                        </div>
+                        <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #F59E0B, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginTop: 8, marginBottom: 16 }}></div>
+
+                        {demoPanelExpanded && (
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 animate-fade-up">
+                                {/* KPI 1: Saved Students */}
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                    <div>
+                                        <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Saved Students</div>
+                                        <div className="text-2xl font-black text-green-400 mt-1">{data.savedCount}</div>
+                                    </div>
+                                    <div className="text-[9px] text-gray-500 mt-2">Moved from HIGH/MODERATE → SAFE</div>
+                                </div>
+
+                                {/* KPI 2: Prevention Effectiveness */}
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                    <div>
+                                        <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Prevention Rate</div>
+                                        <div className="text-2xl font-black text-[#4DA3FF] mt-1">{data.dropoutPreventionRate}%</div>
+                                    </div>
+                                    <div className="text-[9px] text-gray-500 mt-2">Institution dropout prevention</div>
+                                </div>
+
+                                {/* KPI 3: Active Interventions */}
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                    <div>
+                                        <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Active Interventions</div>
+                                        <div className="text-2xl font-black text-[#F59E0B] mt-1">{data.activeInterventionsCount}</div>
+                                    </div>
+                                    <div className="text-[9px] text-gray-500 mt-2">Resolutions in progress</div>
+                                </div>
+
+                                {/* KPI 4: Parent Engagement */}
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                    <div>
+                                        <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Parent Engagement</div>
+                                        <div className="text-2xl font-black text-[#8CC7FF] mt-1">{data.parentEngagementRate}%</div>
+                                    </div>
+                                    <div className="text-[9px] text-gray-500 mt-2">Notified parent feedback rate</div>
+                                </div>
+
+                                {/* KPI 5: Academic Recovery */}
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                    <div>
+                                        <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Academic Recovery</div>
+                                        <div className="text-2xl font-black text-green-400 mt-1">{data.academicRecoveryRate}%</div>
+                                    </div>
+                                    <div className="text-[9px] text-gray-500 mt-2">Students showing grade growth</div>
+                                </div>
+
+                                {/* KPI 6: Mentorship Success */}
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                    <div>
+                                        <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Mentor Success</div>
+                                        <div className="text-2xl font-black text-[#4DA3FF] mt-1">{data.mentorshipSuccessRate}%</div>
+                                    </div>
+                                    <div className="text-[9px] text-gray-500 mt-2">Mentored student stabilization</div>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     {role === "ADMIN" && (
@@ -10392,28 +10509,49 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                     ↓ Attendance dropped 16% this month
                                 </div>
                             </div>
-                            <ResponsiveContainer width="100%" height={220}>
-                                <LineChart data={data.monthlyAtt} margin={{ top: 10, right: 30, left: 30, bottom: 5 }}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="var(--glass-border-08)" vertical={false} />
-                                    <XAxis dataKey="week" stroke="#8CC7FF" tick={{ fill: (document.documentElement.classList.contains('dark')) ? "#9ca3af" : "#6b7280" }} tickMargin={10} axisLine={false} tickLine={false} />
-                                    <YAxis domain={[60, 85]} stroke="#8CC7FF" tick={{ fill: (document.documentElement.classList.contains('dark')) ? "#9ca3af" : "#6b7280" }} axisLine={false} tickLine={false} />
+                            <ResponsiveContainer width="100%" height={260}>
+                                <LineChart data={data.monthlyAtt} margin={{ top: 20, right: 20, left: 30, bottom: 20 }}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="var(--glass-border-08)" vertical={true} />
+                                    <XAxis 
+                                        dataKey="week" 
+                                        stroke="var(--text-normal-8)" 
+                                        height={55}
+                                        padding={{ left: 35, right: 35 }}
+                                        tick={{ fill: 'var(--text-muted-4)', fontSize: 11, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }} 
+                                        tickMargin={8} 
+                                        axisLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                        tickLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                        label={{ value: 'Academic Weeks', position: 'insideBottom', offset: 0, fill: 'var(--text-normal-9)', fontSize: 11, fontFamily: "'DM Sans', sans-serif", fontWeight: 700 }} 
+                                    />
+                                    <YAxis 
+                                        domain={[60, 100]} 
+                                        ticks={[60, 65, 70, 75, 80, 85, 90, 95, 100]}
+                                        stroke="var(--text-normal-8)" 
+                                        width={65}
+                                        tick={{ fill: 'var(--text-muted-4)', fontSize: 11, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }} 
+                                        tickMargin={8} 
+                                        axisLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                        tickLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                        label={{ value: 'Attendance (%)', angle: -90, position: 'insideLeft', offset: 5, fill: 'var(--text-normal-9)', fontSize: 11, fontFamily: "'DM Sans', sans-serif", fontWeight: 700 }} 
+                                    />
                                     <RechartsTooltip cursor={{ fill: 'var(--glass-bg-05)' }} content={<CustomTooltip />} />
-                                    <Line type="monotone" dataKey="value" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4, fill: '#8CC7FF', strokeWidth: 0 }} activeDot={{ r: 6, fill: '#8CC7FF' }} label={{ position: 'top', fill: '#8CC7FF', fontSize: 12, formatter: (value) => `${value}%` }} />
+                                    <Line type="monotone" dataKey="value" name="Attendance" stroke="#4DA3FF" strokeWidth={3.5} dot={{ r: 5, fill: '#8CC7FF', strokeWidth: 0 }} activeDot={{ r: 7, fill: '#8CC7FF' }} label={{ position: 'top', fill: '#8CC7FF', fontSize: 11, fontFamily: "'DM Sans', sans-serif", fontWeight: 700, formatter: (value) => `${value}%` }} />
                                 </LineChart>
                             </ResponsiveContainer>
                         </Card>
                     )}
 
-                    <div className="flex flex-col lg:flex-row gap-6">
-                        <div className="w-full lg:w-[60%] space-y-6">
-                            <Card tier={2} delay={0.5} className="h-80 flex flex-col">
+                    {/* Row 1: Department Risk Profile (60%) & Risk Distribution (40%) */}
+                    <div className="flex flex-col lg:flex-row gap-6 items-start mb-6">
+                        <div className="w-full lg:w-[60%]">
+                            <Card tier={2} delay={0.5} className="flex flex-col">
                                 <h3 className="text-lg font-semibold mb-4 px-2">Department Risk Profile (Avg Score)</h3>
                                 <div className="flex-1 animate-chart">
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <BarChart data={data.deptChart} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={false} />
-                                            <XAxis dataKey="name" stroke="var(--glass-border-08)" tick={{ fill: (document.documentElement.classList.contains('dark')) ? "#9ca3af" : "#6b7280", fontSize: 12 }} axisLine={false} tickLine={false} />
-                                            <YAxis stroke="var(--glass-border-08)" tick={{ fill: (document.documentElement.classList.contains('dark')) ? "#9ca3af" : "#6b7280", fontSize: 12 }} axisLine={false} tickLine={false} />
+                                    <ResponsiveContainer width="100%" height={220}>
+                                        <BarChart data={data.deptChart} margin={{ top: 20, right: 10, left: 10, bottom: 15 }}>
+                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={true} />
+                                            <XAxis dataKey="name" stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 11, fontFamily: "'DM Sans', sans-serif" }} axisLine={{ stroke: 'var(--glass-border-08)' }} tickLine={{ stroke: 'var(--glass-border-08)' }} label={{ value: 'Departments', position: 'insideBottom', offset: -5, fill: 'var(--text-muted-4)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }} />
+                                            <YAxis stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 11, fontFamily: "'DM Sans', sans-serif" }} axisLine={{ stroke: 'var(--glass-border-08)' }} tickLine={{ stroke: 'var(--glass-border-08)' }} label={{ value: 'Avg Risk Score', angle: -90, position: 'insideLeft', offset: -2, fill: 'var(--text-muted-4)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }} />
                                             <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'var(--glass-bg-05)' }} />
                                             <Bar dataKey="limit" radius={[4, 4, 0, 0]}>
                                                 {data.deptChart.map((entry, index) => (
@@ -10424,34 +10562,13 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                     </ResponsiveContainer>
                                 </div>
                             </Card>
-
-                            <Card tier={2} delay={0.6} className="h-64 flex flex-col">
-                                <h3 className="text-lg font-semibold mb-4 px-2">Probable Attrition Rate (6 Months)</h3>
-                                <div className="flex-1 animate-chart">
-                                    <ResponsiveContainer width="100%" height="100%">
-                                        <AreaChart data={data.dropoutData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                                            <defs>
-                                                <linearGradient id="dropoutGradient" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="#EF4444" stopOpacity={0.3} />
-                                                    <stop offset="95%" stopColor="#EF4444" stopOpacity={0} />
-                                                </linearGradient>
-                                            </defs>
-                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={false} />
-                                            <XAxis dataKey="name" stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 12 }} axisLine={false} tickLine={false} />
-                                            <YAxis stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 12 }} axisLine={false} tickLine={false} />
-                                            <RechartsTooltip content={<CustomTooltip />} />
-                                            <Area type="monotone" dataKey="prob" name="Dropout %" stroke="#EF4444" strokeWidth={2} fillOpacity={1} fill="url(#dropoutGradient)" />
-                                        </AreaChart>
-                                    </ResponsiveContainer>
-                                </div>
-                            </Card>
                         </div>
 
-                        <div className="w-full lg:w-[40%] space-y-6">
-                            <Card tier={2} delay={0.7} className="h-[22rem] flex flex-col relative overflow-hidden">
+                        <div className="w-full lg:w-[40%]">
+                            <Card tier={2} delay={0.7} className="relative overflow-hidden">
                                 <h3 className="text-lg font-semibold mb-2 px-2">Risk Distribution</h3>
-                                <div className="flex-1 animate-chart relative">
-                                    <ResponsiveContainer width="100%" height="100%">
+                                <div className="animate-chart relative">
+                                    <ResponsiveContainer width="100%" height={180}>
                                         <PieChart>
                                             <Pie
                                                 data={data.pieData}
@@ -10467,7 +10584,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                             <RechartsTooltip content={<CustomTooltip />} />
                                         </PieChart>
                                     </ResponsiveContainer>
-                                    <div className="absolute inset-0 flex items-center justify-center flex-col pointer-events-none pb-8">
+                                    <div className="absolute inset-0 flex items-center justify-center flex-col pointer-events-none pb-0">
                                         <span className="text-3xl font-bold">{students.length}</span>
                                         <span className="text-xs text-gray-600 dark:text-gray-400">Total</span>
                                     </div>
@@ -10482,44 +10599,71 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                     ))}
                                 </div>
                             </Card>
+                        </div>
+                    </div>
 
-                            {/* Recommended Actions Today */}
-                            <Card tier={2} delay={0.75} className="flex flex-col" style={{ minHeight: '20rem', maxHeight: '28rem' }}>
+                    {/* Row 2: Probable Attrition Rate (60%) & Recommended Actions Today (40%) */}
+                    <div className="flex flex-col lg:flex-row gap-6 items-stretch mb-6">
+                        <div className="w-full lg:w-[60%] flex flex-col">
+                            <Card tier={2} delay={0.6} className="flex flex-col h-full">
+                                <h3 className="text-lg font-semibold mb-4 px-2">Probable Attrition Rate (6 Months)</h3>
+                                <div className="flex-1 animate-chart">
+                                    <ResponsiveContainer width="100%" height={200}>
+                                        <AreaChart data={data.dropoutData} margin={{ top: 20, right: 10, left: 10, bottom: 15 }}>
+                                            <defs>
+                                                <linearGradient id="dropoutGradient" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="5%" stopColor="#EF4444" stopOpacity={0.3} />
+                                                    <stop offset="95%" stopColor="#EF4444" stopOpacity={0} />
+                                                </linearGradient>
+                                            </defs>
+                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={true} />
+                                            <XAxis dataKey="name" stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 11, fontFamily: "'DM Sans', sans-serif" }} axisLine={{ stroke: 'var(--glass-border-08)' }} tickLine={{ stroke: 'var(--glass-border-08)' }} label={{ value: 'Timeline', position: 'insideBottom', offset: -5, fill: 'var(--text-muted-4)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }} />
+                                            <YAxis stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 11, fontFamily: "'DM Sans', sans-serif" }} axisLine={{ stroke: 'var(--glass-border-08)' }} tickLine={{ stroke: 'var(--glass-border-08)' }} label={{ value: 'Probability (%)', angle: -90, position: 'insideLeft', offset: -2, fill: 'var(--text-muted-4)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }} />
+                                            <RechartsTooltip content={<CustomTooltip />} />
+                                            <Area type="monotone" dataKey="prob" name="Dropout %" stroke="#EF4444" strokeWidth={2} fillOpacity={1} fill="url(#dropoutGradient)" />
+                                        </AreaChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </Card>
+                        </div>
+
+                        <div className="w-full lg:w-[40%] flex flex-col">
+                            <Card tier={2} delay={0.75} className="flex flex-col h-full">
                                 <h3 className="text-lg font-semibold mb-4 px-2 flex items-center gap-2">
                                     <Bell className="w-5 h-5 text-[#4DA3FF]" />
-                                    Recommended Actions Today
+                                    Recommended Actions
                                 </h3>
-                                <div className="space-y-3 overflow-y-auto pr-1 flex-1">
+                                <div className="space-y-3 pr-1 flex-1">
                                     {/* Action 1: Parent Notification */}
                                     <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
                                         <div 
                                             onClick={() => setExpandedAction(expandedAction === 'parent' ? null : 'parent')}
-                                            className="p-3.5 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-white/5"
                                         >
                                             <div className="flex flex-col">
-                                                <span className="text-xs font-bold text-gray-900 dark:text-white">Needing Parent Notification</span>
-                                                <span className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Attendance &lt; 75% or High Risk</span>
+                                                <span className="text-[11px] font-bold text-gray-900 dark:text-white leading-tight">Needing Parent Notification</span>
+                                                <span className="text-[9px] text-gray-500 dark:text-gray-400 mt-0.5">Attendance &lt; 75% or High Risk</span>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20 uppercase">High</span>
-                                                <span className="w-6 h-6 rounded-full bg-[#EF4444]/15 text-[#EF4444] flex items-center justify-center text-xs font-bold">{data.needingParentList.length}</span>
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20 uppercase">High</span>
+                                                <span className="w-5 h-5 rounded-full bg-[#EF4444]/15 text-[#EF4444] flex items-center justify-center text-[10px] font-bold">{data.needingParentList.length}</span>
                                             </div>
                                         </div>
                                         {expandedAction === 'parent' && (
-                                            <div className="p-3 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1.5 max-h-48 overflow-y-auto">
+                                            <div className="p-2 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1 max-h-36 overflow-y-auto">
                                                 {data.needingParentList.length > 0 ? (
                                                     data.needingParentList.map(s => (
                                                         <div 
                                                             key={s.id} 
                                                             onClick={() => openStudentDetail && openStudentDetail(s)}
-                                                            className="flex justify-between items-center text-xs p-2 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
                                                         >
                                                             <span>{s.name} ({s.dept})</span>
                                                             <span className="text-gray-500 dark:text-gray-400 font-normal">Score: {calculateRiskScore(s).score}</span>
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="text-xs text-gray-500 text-center py-2">No recommendations in this category</div>
+                                                    <div className="text-[10px] text-gray-500 text-center py-1">No recommendations</div>
                                                 )}
                                             </div>
                                         )}
@@ -10529,32 +10673,32 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                     <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
                                         <div 
                                             onClick={() => setExpandedAction(expandedAction === 'mentor' ? null : 'mentor')}
-                                            className="p-3.5 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-white/5"
                                         >
                                             <div className="flex flex-col">
-                                                <span className="text-xs font-bold text-gray-900 dark:text-white">Requiring Mentor Assignment</span>
-                                                <span className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Moderate/High Risk with 3+ delays</span>
+                                                <span className="text-[11px] font-bold text-gray-900 dark:text-white leading-tight">Requiring Mentor Assignment</span>
+                                                <span className="text-[9px] text-gray-500 dark:text-gray-400 mt-0.5">Moderate/High Risk with 3+ delays</span>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20 uppercase">Medium</span>
-                                                <span className="w-6 h-6 rounded-full bg-[#F59E0B]/15 text-[#F59E0B] flex items-center justify-center text-xs font-bold">{data.requiringMentorList.length}</span>
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20 uppercase">Med</span>
+                                                <span className="w-5 h-5 rounded-full bg-[#F59E0B]/15 text-[#F59E0B] flex items-center justify-center text-[10px] font-bold">{data.requiringMentorList.length}</span>
                                             </div>
                                         </div>
                                         {expandedAction === 'mentor' && (
-                                            <div className="p-3 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1.5 max-h-48 overflow-y-auto">
+                                            <div className="p-2 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1 max-h-36 overflow-y-auto">
                                                 {data.requiringMentorList.length > 0 ? (
                                                     data.requiringMentorList.map(s => (
                                                         <div 
                                                             key={s.id} 
                                                             onClick={() => openStudentDetail && openStudentDetail(s)}
-                                                            className="flex justify-between items-center text-xs p-2 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
                                                         >
                                                             <span>{s.name} ({s.dept})</span>
                                                             <span className="text-gray-500 dark:text-gray-400 font-normal">Delays: {s.assignmentDelays}</span>
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="text-xs text-gray-500 text-center py-2">No recommendations in this category</div>
+                                                    <div className="text-[10px] text-gray-500 text-center py-1">No recommendations</div>
                                                 )}
                                             </div>
                                         )}
@@ -10564,32 +10708,32 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                     <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
                                         <div 
                                             onClick={() => setExpandedAction(expandedAction === 'remedial' ? null : 'remedial')}
-                                            className="p-3.5 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-white/5"
                                         >
                                             <div className="flex flex-col">
-                                                <span className="text-xs font-bold text-gray-900 dark:text-white">Requiring Remedial Support</span>
-                                                <span className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Recent marks below 55%</span>
+                                                <span className="text-[11px] font-bold text-gray-900 dark:text-white leading-tight">Requiring Remedial Support</span>
+                                                <span className="text-[9px] text-gray-500 dark:text-gray-400 mt-0.5">Recent marks below 55%</span>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20 uppercase">Medium</span>
-                                                <span className="w-6 h-6 rounded-full bg-[#F59E0B]/15 text-[#F59E0B] flex items-center justify-center text-xs font-bold">{data.requiringRemedialList.length}</span>
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-[#F59E0B]/10 text-[#F59E0B] border border-[#F59E0B]/20 uppercase">Med</span>
+                                                <span className="w-5 h-5 rounded-full bg-[#F59E0B]/15 text-[#F59E0B] flex items-center justify-center text-[10px] font-bold">{data.requiringRemedialList.length}</span>
                                             </div>
                                         </div>
                                         {expandedAction === 'remedial' && (
-                                            <div className="p-3 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1.5 max-h-48 overflow-y-auto">
+                                            <div className="p-2 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1 max-h-36 overflow-y-auto">
                                                 {data.requiringRemedialList.length > 0 ? (
                                                     data.requiringRemedialList.map(s => (
                                                         <div 
                                                             key={s.id} 
                                                             onClick={() => openStudentDetail && openStudentDetail(s)}
-                                                            className="flex justify-between items-center text-xs p-2 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
                                                         >
                                                             <span>{s.name} ({s.dept})</span>
                                                             <span className="text-gray-500 dark:text-gray-400 font-normal">Marks: {s.marks[s.marks.length - 1]}%</span>
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="text-xs text-gray-500 text-center py-2">No recommendations in this category</div>
+                                                    <div className="text-[10px] text-gray-500 text-center py-1">No recommendations</div>
                                                 )}
                                             </div>
                                         )}
@@ -10599,60 +10743,127 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                                     <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
                                         <div 
                                             onClick={() => setExpandedAction(expandedAction === 'immediate' ? null : 'immediate')}
-                                            className="p-3.5 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-white/5"
                                         >
                                             <div className="flex flex-col">
-                                                <span className="text-xs font-bold text-gray-900 dark:text-white">Requiring Immediate Attention</span>
-                                                <span className="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Overall risk score &ge; 70</span>
+                                                <span className="text-[11px] font-bold text-gray-900 dark:text-white leading-tight">Requiring Immediate Attention</span>
+                                                <span className="text-[9px] text-gray-500 dark:text-gray-400 mt-0.5">Overall risk score &ge; 70</span>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20 uppercase animate-pulse">Critical</span>
-                                                <span className="w-6 h-6 rounded-full bg-[#EF4444]/15 text-[#EF4444] flex items-center justify-center text-xs font-bold animate-pulse">{data.immediateAttentionList.length}</span>
+                                            <div className="flex items-center gap-1.5">
+                                                <span className="px-1.5 py-0.5 rounded text-[8px] font-bold bg-[#EF4444]/10 text-[#EF4444] border border-[#EF4444]/20 uppercase animate-pulse">Critical</span>
+                                                <span className="w-5 h-5 rounded-full bg-[#EF4444]/15 text-[#EF4444] flex items-center justify-center text-[10px] font-bold animate-pulse">{data.immediateAttentionList.length}</span>
                                             </div>
                                         </div>
                                         {expandedAction === 'immediate' && (
-                                            <div className="p-3 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1.5 max-h-48 overflow-y-auto">
+                                            <div className="p-2 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1 max-h-36 overflow-y-auto">
                                                 {data.immediateAttentionList.length > 0 ? (
                                                     data.immediateAttentionList.map(s => (
                                                         <div 
                                                             key={s.id} 
                                                             onClick={() => openStudentDetail && openStudentDetail(s)}
-                                                            className="flex justify-between items-center text-xs p-2 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
                                                         >
                                                             <span>{s.name} ({s.dept})</span>
                                                             <span className="text-gray-500 dark:text-gray-400 font-normal text-[#EF4444]">Risk: {calculateRiskScore(s).score}</span>
                                                         </div>
                                                     ))
                                                 ) : (
-                                                    <div className="text-xs text-gray-500 text-center py-2">No recommendations in this category</div>
+                                                    <div className="text-[10px] text-gray-500 text-center py-1">No recommendations</div>
                                                 )}
                                             </div>
                                         )}
                                     </div>
                                 </div>
                             </Card>
-
-                            <Card tier={2} delay={0.8} className="flex-1 h-64 overflow-y-auto">
-                                <h3 className="text-lg font-semibold mb-4 flex items-center gap-2"><Zap className="w-5 h-5 text-[#FBBF24]" /> Recent Alerts</h3>
-                                <div className="space-y-4">
-                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#EF4444]" style={{ animationDelay: '0.9s' }}>
-                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#EF4444] shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
-                                        <p className="text-sm font-medium">Aryan Mehta crossed HIGH RISK threshold</p>
-                                        <p className="text-xs text-gray-500">2 min ago</p>
-                                    </div>
-                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#EF4444]" style={{ animationDelay: '1.0s' }}>
-                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#EF4444] shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
-                                        <p className="text-sm font-medium">Rehan Shaikh marked 3rd behavioral incident</p>
-                                        <p className="text-xs text-gray-500">1 hour ago</p>
-                                    </div>
-                                    <div className="animate-fade-up relative pl-4 border-l-2 border-[#4DA3FF]" style={{ animationDelay: '1.1s' }}>
-                                        <div className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#4DA3FF] shadow-[0_0_8px_rgba(77,163,255,1)]"></div>
-                                        <p className="text-sm font-medium">Kavya Nair shows strong recovery trend</p>
-                                        <p className="text-xs text-gray-500">3 hours ago</p>
-                                    </div>
-                                </div>
-                            </Card>
                         </div>
+                    </div>
+
+                    {/* Row 3: Recent Alerts (100% Horizontal Bar) */}
+                    <div className="w-full mb-6">
+                        <Card tier={2} delay={0.8} className="flex flex-col animate-fade-up" style={{ overflow: 'hidden' }}>
+                            <h3 className="text-lg font-semibold mb-4 px-2 flex items-center gap-2"><Zap className="w-5 h-5 text-[#FBBF24]" /> Recent Alerts</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4 px-2 pb-2">
+                                <div className="relative pl-3.5 border-l-2 border-[#EF4444] py-0.5">
+                                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#EF4444] shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
+                                    <div className="flex justify-between items-center text-[11px] font-bold text-gray-900 dark:text-white">
+                                        <span>Consecutive absenteeism flagged</span>
+                                        <span className="text-[9px] text-[#EF4444] bg-[#EF4444]/10 px-1 rounded uppercase font-semibold">Critical</span>
+                                    </div>
+                                    <p className="text-[11px] text-gray-600 dark:text-gray-300 font-medium">Suresh Rao (CSE) missed 3 classes consecutively</p>
+                                    <p className="text-[9px] text-gray-500 mt-0.5">10m ago</p>
+                                </div>
+
+                                <div className="relative pl-3.5 border-l-2 border-[#EF4444] py-0.5">
+                                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#EF4444] shadow-[0_0_8px_rgba(239,68,68,1)]"></div>
+                                    <div className="flex justify-between items-center text-[11px] font-bold text-gray-900 dark:text-white">
+                                        <span>Attendance threshold breached</span>
+                                        <span className="text-[9px] text-[#EF4444] bg-[#EF4444]/10 px-1 rounded uppercase font-semibold">High</span>
+                                    </div>
+                                    <p className="text-[11px] text-gray-600 dark:text-gray-300 font-medium">Ishaan Bhattacharya (CIVIL) attendance fell to 55%</p>
+                                    <p className="text-[9px] text-gray-500 mt-0.5">30m ago</p>
+                                </div>
+
+                                <div className="relative pl-3.5 border-l-2 border-[#F59E0B] py-0.5">
+                                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#F59E0B] shadow-[0_0_8px_rgba(245,158,11,1)]"></div>
+                                    <div className="flex justify-between items-center text-[11px] font-bold text-gray-900 dark:text-white">
+                                        <span>Fee payment overdue</span>
+                                        <span className="text-[9px] text-[#F59E0B] bg-[#F59E0B]/10 px-1 rounded uppercase font-semibold">High</span>
+                                    </div>
+                                    <p className="text-[11px] text-gray-600 dark:text-gray-300 font-medium">Aarti Rao (EEE) second notice transmitted</p>
+                                    <p className="text-[9px] text-gray-500 mt-0.5">2h ago</p>
+                                </div>
+
+                                <div className="relative pl-3.5 border-l-2 border-[#4DA3FF] py-0.5">
+                                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#4DA3FF] shadow-[0_0_8px_rgba(77,163,255,1)]"></div>
+                                    <div className="flex justify-between items-center text-[11px] font-bold text-gray-900 dark:text-white">
+                                        <span>Parent notification delivered</span>
+                                        <span className="text-[9px] text-[#4DA3FF] bg-[#4DA3FF]/10 px-1 rounded uppercase font-semibold">Info</span>
+                                    </div>
+                                    <p className="text-[11px] text-gray-600 dark:text-gray-300 font-medium">Alerts dispatched for Sneha Sharma (CIVIL)</p>
+                                    <p className="text-[9px] text-gray-500 mt-0.5">4h ago</p>
+                                </div>
+
+                                <div className="relative pl-3.5 border-l-2 border-[#10B981] py-0.5">
+                                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,1)]"></div>
+                                    <div className="flex justify-between items-center text-[11px] font-bold text-gray-900 dark:text-white">
+                                        <span>Mentor assigned successfully</span>
+                                        <span className="text-[9px] text-[#10B981] bg-[#10B981]/10 px-1 rounded uppercase font-semibold">Success</span>
+                                    </div>
+                                    <p className="text-[11px] text-gray-600 dark:text-gray-300 font-medium">Ananya Nambiar (ECE) &rarr; Prof. Anjali Desai</p>
+                                    <p className="text-[9px] text-gray-500 mt-0.5">5h ago</p>
+                                </div>
+
+                                <div className="relative pl-3.5 border-l-2 border-[#10B981] py-0.5">
+                                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,1)]"></div>
+                                    <div className="flex justify-between items-center text-[11px] font-bold text-gray-900 dark:text-white">
+                                        <span>Academic recovery detected</span>
+                                        <span className="text-[9px] text-[#10B981] bg-[#10B981]/10 px-1 rounded uppercase font-semibold">Success</span>
+                                    </div>
+                                    <p className="text-[11px] text-gray-600 dark:text-gray-300 font-medium">Kavya Nair (CSE) test grades improved by 18%</p>
+                                    <p className="text-[9px] text-gray-500 mt-0.5">1d ago</p>
+                                </div>
+
+                                <div className="relative pl-3.5 border-l-2 border-[#10B981] py-0.5">
+                                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,1)]"></div>
+                                    <div className="flex justify-between items-center text-[11px] font-bold text-gray-900 dark:text-white">
+                                        <span>Intervention resolved</span>
+                                        <span className="text-[9px] text-gray-500 bg-white/5 border border-white/10 px-1 rounded uppercase font-semibold">Closed</span>
+                                    </div>
+                                    <p className="text-[11px] text-gray-600 dark:text-gray-300 font-medium">Saurabh Tiwari (MECH) remedial cluster complete</p>
+                                    <p className="text-[9px] text-gray-500 mt-0.5">2d ago</p>
+                                </div>
+
+                                <div className="relative pl-3.5 border-l-2 border-[#10B981] py-0.5">
+                                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,1)]"></div>
+                                    <div className="flex justify-between items-center text-[11px] font-bold text-gray-900 dark:text-white">
+                                        <span>Academic status stabilized</span>
+                                        <span className="text-[9px] text-[#10B981] bg-[#10B981]/10 px-1 rounded uppercase font-semibold">Success</span>
+                                    </div>
+                                    <p className="text-[11px] text-gray-600 dark:text-gray-300 font-medium">Nithya Dev (ECE) transitioned to low risk</p>
+                                    <p className="text-[9px] text-gray-500 mt-0.5">3d ago</p>
+                                </div>
+                            </div>
+                        </Card>
                     </div>
 
                 </>
@@ -10705,7 +10916,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                 <>
                     {/* Department Intelligence */}
                     <div style={{
-                        marginTop: 48,
+                        marginTop: 24,
                         animationName: 'staggerFadeUp',
                         animationDuration: '300ms',
                         animationTimingFunction: 'ease-out',
@@ -10864,7 +11075,7 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
                     </div>
 
                     <div style={{
-                        marginTop: 48,
+                        marginTop: 24,
                         animationName: 'staggerFadeUp',
                         animationDuration: '300ms',
                         animationTimingFunction: 'ease-out',
@@ -10938,11 +11149,9 @@ const AdminDashboard = ({ students, onNavigate, currentStudentId, animatedStats,
     );
 };
 
-const ParentDashboard = ({ students }) => {
-    // Determine the child mapped to this parent. 
-    // In a real application, you'd match by parentId. 
-    // Since mock data lacks parentId, we gracefully pick the first student for demonstration.
-    const child = students[0];
+const ParentDashboard = ({ students, child }) => {
+    const [alertsCollapsed, setAlertsCollapsed] = useState(false);
+
     const risk = calculateRiskScore(child);
 
     // Formatted metric blocks
@@ -10952,20 +11161,144 @@ const ParentDashboard = ({ students }) => {
     // Recent Performance Data formatting
     const performanceData = child.marks.map((m, i) => ({ term: `T${i + 1}`, score: m }));
 
+    const activeAlerts = useMemo(() => {
+        const alerts = [];
+        
+        // 1. Attendance Drop Alert
+        const attVals = child.attendance || [];
+        if (attVals.length > 1) {
+            const drop = attVals[0] - attVals[attVals.length - 1];
+            if (drop >= 10) {
+                alerts.push({
+                    title: "Critical Attendance Drop Detected",
+                    desc: `Your child's attendance has decreased by ${drop}% over the past few weeks, currently sitting at ${attVals[attVals.length - 1]}%.`,
+                    action: "Please check in with your child and discuss the importance of regular attendance.",
+                    severity: "HIGH"
+                });
+            }
+        }
+        
+        // 2. Risk Level Escalated Alert
+        if (risk.level === "HIGH") {
+            alerts.push({
+                title: "Academic Risk Escalated to HIGH",
+                desc: `Our prediction engine has flagged an academic risk score of ${risk.score}/100.`,
+                action: "We recommend scheduling an urgent counselor call to discuss a recovery strategy.",
+                severity: "HIGH"
+            });
+        } else if (risk.level === "MODERATE") {
+            alerts.push({
+                title: "Academic Risk Level Increased to Moderate",
+                desc: `The academic risk score has risen to ${risk.score}/100.`,
+                action: "Regular study monitoring is advised to stabilize performance.",
+                severity: "MEDIUM"
+            });
+        }
+
+        // 3. Mentor Intervention Recommended
+        const mentorRecommended = (risk.level === "HIGH" || risk.level === "MODERATE") && child.assignmentDelays >= 3;
+        if (mentorRecommended) {
+            alerts.push({
+                title: "Faculty Mentor Assignment Recommended",
+                desc: `Due to elevated risk level and ${child.assignmentDelays} late assignment submissions, a structured mentorship is recommended.`,
+                action: "Please approve the faculty mentor assignment request on the portal.",
+                severity: "MEDIUM"
+            });
+        }
+
+        // 4. Declining Performance
+        const marksVals = child.marks || [];
+        const isMarksDeclining = marksVals.length > 2 && marksVals[marksVals.length - 3] > marksVals[marksVals.length - 2] && marksVals[marksVals.length - 2] > marksVals[marksVals.length - 1];
+        if (isMarksDeclining) {
+            alerts.push({
+                title: "Academic Performance in Decline",
+                desc: "Recent test grades show a steady downward trend from test to test.",
+                action: "Consider dedicating additional study hours at home and reviewing weak subjects.",
+                severity: "MEDIUM"
+            });
+        }
+
+        // 5. Remedial Support Suggestion
+        const currentMark = marksVals.length ? marksVals[marksVals.length - 1] : 100;
+        if (currentMark < 55) {
+            alerts.push({
+                title: "Remedial Support Suggestion",
+                desc: `Your child scored ${currentMark}% in the latest examination, which falls below the institutional safety threshold of 55%.`,
+                action: "We suggest enrolling them in the upcoming remedial cluster support sessions.",
+                severity: "MEDIUM"
+            });
+        }
+
+        return alerts;
+    }, [child, risk]);
+
     return (
         <div className="p-6 animate-page max-w-7xl mx-auto">
             <HeaderUnderline title={`Parent Portal - ${child.name}`} />
 
-            {/* High Risk Banner Alert */}
-            {risk.level === "HIGH" && (
-                <div className="bg-red-900/30 border border-red-500 text-red-300 rounded-lg p-4 mb-6 animate-fade-up">
-                    <div className="flex items-center gap-2 font-bold mb-1">
-                        <AlertTriangle className="w-5 h-5" />
-                        Attention Required
+            {/* Parent Alert Center */}
+            <div style={{ background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 20, marginBottom: 24 }} className="animate-fade-up">
+                <div className="flex justify-between items-center">
+                    <div style={{ fontFamily: 'Syne', fontSize: 18, fontWeight: 600, display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <Bell className="w-5 h-5 text-[#EF4444]" />
+                        Parent Alert Center
+                        {activeAlerts.length > 0 && (
+                            <span className="w-5 h-5 rounded-full bg-[#EF4444]/15 text-[#EF4444] flex items-center justify-center text-xs font-bold animate-pulse">
+                                {activeAlerts.length}
+                            </span>
+                        )}
                     </div>
-                    ⚠ Your child may be at academic risk. Suggested intervention recommended.
+                    <button
+                        onClick={() => setAlertsCollapsed(!alertsCollapsed)}
+                        className="text-xs text-[#4DA3FF] hover:underline flex items-center gap-1 font-semibold"
+                    >
+                        {alertsCollapsed ? "Show Alerts" : "Hide Alerts"}
+                        <ChevronRight className={`w-3.5 h-3.5 transform transition-transform ${alertsCollapsed ? '' : 'rotate-90'}`} />
+                    </button>
                 </div>
-            )}
+                <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #EF4444, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginTop: 8, marginBottom: 12 }}></div>
+
+                {!alertsCollapsed && (
+                    <div className="space-y-3 mt-3">
+                        {activeAlerts.length > 0 ? (
+                            activeAlerts.map((alert, index) => {
+                                const isHigh = alert.severity === "HIGH";
+                                const isMed = alert.severity === "MEDIUM";
+                                return (
+                                    <div 
+                                        key={index}
+                                        className={`p-4 rounded-xl border flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all ${
+                                            isHigh ? 'bg-[#EF4444]/5 border-[#EF4444]/20' : 
+                                            isMed ? 'bg-[#F59E0B]/5 border-[#F59E0B]/20' : 
+                                            'bg-[#4DA3FF]/5 border-[#4DA3FF]/20'
+                                        }`}
+                                    >
+                                        <div className="flex-1">
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                                                    isHigh ? 'bg-[#EF4444]/15 text-[#EF4444] border border-[#EF4444]/30' : 
+                                                    isMed ? 'bg-[#F59E0B]/15 text-[#F59E0B] border border-[#F59E0B]/30' : 
+                                                    'bg-[#4DA3FF]/15 text-[#4DA3FF] border border-[#4DA3FF]/30'
+                                                }`}>
+                                                    {alert.severity}
+                                                </span>
+                                                <h4 className="text-sm font-bold text-gray-900 dark:text-white">{alert.title}</h4>
+                                            </div>
+                                            <p className="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">{alert.desc}</p>
+                                        </div>
+                                        <div className="md:w-1/3 p-3 rounded-lg bg-black/10 dark:bg-black/20 border border-white/5">
+                                            <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Suggested Action</div>
+                                            <p className="text-xs text-gray-700 dark:text-gray-300">{alert.action}</p>
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <div className="text-xs text-gray-500 text-center py-4">✓ No alerts detected. Your child is meeting all academic stability parameters.</div>
+                        )}
+                    </div>
+                )}
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
@@ -11099,7 +11432,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                         </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-3 mb-4 ml-4">
+                    <div className="flex flex-wrap gap-3 mb-4 ml-4 items-center">
                         <select
                             value={selectedDepartment}
                             onChange={(e) => setSelectedDepartment(e.target.value)}
@@ -11124,6 +11457,20 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                             <option value="3">Year 3</option>
                             <option value="4">Year 4</option>
                         </select>
+
+                        <span className="text-xs font-semibold ml-2">
+                            {filteredStudents.length > 0 ? (
+                                <span className="text-green-500 flex items-center gap-1">
+                                    <CheckCircle2 className="w-3.5 h-3.5" />
+                                    Found {filteredStudents.length} matching students
+                                </span>
+                            ) : (
+                                <span className="text-[#EF4444] flex items-center gap-1">
+                                    <AlertTriangle className="w-3.5 h-3.5" />
+                                    No students match filters
+                                </span>
+                            )}
+                        </span>
                     </div>
 
                     <Card tier={2} className="p-0 overflow-hidden ml-4">
@@ -11135,72 +11482,84 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                                         <th className="p-4 font-semibold">Student</th>
                                         <th className="p-4 font-semibold">Dept</th>
                                         <th className="p-4 font-semibold text-center">Sem</th>
-                                        <th className="p-4 font-semibold text-center">Risk Score ⬇</th>
+                                        <th className="p-4 font-semibold text-center">Risk Score ↓</th>
                                         <th className="p-4 font-semibold">Risk Level</th>
                                         <th className="p-4 font-semibold text-center">Trend</th>
                                         <th className="p-4 font-semibold text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredStudents.map((s, idx) => {
-                                        const isHigh = s.risk.level === "HIGH";
-                                        const isSafe = s.risk.level === "SAFE";
-                                        return (
-                                            <tr key={s.id} className={`border-b border-white/5 smart-table-row risk-${s.risk.level.toLowerCase()}`}
-                                                onMouseEnter={e => {
-                                                    e.currentTarget.style.transform = 'translateX(3px)';
-                                                    e.currentTarget.style.transition = 'all 0.2s ease';
-                                                    e.currentTarget.style.background = 'rgba(77,163,255,0.04)';
-                                                }}
-                                                onMouseLeave={e => {
-                                                    e.currentTarget.style.transform = 'translateX(0px)';
-                                                    e.currentTarget.style.background = 'transparent';
-                                                }}
-                                            >
-                                                <td className="p-4 text-center text-gray-500">{idx + 1}</td>
-                                                <td className="p-4">
-                                                    <div className="flex items-center gap-3">
-                                                        <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-[#0B0B0C]"
+                                    {filteredStudents.length > 0 ? (
+                                        filteredStudents.map((s, idx) => {
+                                            const isHigh = s.risk.level === "HIGH";
+                                            const isSafe = s.risk.level === "SAFE";
+                                            return (
+                                                <tr key={s.id} className={`border-b border-white/5 smart-table-row risk-${s.risk.level.toLowerCase()}`}
+                                                    onMouseEnter={e => {
+                                                        e.currentTarget.style.transform = 'translateX(3px)';
+                                                        e.currentTarget.style.transition = 'all 0.2s ease';
+                                                        e.currentTarget.style.background = 'rgba(77,163,255,0.04)';
+                                                    }}
+                                                    onMouseLeave={e => {
+                                                        e.currentTarget.style.transform = 'translateX(0px)';
+                                                        e.currentTarget.style.background = 'transparent';
+                                                    }}
+                                                >
+                                                    <td className="p-4 text-center text-gray-500">{idx + 1}</td>
+                                                    <td className="p-4">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-[#0B0B0C]"
+                                                                style={getBadgeStyle(s.risk.level)}>
+                                                                {s.name.split(' ').map(n => n[0]).join('')}
+                                                            </div>
+                                                            <div>
+                                                                <div className="font-bold">{s.name}</div>
+                                                                <div className="text-xs text-gray-500">{s.id}</div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="p-4 text-gray-700 dark:text-gray-300">{s.dept}</td>
+                                                    <td className="p-4 text-center text-gray-700 dark:text-gray-300">{s.sem}</td>
+                                                    <td className="p-4 text-center">
+                                                        <div className="inline-block px-3 py-1 rounded-full risk-cell font-bold"
                                                             style={getBadgeStyle(s.risk.level)}>
-                                                            {s.name.split(' ').map(n => n[0]).join('')}
+                                                            {s.risk.score}
                                                         </div>
-                                                        <div>
-                                                            <div className="font-bold">{s.name}</div>
-                                                            <div className="text-xs text-gray-500">{s.id}</div>
+                                                    </td>
+                                                    <td className="p-4">
+                                                        <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold border ${isHigh ? 'risk-pulse' : ''}`}
+                                                            style={getBadgeStyle(s.risk.level)}>
+                                                            {s.risk.level}
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td className="p-4 text-gray-700 dark:text-gray-300">{s.dept}</td>
-                                                <td className="p-4 text-center text-gray-700 dark:text-gray-300">{s.sem}</td>
-                                                <td className="p-4 text-center">
-                                                    <div className="inline-block px-3 py-1 rounded-full risk-cell font-bold"
-                                                        style={getBadgeStyle(s.risk.level)}>
-                                                        {s.risk.score}
-                                                    </div>
-                                                </td>
-                                                <td className="p-4">
-                                                    <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold border ${isHigh ? 'risk-pulse' : ''}`}
-                                                        style={getBadgeStyle(s.risk.level)}>
-                                                        {s.risk.level}
-                                                    </div>
-                                                </td>
-                                                <td className="p-4 text-center">
-                                                    {s.risk.trend === 'declining' && <TrendingDown className="w-5 h-5 mx-auto text-[#EF4444]" />}
-                                                    {s.risk.trend === 'improving' && <TrendingUp className="w-5 h-5 mx-auto text-[#4DA3FF]" />}
-                                                    {s.risk.trend === 'stable' && <Minus className="w-5 h-5 mx-auto text-gray-600 dark:text-gray-400" />}
-                                                    {s.risk.trend === 'mixed' && <Activity className="w-5 h-5 mx-auto text-[#F59E0B]" />}
-                                                </td>
-                                                <td className="p-4 text-center align-middle">
-                                                    <button
-                                                        onClick={() => openStudentDetail && openStudentDetail(s) || onSelectStudent && onSelectStudent(s)}
-                                                        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.transition = 'all 0.25s ease'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(77,163,255,0.16)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0px)'; e.currentTarget.style.boxShadow = 'none'; }} className="action-btn px-4 py-1.5 btn-gradient rounded-lg text-sm font-bold text-gray-900 dark:text-white shadow-md mx-auto inline-block opacity-0 transition-opacity"
-                                                    >
-                                                        View Profile
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
+                                                    </td>
+                                                    <td className="p-4 text-center">
+                                                        {s.risk.trend === 'declining' && <TrendingDown className="w-5 h-5 mx-auto text-[#EF4444]" />}
+                                                        {s.risk.trend === 'improving' && <TrendingUp className="w-5 h-5 mx-auto text-[#4DA3FF]" />}
+                                                        {s.risk.trend === 'stable' && <Minus className="w-5 h-5 mx-auto text-gray-600 dark:text-gray-400" />}
+                                                        {s.risk.trend === 'mixed' && <Activity className="w-5 h-5 mx-auto text-[#F59E0B]" />}
+                                                    </td>
+                                                    <td className="p-4 text-center align-middle">
+                                                        <button
+                                                            onClick={() => openStudentDetail && openStudentDetail(s) || onSelectStudent && onSelectStudent(s)}
+                                                            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.transition = 'all 0.25s ease'; e.currentTarget.style.boxShadow = '0 6px 18px rgba(77,163,255,0.16)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0px)'; e.currentTarget.style.boxShadow = 'none'; }} className="action-btn px-4 py-1.5 btn-gradient rounded-lg text-sm font-bold text-gray-900 dark:text-white shadow-md mx-auto inline-block opacity-0 transition-opacity"
+                                                        >
+                                                            View Profile
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                    ) : (
+                                        <tr>
+                                            <td colSpan={8} className="p-8 text-center">
+                                                <div className="flex flex-col items-center justify-center text-gray-500 py-6">
+                                                    <AlertTriangle className="w-10 h-10 text-[#F59E0B] mb-2 animate-pulse" />
+                                                    <div className="text-sm font-bold text-gray-900 dark:text-white">No Matching Students Found</div>
+                                                    <div className="text-xs text-gray-500 mt-1">Try adjusting your search query, risk filters, department, or year.</div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -11235,11 +11594,159 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
 };
 
 const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, displayScore, showToast }) => {
+    const [stressCollapsed, setStressCollapsed] = useState(true);
 
     const risk = useMemo(() => calculateRiskScore(student), [student]);
     const color = getLevelColor(risk.level);
     const isHigh = risk.level === "HIGH";
     const isSafe = risk.level === "SAFE";
+
+    const stressData = useMemo(() => {
+        const attVals = student.attendance || [100, 100, 100, 100, 100];
+        const volatility = attVals.length > 1 ? Math.max(...attVals) - Math.min(...attVals) : 0;
+        const daVal = Math.min(100, volatility * 4);
+
+        const vulnRaw = student.financial ? student.financial.vulnerabilityScore : 0;
+        const fVal = Math.min(100, (vulnRaw <= 10 ? vulnRaw * 10 : vulnRaw) + (student.financial && student.financial.feeStatus === "Pending" ? 30 : 0));
+
+        const lastMark = student.marks && student.marks.length ? student.marks[student.marks.length - 1] : 0;
+        const pVal = Math.max(0, 100 - lastMark);
+
+        const mVal = risk.score;
+
+        const Wa = 0.25;
+        const Wf = 0.20;
+        const Wp = 0.30;
+        const Wml = 0.25;
+
+        const score = Math.min(100, Math.max(0, Math.round((Wa * daVal) + (Wf * fVal) + (Wp * pVal) + (Wml * mVal))));
+
+        return {
+            daVal,
+            fVal,
+            pVal,
+            mVal,
+            Wa,
+            Wf,
+            Wp,
+            Wml,
+            score
+        };
+    }, [student, risk]);
+
+    const timelineEvents = useMemo(() => {
+        const events = [];
+        const level = risk.level;
+        
+        // Base Week 1 event (common for all)
+        events.push({
+            date: "Oct 12, 2026",
+            title: "Semester Commencement",
+            desc: "Student enrolled in courses. Assigned to primary academic advisor.",
+            status: "success",
+            icon: "BookOpen"
+        });
+
+        if (level === "HIGH" || level === "MODERATE") {
+            const attVal = student.attendance[student.attendance.length - 1];
+            events.push({
+                date: "Oct 26, 2026",
+                title: "Attendance Drop Warning",
+                desc: `Student attendance fell to ${attVal}%. Triggers system monitoring alert.`,
+                status: "warning",
+                icon: "AlertTriangle"
+            });
+
+            events.push({
+                date: "Nov 02, 2026",
+                title: "Risk Engine Escalation",
+                desc: `Prediction engine flagged student at ${level} risk. Score reached ${risk.score}/100.`,
+                status: "danger",
+                icon: "ShieldAlert"
+            });
+
+            events.push({
+                date: "Nov 05, 2026",
+                title: "Parent Alert Transmitted",
+                desc: "Automatic notification dispatched to parents regarding academic performance warning.",
+                status: "info",
+                icon: "Bell"
+            });
+
+            events.push({
+                date: "Nov 12, 2026",
+                title: "Faculty Mentor Appointed",
+                desc: `Assigned senior advisor ${student.facultyAdvisor} to lead the study stabilization protocol.`,
+                status: "success",
+                icon: "GraduationCap"
+            });
+
+            events.push({
+                date: "Nov 19, 2026",
+                title: "Active Intervention Created",
+                desc: "Created structured intervention track: monitoring academic submissions and mandatory tutorials.",
+                status: "danger",
+                icon: "Zap"
+            });
+
+            if (student.marks[student.marks.length - 1] < 55) {
+                events.push({
+                    date: "Nov 26, 2026",
+                    title: "Remedial Cluster Tutorial Scheduled",
+                    desc: `Assigned remedial sessions due to test score of ${student.marks[student.marks.length - 1]}%.`,
+                    status: "warning",
+                    icon: "Clock"
+                });
+            }
+        } else {
+            // SAFE students
+            events.push({
+                date: "Oct 26, 2026",
+                title: "Stable Attendance Audit",
+                desc: `Verified consistent attendance of ${student.attendance[student.attendance.length - 1]}%. Target metric achieved.`,
+                status: "success",
+                icon: "CheckCircle2"
+            });
+
+            events.push({
+                date: "Nov 02, 2026",
+                title: "Risk Engine Audit: Stable",
+                desc: `System checked academic health. Score is safe at ${risk.score}/100.`,
+                status: "success",
+                icon: "ShieldCheck"
+            });
+
+            if (student.financial.scholarshipEligible) {
+                events.push({
+                    date: "Nov 08, 2026",
+                    title: "Scholarship Alignment Review",
+                    desc: `Eligible for ${student.financial.scholarshipType || 'Scholarship'}. Maintaining academic status requirement.`,
+                    status: "info",
+                    icon: "Wallet"
+                });
+            }
+
+            if (student.competitions > 0) {
+                events.push({
+                    date: "Nov 15, 2026",
+                    title: "Co-Curricular Milestone",
+                    desc: `Participated in ${student.competitions} technical competition/hackathon, boosting student portfolio.`,
+                    status: "success",
+                    icon: "Star"
+                });
+            }
+
+            events.push({
+                date: "Nov 22, 2026",
+                title: "Progressive Growth Certified",
+                desc: `Term performance is solid with Average test marks of ${Math.round(student.marks.reduce((a,b)=>a+b,0)/student.marks.length)}%.`,
+                status: "success",
+                icon: "TrendingUp"
+            });
+        }
+
+        return events;
+    }, [student, risk]);
 
     const radius = 80;
     const circumference = 2 * Math.PI * radius;
@@ -11325,29 +11832,75 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
         }
 
         let summaryText = "";
+        let summaryPoints = [];
         if (risk.level === "HIGH") {
             summaryText = `${student.name} is classified as High Risk primarily due to `;
             const issues = [];
-            if (currentAtt < 75) issues.push(`severely low attendance (${currentAtt}%)`);
-            if (currentMark < 50) issues.push(`poor exam marks (${currentMark}%)`);
-            if (isAttDeclining || isMarksDeclining) issues.push("a steady downward performance trend");
-            if (recentLms < 5) issues.push("critically low LMS activity");
-            if (student.behaviorIncidents >= 1) issues.push("recent behavioral incidents");
+            const points = [];
+            if (currentAtt < 75) {
+                issues.push(`severely low attendance (${currentAtt}%)`);
+                points.push(`Low Attendance Threshold: Current attendance is at ${currentAtt}%, which is below the mandatory 75% requirement.`);
+            }
+            if (currentMark < 50) {
+                issues.push(`poor exam marks (${currentMark}%)`);
+                points.push(`Academic Performance: Average assessment marks are critically low at ${currentMark}% (passing target is 50%).`);
+            }
+            if (isAttDeclining || isMarksDeclining) {
+                issues.push("a steady downward performance trend");
+                points.push("Declining Trajectory: Student displays a steady downward trend in attendance and test performance.");
+            }
+            if (recentLms < 5) {
+                issues.push("critically low LMS activity");
+                points.push(`LMS Engagement: Digitally inactive with critically low LMS portal interaction (average < 5 weekly logins).`);
+            }
+            if (student.behaviorIncidents >= 1) {
+                issues.push("recent behavioral incidents");
+                points.push(`Behavioral Flags: Student profiles show recent behavioral incidents or attendance disputes flagged.`);
+            }
             summaryText += issues.join(", ") + ". Immediate preventive intervention is strongly advised to prevent academic failure.";
+            summaryPoints.push(`${student.name} is classified under HIGH RISK status. Primary drivers of instability:`);
+            summaryPoints.push(...points);
+            summaryPoints.push("Immediate preventive intervention is strongly advised to prevent academic failure.");
         } else if (risk.level === "MODERATE") {
             summaryText = `${student.name} shows Moderate Risk characteristics. This is driven by `;
             const issues = [];
-            if (currentAtt < 85 && currentAtt >= 75) issues.push(`sub-optimal attendance (${currentAtt}%)`);
-            if (currentMark < 65 && currentMark >= 50) issues.push(`moderate marks (${currentMark}%)`);
-            if (recentLms < 10) issues.push("reduced digital activity in the LMS portal");
-            if (student.assignmentDelays > 0) issues.push(`${student.assignmentDelays} late assignment submissions`);
-            if (issues.length === 0) issues.push("minor shifts in engagement indicators");
+            const points = [];
+            if (currentAtt < 85 && currentAtt >= 75) {
+                issues.push(`sub-optimal attendance (${currentAtt}%)`);
+                points.push(`Sub-optimal Attendance: Attendance has slipped to ${currentAtt}% (requires monitoring to prevent threshold breach).`);
+            }
+            if (currentMark < 65 && currentMark >= 50) {
+                issues.push(`moderate marks (${currentMark}%)`);
+                points.push(`Average Academic Standing: Term marks average stands at ${currentMark}%, indicating a need for remedial attention.`);
+            }
+            if (recentLms < 10) {
+                issues.push("reduced digital activity in the LMS portal");
+                points.push("LMS Activity Shift: Reduced engagement frequency and learning resource access in the LMS portal.");
+            }
+            if (student.assignmentDelays > 0) {
+                issues.push(`${student.assignmentDelays} late assignment submissions`);
+                points.push(`Late Submissions: ${student.assignmentDelays} late assignment submissions flagged over the semester.`);
+            }
+            if (issues.length === 0) {
+                issues.push("minor shifts in engagement indicators");
+                points.push("Engagement Indicators: Subtle fluctuations in attendance and class participation.");
+            }
             summaryText += issues.join(", ") + ". Preventive support is recommended to stabilize their performance.";
+            summaryPoints.push(`${student.name} shows MODERATE RISK characteristics. Areas of concern:`);
+            summaryPoints.push(...points);
+            summaryPoints.push("Preventive support is recommended to stabilize their academic performance.");
         } else {
             summaryText = `${student.name} maintains a Safe standing. Attendance (${currentAtt}%) and academic indicators (${currentMark}%) are strong, with healthy LMS logins and minimal delays. Trajectory remains stable and positive.`;
+            summaryPoints = [
+                `${student.name} maintains a SAFE standing with no immediate risk factors.`,
+                `Strong Attendance: Attendance is recorded at a healthy ${currentAtt}%.`,
+                `Solid Academics: Term grades and test performance average is stable at ${currentMark}%.`,
+                `Active Engagement: Healthy LMS platform logins and no late assignment submissions flagged.`,
+                "Overall Trajectory: Academic performance remains stable, positive, and on-track."
+            ];
         }
         
-        return { factors, actions, summaryText };
+        return { factors, actions, summaryText, summaryPoints };
     }, [student, risk]);
 
     return (
@@ -11408,12 +11961,12 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                     {/* AI Insights Section */}
                     <div className="card-tier-3 p-6 mb-8 relative overflow-hidden bg-gradient-to-br from-[#4DA3FF]/5 to-indigo-500/5 dark:from-[#4DA3FF]/10 dark:to-purple-500/5 border-[#4DA3FF]/20 animate-fade-up">
                         <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
-                            <Brain className="w-28 h-28 text-[#4DA3FF]" />
+                            <Cpu className="w-28 h-28 text-[#4DA3FF]" />
                         </div>
                         
                         <div className="flex items-center gap-3 mb-5">
                             <div className="p-2 bg-[#4DA3FF]/10 rounded-xl text-[#4DA3FF]">
-                                <Brain className="w-6 h-6" />
+                                <Cpu className="w-6 h-6" />
                             </div>
                             <div>
                                 <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
@@ -11427,10 +11980,30 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                             <div className="lg:col-span-2 space-y-4">
                                 <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                                    <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-2">Automated Executive Summary</div>
-                                    <p className="text-sm text-gray-700 dark:text-gray-200 leading-relaxed font-medium">
-                                        {aiAnalysis.summaryText}
-                                    </p>
+                                    <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">Automated Executive Summary</div>
+                                    <ul className="space-y-3">
+                                        {aiAnalysis.summaryPoints.map((point, index) => {
+                                            const isHeader = index === 0;
+                                            const isFooter = index === aiAnalysis.summaryPoints.length - 1;
+                                            const isHighlight = isHeader || isFooter;
+                                            
+                                            let bulletColor = "bg-[#4DA3FF]"; // default/safe/info
+                                            if (risk.level === "HIGH") {
+                                                bulletColor = isFooter ? "bg-[#EF4444] animate-pulse" : isHeader ? "bg-[#EF4444]" : "bg-[#EF4444]/60";
+                                            } else if (risk.level === "MODERATE") {
+                                                bulletColor = isFooter ? "bg-[#F59E0B]" : isHeader ? "bg-[#F59E0B]" : "bg-[#F59E0B]/60";
+                                            } else {
+                                                bulletColor = "bg-green-500";
+                                            }
+
+                                            return (
+                                                <li key={index} className={`text-xs md:text-[13px] flex gap-2.5 items-start leading-relaxed ${isHighlight ? 'font-bold text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-300 font-medium'}`}>
+                                                    <span className={`mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0 ${bulletColor}`}></span>
+                                                    <span>{point}</span>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
                                 </div>
 
                                 <div>
@@ -11515,29 +12088,61 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                         </Card>
 
                         <div className="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <Card tier={2} delay={0.2} className="h-48 flex flex-col">
-                                <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">Attendance Trend</h3>
-                                <div className="flex-1 -ml-4">
+                            <Card tier={2} delay={0.2} className="h-56 flex flex-col">
+                                <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2 px-2">Attendance Trend</h3>
+                                <div className="flex-1">
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <LineChart data={attData}>
-                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={false} />
-                                            <XAxis dataKey="week" stroke="var(--glass-border-08)" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
+                                        <LineChart data={attData} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
+                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={true} />
+                                            <XAxis 
+                                                dataKey="week" 
+                                                stroke="var(--text-normal-8)" 
+                                                tick={{ fill: 'var(--text-muted-4)', fontSize: 10, fontWeight: 600 }} 
+                                                axisLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                                tickLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                                label={{ value: 'Weeks', position: 'insideBottom', offset: -10, fill: 'var(--text-normal-9)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 700 }} 
+                                            />
+                                            <YAxis 
+                                                domain={[50, 100]} 
+                                                ticks={[50, 60, 70, 80, 90, 100]}
+                                                stroke="var(--text-normal-8)" 
+                                                tick={{ fill: 'var(--text-muted-4)', fontSize: 10, fontWeight: 600 }} 
+                                                axisLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                                tickLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                                label={{ value: 'Att %', angle: -90, position: 'insideLeft', offset: -5, fill: 'var(--text-normal-9)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 700 }} 
+                                            />
                                             <RechartsTooltip content={<CustomTooltip />} />
-                                            <Line type="monotone" dataKey="val" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4, fill: '#4DA3FF', strokeWidth: 0 }} activeDot={{ r: 6 }} />
+                                            <Line type="monotone" dataKey="val" name="Attendance" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4, fill: '#4DA3FF', strokeWidth: 0 }} activeDot={{ r: 6 }} />
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
                             </Card>
 
-                            <Card tier={2} delay={0.3} className="h-48 flex flex-col">
-                                <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">Academic Performance</h3>
-                                <div className="flex-1 -ml-4">
+                            <Card tier={2} delay={0.3} className="h-56 flex flex-col">
+                                <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2 px-2">Academic Performance</h3>
+                                <div className="flex-1">
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <LineChart data={marksData}>
-                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={false} />
-                                            <XAxis dataKey="test" stroke="var(--glass-border-08)" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
+                                        <LineChart data={marksData} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
+                                            <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" vertical={true} />
+                                            <XAxis 
+                                                dataKey="test" 
+                                                stroke="var(--text-normal-8)" 
+                                                tick={{ fill: 'var(--text-muted-4)', fontSize: 10, fontWeight: 600 }} 
+                                                axisLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                                tickLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                                label={{ value: 'Tests', position: 'insideBottom', offset: -10, fill: 'var(--text-normal-9)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 700 }} 
+                                            />
+                                            <YAxis 
+                                                domain={[0, 100]} 
+                                                ticks={[0, 20, 40, 60, 80, 100]}
+                                                stroke="var(--text-normal-8)" 
+                                                tick={{ fill: 'var(--text-muted-4)', fontSize: 10, fontWeight: 600 }} 
+                                                axisLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                                tickLine={{ stroke: 'var(--text-normal-8)', strokeWidth: 2 }} 
+                                                label={{ value: 'Marks', angle: -90, position: 'insideLeft', offset: -5, fill: 'var(--text-normal-9)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 700 }} 
+                                            />
                                             <RechartsTooltip content={<CustomTooltip />} />
-                                            <Line type="monotone" dataKey="val" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6, fill: "#8CC7FF" }} />
+                                            <Line type="monotone" dataKey="val" name="Score" stroke="#4DA3FF" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6, fill: "#8CC7FF" }} />
                                         </LineChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -11569,14 +12174,14 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                     </div>
 
                     <Card tier={3} delay={0.6} className="w-full mb-8">
-                        <h3 className="text-xl font-bold mb-6 flex items-center gap-2">🧠 Why This Risk Score?</h3>
+                        <h3 className="text-xl font-bold mb-6 flex items-center gap-2"><Sparkles className="w-5 h-5 text-[#4DA3FF]" /> Why This Risk Score?</h3>
                         <div className="flex flex-col lg:flex-row gap-8">
                             <div className="w-full lg:w-1/2 h-64 animate-chart">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={shapData} layout="vertical" margin={{ top: 0, right: 30, left: 10, bottom: 0 }}>
-                                        <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" horizontal={true} vertical={false} />
-                                        <XAxis type="number" stroke="var(--glass-border-08)" tick={{ fill: '#6B7280', fontSize: 10 }} axisLine={false} tickLine={false} />
-                                        <YAxis dataKey="factor" type="category" stroke="var(--glass-border-08)" width={120} tick={{ fill: '#D1D5DB', fontSize: 11 }} axisLine={false} tickLine={false} />
+                                    <BarChart data={shapData} layout="vertical" margin={{ top: 15, right: 20, left: 10, bottom: 15 }}>
+                                        <CartesianGrid stroke="var(--glass-border-08)" strokeDasharray="3 3" horizontal={true} vertical={true} />
+                                        <XAxis type="number" stroke="var(--glass-border-08)" tick={{ fill: 'var(--text-muted-4)', fontSize: 10 }} tickLine={{ stroke: 'var(--glass-border-08)' }} axisLine={{ stroke: 'var(--glass-border-08)' }} label={{ value: 'Impact Score', position: 'insideBottom', offset: -5, fill: 'var(--text-muted-4)', fontSize: 10, fontFamily: "'DM Sans', sans-serif", fontWeight: 600 }} />
+                                        <YAxis dataKey="factor" type="category" stroke="var(--glass-border-08)" width={120} tick={{ fill: 'var(--text-muted-4)', fontSize: 11 }} tickLine={{ stroke: 'var(--glass-border-08)' }} axisLine={{ stroke: 'var(--glass-border-08)' }} />
                                         <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'var(--glass-bg-05)' }} />
                                         <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={20}>
                                             {shapData.map((entry, index) => (
@@ -11608,7 +12213,9 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
 
                     {/* Panel A: Financial Risk Index */}
                     <div style={{ background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
-                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8 }}>💰 Financial Risk Index</div>
+                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <Wallet className="w-5 h-5 text-[#4DA3FF]" /> Financial Risk Index
+                        </div>
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
                         <div style={{ display: 'flex', flexDirection: 'row', gap: 16 }}>
                             <div style={{ flex: 1, borderRight: '1px solid var(--glass-border-05)', paddingRight: 16 }}>
@@ -11651,7 +12258,9 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
 
                     {/* Panel B: Socio-Economic Profile */}
                     <div style={{ background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
-                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8 }}>🏘️ Socio-Economic Profile</div>
+                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <Building2 className="w-5 h-5 text-[#4DA3FF]" /> Socio-Economic Profile
+                        </div>
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                             <div style={{ background: 'var(--glass-bg-03)', border: '1px solid var(--glass-border-06)', borderRadius: 12, padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -11706,7 +12315,9 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                         border: `1px solid ${isHigh ? 'rgba(239,68,68,0.25)' : risk.level === "MODERATE" ? 'rgba(245,158,11,0.2)' : 'rgba(77,163,255,0.15)'}`,
                         backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24
                     }}>
-                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8 }}>⏱️ Dropout Risk Prediction</div>
+                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <Clock className="w-5 h-5 text-[#4DA3FF]" /> Dropout Risk Prediction
+                        </div>
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
                         <div style={{ display: 'flex', flexDirection: 'row', gap: 16 }}>
                             <div style={{ flex: '0 0 60%' }}>
@@ -11718,7 +12329,7 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                                     fontSize: 12, marginTop: 4,
                                     color: isHigh ? 'rgba(239,68,68,0.8)' : risk.level === "MODERATE" ? 'rgba(245,158,11,0.8)' : 'rgba(77,163,255,0.8)'
                                 }}>
-                                    {isHigh ? '⚠ Immediate intervention required' : risk.level === "MODERATE" ? '↑ Monitoring escalation recommended' : '✓ Student trajectory is stable'}
+                                    {isHigh ? 'Immediate intervention required' : risk.level === "MODERATE" ? 'Monitoring escalation recommended' : 'Student trajectory is stable'}
                                 </div>
                                 <div style={{ marginTop: 16 }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'var(--text-muted-4)' }}>
@@ -11752,23 +12363,174 @@ const StudentDetail = ({ student, onBack, onInterventionReq, skeletonLoading, di
                         </div>
                     </div>
 
-                    {/* Panel D: Stress Score */}
+                    {/* Panel D: Explainable Stress Score */}
                     <div style={{ background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
-                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8 }}>🧠 Stress Score</div>
+                        <div className="flex justify-between items-center mb-2">
+                            <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, display: 'flex', alignItems: 'center', gap: 8 }}>
+                                <Activity className="w-5 h-5 text-[#4DA3FF]" /> Stress Score Calculation
+                            </div>
+                            <span style={{
+                                background: stressData.score <= 40 ? 'rgba(16,185,129,0.12)' : stressData.score <= 70 ? 'rgba(245,158,11,0.12)' : 'rgba(239,68,68,0.12)',
+                                border: `1px solid ${stressData.score <= 40 ? 'rgba(16,185,129,0.3)' : stressData.score <= 70 ? 'rgba(245,158,11,0.3)' : 'rgba(239,68,68,0.3)'}`,
+                                color: stressData.score <= 40 ? '#34D399' : stressData.score <= 70 ? '#F59E0B' : '#EF4444',
+                                borderRadius: 20, padding: '4px 12px', fontSize: 13, fontWeight: 700
+                            }}>
+                                {stressData.score} / 100
+                            </span>
+                        </div>
+                        <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 16 }}></div>
+
+                        <div className="flex flex-col gap-3">
+                            <div className="flex justify-between items-center">
+                                <span className="text-xs text-gray-500 dark:text-gray-400">
+                                    Status: <span className="font-semibold" style={{ color: stressData.score <= 40 ? '#34D399' : stressData.score <= 70 ? '#F59E0B' : '#EF4444' }}>
+                                        {stressData.score <= 40 ? 'Low Stress' : stressData.score <= 70 ? 'Moderate Stress' : 'High Stress'}
+                                    </span>
+                                </span>
+                                <button
+                                    onClick={() => setStressCollapsed(!stressCollapsed)}
+                                    className="text-xs text-[#4DA3FF] hover:underline flex items-center gap-1 font-semibold"
+                                >
+                                    {stressCollapsed ? "Show Calculation Breakdown" : "Hide Calculation Breakdown"}
+                                    <ChevronRight className={`w-3.5 h-3.5 transform transition-transform ${stressCollapsed ? '' : 'rotate-90'}`} />
+                                </button>
+                            </div>
+
+                            {!stressCollapsed && (
+                                <div className="mt-4 space-y-4 animate-fade-up">
+                                    <div className="p-3.5 rounded-xl bg-white/5 border border-white/5">
+                                        <div className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5 font-sans">Weighted Stress Formula</div>
+                                        <div className="text-sm font-mono text-gray-800 dark:text-gray-300 overflow-x-auto py-1">
+                                            S = (W<sub>a</sub> × ΔA) + (W<sub>f</sub> × F) + (W<sub>p</sub> × P) + (W<sub>ml</sub> × M)
+                                        </div>
+                                        <div className="text-[11px] text-gray-500 mt-1">
+                                            S = (0.25 × {stressData.daVal}) + (0.20 × {stressData.fVal}) + (0.30 × {stressData.pVal}) + (0.25 × {stressData.mVal}) = <span className="font-bold text-gray-900 dark:text-white">{stressData.score}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                                        {/* Attendance Volatility card */}
+                                        <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between">
+                                            <div>
+                                                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Attendance Volatility (ΔA)</div>
+                                                <div className="text-2xl font-black text-gray-900 dark:text-white mt-1">{stressData.daVal}%</div>
+                                                <div className="text-xs text-gray-500 mt-1.5">Measures deviations in week-to-week class attendance patterns.</div>
+                                            </div>
+                                            <div className="flex justify-between items-center text-[10px] text-gray-500 mt-4 pt-2 border-t border-white/5">
+                                                <span>Weight: {Math.round(stressData.Wa * 100)}%</span>
+                                                <span className="font-semibold text-gray-800 dark:text-gray-300">+{Number((stressData.Wa * stressData.daVal).toFixed(2))} pts</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Financial Friction card */}
+                                        <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between">
+                                            <div>
+                                                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Financial Friction (F)</div>
+                                                <div className="text-2xl font-black text-gray-900 dark:text-white mt-1">{stressData.fVal}%</div>
+                                                <div className="text-xs text-gray-500 mt-1.5">Evaluates fee payment delays and family economic vulnerability.</div>
+                                            </div>
+                                            <div className="flex justify-between items-center text-[10px] text-gray-500 mt-4 pt-2 border-t border-white/5">
+                                                <span>Weight: {Math.round(stressData.Wf * 100)}%</span>
+                                                <span className="font-semibold text-gray-800 dark:text-gray-300">+{Number((stressData.Wf * stressData.fVal).toFixed(2))} pts</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Performance Gap card */}
+                                        <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between">
+                                            <div>
+                                                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Performance Gap (P)</div>
+                                                <div className="text-2xl font-black text-gray-900 dark:text-white mt-1">{stressData.pVal}%</div>
+                                                <div className="text-xs text-gray-500 mt-1.5">Represents the difference between expected targets and current assessment grades.</div>
+                                            </div>
+                                            <div className="flex justify-between items-center text-[10px] text-gray-500 mt-4 pt-2 border-t border-white/5">
+                                                <span>Weight: {Math.round(stressData.Wp * 100)}%</span>
+                                                <span className="font-semibold text-gray-800 dark:text-gray-300">+{Number((stressData.Wp * stressData.pVal).toFixed(2))} pts</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Risk Prediction card */}
+                                        <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between">
+                                            <div>
+                                                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Risk Prediction (M)</div>
+                                                <div className="text-2xl font-black text-gray-900 dark:text-white mt-1">{stressData.mVal}%</div>
+                                                <div className="text-xs text-gray-500 mt-1.5">Derived from the machine learning cohort dropout probability index.</div>
+                                            </div>
+                                            <div className="flex justify-between items-center text-[10px] text-gray-500 mt-4 pt-2 border-t border-white/5">
+                                                <span>Weight: {Math.round(stressData.Wml * 100)}%</span>
+                                                <span className="font-semibold text-gray-800 dark:text-gray-300">+{Number((stressData.Wml * stressData.mVal).toFixed(2))} pts</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-4 rounded-xl bg-[#4DA3FF]/10 border border-[#4DA3FF]/20 text-xs text-gray-900 dark:text-gray-200 leading-relaxed font-sans mt-3">
+                                        <strong>AI Summary Analysis:</strong> Primary contributors to this student's stress score are attendance volatility and academic performance decline.
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+ 
+                    {/* Student Activity Timeline */}
+                    <div style={{ background: 'var(--glass-bg-02)', border: '1px solid var(--glass-border-06)', backdropFilter: 'blur(20px)', borderRadius: 20, padding: 24, marginBottom: 24 }}>
+                        <div style={{ fontFamily: 'Syne', fontSize: 22, fontWeight: 600, letterSpacing: 0.3, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <Calendar className="w-5 h-5 text-[#4DA3FF]" /> Student Activity Timeline
+                        </div>
                         <div style={{ height: 2, borderRadius: 1, background: 'linear-gradient(90deg, #4DA3FF, transparent)', width: 0, animation: 'expandLine 1s 0.2s ease forwards', marginBottom: 24 }}></div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                            <div style={{ fontSize: 13, color: 'var(--text-muted-4)', marginBottom: 4 }}>Mental Stress Index</div>
-                            <div style={{ fontSize: 28, fontWeight: 700, fontFamily: 'Syne', color: (typeof student.mentalHealth === 'object' ? student.mentalHealth.behavioralStressIndex : student.mentalHealth) <= 40 ? '#34D399' : (typeof student.mentalHealth === 'object' ? student.mentalHealth.behavioralStressIndex : student.mentalHealth) <= 70 ? '#F59E0B' : '#EF4444' }}>
-                                {typeof student.mentalHealth === 'object' ? student.mentalHealth.behavioralStressIndex : student.mentalHealth} / 100
-                            </div>
-                            <div style={{ fontSize: 13, color: (typeof student.mentalHealth === 'object' ? student.mentalHealth.behavioralStressIndex : student.mentalHealth) <= 40 ? '#34D399' : (typeof student.mentalHealth === 'object' ? student.mentalHealth.behavioralStressIndex : student.mentalHealth) <= 70 ? '#F59E0B' : '#EF4444', fontWeight: 500 }}>
-                                {(typeof student.mentalHealth === 'object' ? student.mentalHealth.behavioralStressIndex : student.mentalHealth) <= 40 ? 'Low Stress' : (typeof student.mentalHealth === 'object' ? student.mentalHealth.behavioralStressIndex : student.mentalHealth) <= 70 ? 'Moderate Stress' : 'High Stress'}
-                            </div>
+
+                        <div className="relative border-l border-gray-200 dark:border-white/10 ml-4 space-y-6">
+                            {timelineEvents.map((evt, idx) => {
+                                let IconComp = BookOpen;
+                                if (evt.icon === "AlertTriangle") IconComp = AlertTriangle;
+                                else if (evt.icon === "ShieldAlert") IconComp = ShieldAlert;
+                                else if (evt.icon === "Bell") IconComp = Bell;
+                                else if (evt.icon === "GraduationCap") IconComp = GraduationCap;
+                                else if (evt.icon === "Zap") IconComp = Zap;
+                                else if (evt.icon === "Clock") IconComp = Clock;
+                                else if (evt.icon === "CheckCircle2") IconComp = CheckCircle2;
+                                else if (evt.icon === "ShieldCheck") IconComp = ShieldCheck;
+                                else if (evt.icon === "Wallet") IconComp = Wallet;
+                                else if (evt.icon === "Star") IconComp = Star;
+                                else if (evt.icon === "TrendingUp") IconComp = TrendingUp;
+
+                                const isDanger = evt.status === "danger";
+                                const isWarning = evt.status === "warning";
+                                const isInfo = evt.status === "info";
+
+                                const dotColor = isDanger ? '#EF4444' : isWarning ? '#F59E0B' : isInfo ? '#8CC7FF' : '#34D399';
+                                const dotBg = isDanger ? 'rgba(239,68,68,0.15)' : isWarning ? 'rgba(245,158,11,0.15)' : isInfo ? 'rgba(140,199,255,0.15)' : 'rgba(52,211,153,0.15)';
+
+                                return (
+                                    <div key={idx} className="relative pl-6 animate-fade-up" style={{ animationDelay: `${idx * 0.08}s` }}>
+                                        {/* Status Dot */}
+                                        <div 
+                                            className="absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 flex items-center justify-center" 
+                                            style={{ borderColor: dotColor, backgroundColor: dotBg, boxShadow: `0 0 10px ${dotColor}33` }}
+                                        >
+                                            <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: dotColor }}></div>
+                                        </div>
+                                        
+                                        {/* Event Content */}
+                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors">
+                                            <div className="flex-1">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <span className="text-[10px] text-gray-500 font-bold uppercase">{evt.date}</span>
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-white/20"></span>
+                                                    <span className="text-xs font-bold text-gray-900 dark:text-white flex items-center gap-1">
+                                                        <IconComp className="w-3.5 h-3.5" style={{ color: dotColor }} />
+                                                        {evt.title}
+                                                    </span>
+                                                </div>
+                                                <p className="text-xs text-gray-600 dark:text-gray-300">{evt.desc}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
 
                     <div className="mt-8 relative">
-                        <HeaderUnderline title="⚡ Active Interventions" />
+                        <HeaderUnderline title="Active Interventions" />
                         <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
                             {isHigh ? (
                                 <>
@@ -12294,6 +13056,57 @@ const UploadPage = ({ setStudents, showToast, role }) => {
     );
 };
 
+const HackSpaceLogo = ({ className = "", size = "normal", variant = "full" }) => {
+    let imgHeight = "h-8";
+    if (size === "small") {
+        imgHeight = "h-9"; // 36px height
+    } else if (size === "large") {
+        imgHeight = "h-16";
+    } else if (size === "xl") {
+        imgHeight = "h-24";
+    }
+
+    return (
+        <div className={`flex items-center gap-3 ${className}`} style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <img
+                src="/hs-logo.png"
+                alt="HackSpace Logo"
+                className={`object-contain ${imgHeight}`}
+            />
+            {variant === "full" && (
+                <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left', justifyContent: 'center' }}>
+                    <span
+                        style={{
+                            fontFamily: "'Syne', sans-serif",
+                            fontWeight: '700',
+                            fontSize: size === "small" ? '18px' : size === "large" ? '32px' : size === "xl" ? '40px' : '22px',
+                            color: '#4DA3FF',
+                            lineHeight: 1.1,
+                            letterSpacing: '-0.02em'
+                        }}
+                    >
+                        HackSpace
+                    </span>
+                    <span
+                        style={{
+                            fontFamily: "'DM Sans', sans-serif",
+                            fontWeight: '600',
+                            fontSize: size === "small" ? '9px' : size === "large" ? '12px' : size === "xl" ? '15px' : '10px',
+                            color: 'var(--text-muted-4)',
+                            letterSpacing: '0.05em',
+                            textTransform: 'uppercase',
+                            lineHeight: 1.2,
+                            marginTop: '2px'
+                        }}
+                    >
+                        Academic Stability Engine
+                    </span>
+                </div>
+            )}
+        </div>
+    );
+};
+
 const App = () => {
     const [currentPage, setCurrentPage] = useState("login");
     const [selectedStudent, setSelectedStudent] = useState(null);
@@ -12319,7 +13132,7 @@ const App = () => {
     }, [isDarkMode]);
 
     const [role, setRole] = useState(null);
-    const [currentStudentId, setCurrentStudentId] = useState("S001");
+    const [currentStudentId, setCurrentStudentId] = useState("S152");
     const [animatedStats, setAnimatedStats] = useState({
         total: 0, highRisk: 0,
         interventions: 0, avgScore: 0
@@ -12328,6 +13141,28 @@ const App = () => {
     const [adminLoading, setAdminLoading] = useState(false);
 
     const [students, setStudents] = useState(() => generateStudents());
+
+    const highestRiskStudent = useMemo(() => {
+        if (!students || students.length === 0) return null;
+        let highest = students[0];
+        let maxScore = -1;
+        students.forEach(s => {
+            const score = calculateRiskScore(s).score;
+            if (score > maxScore) {
+                maxScore = score;
+                highest = s;
+            }
+        });
+        return highest;
+    }, [students]);
+
+    const activeStudent = selectedStudent || highestRiskStudent || students[0];
+
+    useEffect(() => {
+        if (activeStudent) {
+            setCurrentStudentId(activeStudent.id);
+        }
+    }, [activeStudent]);
 
     const [interventions, setInterventions] = useState([
         { id: 1, studentId: "S001", type: "Parent Meeting", status: "Pending", date: "Today", assigned: "Dr. Ramesh Iyer" },
@@ -12527,29 +13362,27 @@ const App = () => {
             {currentPage !== "login" && currentPage !== "reset-password" && (
                 <nav className="w-full border-b border-white/10 bg-[#10293F]/80 backdrop-blur-lg sticky top-0 z-40 transition-colors duration-300">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                        <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleNavigate('admin')} style={{ display: 'flex', alignItems: 'center' }}>
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#8CC7FF] to-[#4DA3FF] flex items-center justify-center">
-                                <Brain className="w-5 h-5 text-gray-900 dark:text-white" />
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: 20, background: 'linear-gradient(135deg,#8CC7FF,#4DA3FF)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', lineHeight: 1.1 }}>Hackspace</span>
-                                <div style={{ fontSize: 10, color: 'var(--text-muted-3)', fontFamily: 'DM Sans', letterSpacing: '0.5px', marginTop: 1, lineHeight: 1 }}>Academic Stability Engine</div>
-                            </div>
-
+                        <div className="cursor-pointer" onClick={() => handleNavigate(role === 'STUDENT' ? 'student' : role === 'PARENT' ? 'parent' : 'admin')}>
+                            <HackSpaceLogo size="small" variant="full" />
                         </div>
 
                         <div className="flex flex-1 justify-center max-w-lg">
                             <div className="flex gap-8 px-4 w-full">
                                 {[
-                                    { label: 'Dashboard', page: 'admin', always: true },
+                                    { label: 'Dashboard', page: 'admin', show: role === 'ADMIN' || role === 'FACULTY' },
+                                    { label: 'Dashboard', page: 'student', show: role === 'STUDENT' },
                                     { label: 'Students', page: 'faculty', show: can('canAccessStudentsPage') },
                                     { label: 'Interventions', page: 'interventions', show: can('canAccessInterventions') },
-                                    { label: 'Parent Dashboard', page: 'parent', show: role === 'PARENT' },
                                     { label: 'Upload', page: 'upload', show: role === 'ADMIN' || role === 'FACULTY' }
-                                ].filter(tab => tab.always || tab.show).map(tab => (
+                                ].filter(tab => tab.show).map(tab => (
                                     <button
                                         key={tab.page}
-                                        onClick={() => navigateTo(tab.page)}
+                                        onClick={() => {
+                                            if (tab.page === 'student' && !selectedStudent) {
+                                                setSelectedStudent(highestRiskStudent);
+                                            }
+                                            navigateTo(tab.page);
+                                        }}
                                         style={{
                                             background: 'none',
                                             border: 'none',
@@ -12605,17 +13438,64 @@ const App = () => {
 
                     {currentPage === "login" && <LoginPage onLogin={handleLogin} onForgotPassword={() => setCurrentPage("reset-password")} />}
                     {currentPage === "reset-password" && <ResetPassword onBack={() => setCurrentPage("login")} />}
-                    {currentPage === "admin" && <AdminDashboard students={students} onNavigate={handleNavigate} currentStudentId={currentStudentId} animatedStats={animatedStats} adminLoading={adminLoading} can={can} role={role} openStudentDetail={openStudentDetail} />}
-                    {currentPage === "parent" && <ParentDashboard students={students} />}
+                    {currentPage === "admin" && <AdminDashboard students={students} interventions={interventions} onNavigate={handleNavigate} currentStudentId={currentStudentId} animatedStats={animatedStats} adminLoading={adminLoading} can={can} role={role} openStudentDetail={openStudentDetail} />}
+                    {currentPage === "parent" && <ParentDashboard students={students} child={activeStudent} />}
                     {currentPage === "faculty" && <FacultyDashboard students={students} onSelectStudent={(s) => openStudentDetail(s)} can={can} currentStudentId={currentStudentId} openStudentDetail={openStudentDetail} />}
-                    {currentPage === "student" && selectedStudent && <StudentDetail
-                        student={selectedStudent}
-                        onBack={() => navigateTo("faculty")}
-                        onInterventionReq={() => setShowInterventionModal(true)}
-                        showToast={showToast}
-                        skeletonLoading={skeletonLoading}
-                        displayScore={displayScore}
-                    />}
+                    {currentPage === "student" && activeStudent && (
+                        role === "STUDENT" ? (
+                            <div className="p-6 animate-page max-w-7xl mx-auto">
+                                <div className="mb-8">
+                                    <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mb-1">My Academic Overview</h1>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">Showing your personal metrics only</p>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <Card tier={2} className="flex-1 min-w-[200px]">
+                                        <div className="text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">Risk Score</div>
+                                        <div className="text-5xl font-black text-[#EF4444] mt-2">
+                                            {calculateRiskScore(activeStudent).score}
+                                        </div>
+                                    </Card>
+
+                                    <Card tier={2} className="flex-1 min-w-[200px]">
+                                        <div className="text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">Attendance</div>
+                                        <div className="text-5xl font-black text-[#4DA3FF] mt-2">
+                                            {activeStudent.attendance[activeStudent.attendance.length - 1]}%
+                                        </div>
+                                    </Card>
+
+                                    <Card tier={2} className="flex-1 min-w-[200px]">
+                                        <div className="text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">Last Test Score</div>
+                                        <div className="text-5xl font-black text-gray-900 dark:text-white mt-2">
+                                            {activeStudent.marks[activeStudent.marks.length - 1]}
+                                        </div>
+                                    </Card>
+                                </div>
+
+                                <div style={{
+                                    textAlign: 'center',
+                                    marginTop: 120,
+                                    fontFamily: 'DM Sans',
+                                    fontSize: 11,
+                                    color: 'var(--text-muted-4)',
+                                    letterSpacing: '0.3px',
+                                    lineHeight: '1.6'
+                                }}>
+                                    <div>HackSpace © 2026</div>
+                                    <div style={{ fontSize: 9, color: 'var(--text-muted-25)' }}>Academic Stability Engine</div>
+                                </div>
+                            </div>
+                        ) : (
+                            <StudentDetail
+                                student={activeStudent}
+                                onBack={() => navigateTo("faculty")}
+                                onInterventionReq={() => setShowInterventionModal(true)}
+                                showToast={showToast}
+                                skeletonLoading={skeletonLoading}
+                                displayScore={displayScore}
+                            />
+                        )
+                    )}
                     {currentPage === "interventions" && <InterventionsPanel students={students} interventions={interventions} setInterventions={setInterventions} />}
                     {currentPage === "upload" && (role === "ADMIN" || role === "FACULTY") && <UploadPage setStudents={setStudents} showToast={showToast} role={role} />}
 
