@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --glass-bg-01: rgba(0,0,0,0.02);
   --glass-bg-02: rgba(0,0,0,0.03);
@@ -19,6 +21,18 @@
   --text-normal-65: rgba(0,0,0,0.75);
   --text-normal-8: rgba(0,0,0,0.85);
   --text-normal-9: rgba(0,0,0,0.95);
+
+  --badge-safe-bg: rgba(77,163,255,0.15);
+  --badge-safe-border: rgba(77,163,255,0.40);
+  --badge-safe-text: #1E40AF;
+
+  --badge-mod-bg: rgba(245,158,11,0.15);
+  --badge-mod-border: rgba(245,158,11,0.40);
+  --badge-mod-text: #B45309;
+
+  --badge-high-bg: rgba(239,68,68,0.15);
+  --badge-high-border: rgba(239,68,68,0.40);
+  --badge-high-text: #B91C1C;
 }
 .dark {
   --glass-bg-01: rgba(255,255,255,0.01);
@@ -38,6 +52,18 @@
   --text-normal-65: rgba(255,255,255,0.65);
   --text-normal-8: rgba(255,255,255,0.80);
   --text-normal-9: rgba(255,255,255,0.90);
+
+  --badge-safe-bg: rgba(107,191,138,0.12);
+  --badge-safe-border: rgba(107,191,138,0.35);
+  --badge-safe-text: #E5E7EB;
+
+  --badge-mod-bg: rgba(242,184,75,0.12);
+  --badge-mod-border: rgba(242,184,75,0.35);
+  --badge-mod-text: #E5E7EB;
+
+  --badge-high-bg: rgba(228,87,87,0.12);
+  --badge-high-border: rgba(228,87,87,0.35);
+  --badge-high-text: #E5E7EB;
 }
 
 @layer base {
@@ -68,9 +94,12 @@ body::before {
   position: fixed;
   inset: 0;
   z-index: -2;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
   background-size: 20px 20px;
   pointer-events: none;
+}
+.dark body::before {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
 body::after {
@@ -79,10 +108,15 @@ body::after {
   inset: 0;
   z-index: -3;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
   background-size: 40px 40px;
   pointer-events: none;
+}
+.dark body::after {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
 
 /* Soft ambient radial glow */
@@ -453,14 +487,14 @@ body::after {
 .premium-grid-bg {
     @apply bg-gray-50 dark:bg-[#0B1C2C];
     background-image:
-      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
-      radial-gradient(circle at 20% 30%, rgba(77,163,255,0.15), transparent 60%);
-    background-size: 40px 40px, 40px 40px, 100% 100%;
-}
-.light .premium-grid-bg {
-    background-image:
       linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px),
       radial-gradient(circle at 20% 30%, rgba(77,163,255,0.1), transparent 60%);
+    background-size: 40px 40px, 40px 40px, 100% 100%;
+}
+.dark .premium-grid-bg {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+      radial-gradient(circle at 20% 30%, rgba(77,163,255,0.15), transparent 60%);
 }

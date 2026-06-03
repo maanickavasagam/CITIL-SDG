@@ -9874,9 +9874,9 @@ const calculateRiskScore = (student) => {
 const getLevelColor = (level) => { if (level === "SAFE") return "#4DA3FF"; if (level === "MODERATE") return "#F59E0B"; return "#EF4444"; };
 
 const getBadgeStyle = (level) => {
-    if (level === "SAFE") return { background: 'rgba(107,191,138,0.12)', border: '1px solid rgba(107,191,138,0.35)', color: '#E5E7EB' };
-    if (level === "MODERATE") return { background: 'rgba(242,184,75,0.12)', border: '1px solid rgba(242,184,75,0.35)', color: '#E5E7EB' };
-    return { background: 'rgba(228,87,87,0.12)', border: '1px solid rgba(228,87,87,0.35)', color: '#E5E7EB' };
+    if (level === "SAFE") return { background: 'var(--badge-safe-bg)', border: '1px solid var(--badge-safe-border)', color: 'var(--badge-safe-text)' };
+    if (level === "MODERATE") return { background: 'var(--badge-mod-bg)', border: '1px solid var(--badge-mod-border)', color: 'var(--badge-mod-text)' };
+    return { background: 'var(--badge-high-bg)', border: '1px solid var(--badge-high-border)', color: 'var(--badge-high-text)' };
 };
 const HeaderUnderline = ({ title }) => (
     <div className="mb-6">
@@ -9971,7 +9971,7 @@ const ResetPassword = ({ onBack }) => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email Address"
-                        className="w-full bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-xl mb-4 focus:ring-2 mt-4 transition-colors focus:border-[#4DA3FF]/30 outline-none"
+                        className="w-full bg-gray-100/50 dark:bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-xl mb-4 focus:ring-2 mt-4 transition-colors focus:border-[#4DA3FF]/30 outline-none"
                         required
                     />
                     <div className="relative mb-4">
@@ -9983,7 +9983,7 @@ const ResetPassword = ({ onBack }) => {
                                 validatePassword(e.target.value);
                             }}
                             placeholder="New Password"
-                            className="w-full bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-xl pr-10 focus:ring-2 transition-colors focus:border-[#4DA3FF]/30 outline-none"
+                            className="w-full bg-gray-100/50 dark:bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-xl pr-10 focus:ring-2 transition-colors focus:border-[#4DA3FF]/30 outline-none"
                             required
                         />
                         <button
@@ -10000,7 +10000,7 @@ const ResetPassword = ({ onBack }) => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="Confirm New Password"
-                        className="w-full bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-xl mb-6 transition-colors focus:border-[#4DA3FF]/30 outline-none"
+                        className="w-full bg-gray-100/50 dark:bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 text-gray-900 dark:text-white p-3 rounded-xl mb-6 transition-colors focus:border-[#4DA3FF]/30 outline-none"
                         required
                     />
                     <button
@@ -10075,13 +10075,13 @@ const LoginPage = ({ onLogin, onForgotPassword }) => {
                 <div className="w-full space-y-4 mb-8 relative z-10">
                     <div>
                         <input type="text" placeholder="Email Address"
-                            className="w-full bg-[#0B0B0C]/50 border border-white/10 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:border-[#4DA3FF]/30 transition-colors"
+                            className="w-full bg-gray-100/50 dark:bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:border-[#4DA3FF]/30 transition-colors"
                             defaultValue={`demo@academiq.edu`}
                         />
                     </div>
                     <div className="relative">
                         <input type={showPassword ? "text" : "password"} placeholder="Password"
-                            className="w-full bg-[#0B0B0C]/50 border border-white/10 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-500 flex items-center pr-10 focus:outline-none focus:border-[#4DA3FF]/30 transition-colors"
+                            className="w-full bg-gray-100/50 dark:bg-[#0B0B0C]/50 border border-gray-300 dark:border-white/10 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder-gray-500 flex items-center pr-10 focus:outline-none focus:border-[#4DA3FF]/30 transition-colors"
                             value={password}
                             onChange={(e) => { setPassword(e.target.value); validatePassword(e.target.value); }}
                         />
@@ -10468,7 +10468,7 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                         {demoPanelExpanded && (
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 animate-fade-up">
                                 {/* KPI 1: Saved Students */}
-                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                <div className="p-4 rounded-xl bg-gray-100/50 border border-gray-200/50 dark:bg-white/5 dark:border-white/5 flex flex-col justify-between hover:bg-gray-200/50 dark:hover:bg-white/10 transition-all hover:scale-105 duration-200">
                                     <div>
                                         <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Saved Students</div>
                                         <div className="text-2xl font-black text-green-400 mt-1">{data.savedCount}</div>
@@ -10477,7 +10477,7 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                 </div>
 
                                 {/* KPI 2: Prevention Effectiveness */}
-                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                <div className="p-4 rounded-xl bg-gray-100/50 border border-gray-200/50 dark:bg-white/5 dark:border-white/5 flex flex-col justify-between hover:bg-gray-200/50 dark:hover:bg-white/10 transition-all hover:scale-105 duration-200">
                                     <div>
                                         <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Prevention Rate</div>
                                         <div className="text-2xl font-black text-[#4DA3FF] mt-1">{data.dropoutPreventionRate}%</div>
@@ -10486,7 +10486,7 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                 </div>
 
                                 {/* KPI 3: Active Interventions */}
-                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                <div className="p-4 rounded-xl bg-gray-100/50 border border-gray-200/50 dark:bg-white/5 dark:border-white/5 flex flex-col justify-between hover:bg-gray-200/50 dark:hover:bg-white/10 transition-all hover:scale-105 duration-200">
                                     <div>
                                         <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Active Interventions</div>
                                         <div className="text-2xl font-black text-[#F59E0B] mt-1">{data.activeInterventionsCount}</div>
@@ -10495,7 +10495,7 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                 </div>
 
                                 {/* KPI 4: Parent Engagement */}
-                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                <div className="p-4 rounded-xl bg-gray-100/50 border border-gray-200/50 dark:bg-white/5 dark:border-white/5 flex flex-col justify-between hover:bg-gray-200/50 dark:hover:bg-white/10 transition-all hover:scale-105 duration-200">
                                     <div>
                                         <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Parent Engagement</div>
                                         <div className="text-2xl font-black text-[#8CC7FF] mt-1">{data.parentEngagementRate}%</div>
@@ -10504,7 +10504,7 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                 </div>
 
                                 {/* KPI 5: Academic Recovery */}
-                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                <div className="p-4 rounded-xl bg-gray-100/50 border border-gray-200/50 dark:bg-white/5 dark:border-white/5 flex flex-col justify-between hover:bg-gray-200/50 dark:hover:bg-white/10 transition-all hover:scale-105 duration-200">
                                     <div>
                                         <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Academic Recovery</div>
                                         <div className="text-2xl font-black text-green-400 mt-1">{data.academicRecoveryRate}%</div>
@@ -10513,7 +10513,7 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                 </div>
 
                                 {/* KPI 6: Mentorship Success */}
-                                <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex flex-col justify-between hover:bg-white/10 transition-all hover:scale-105 duration-200">
+                                <div className="p-4 rounded-xl bg-gray-100/50 border border-gray-200/50 dark:bg-white/5 dark:border-white/5 flex flex-col justify-between hover:bg-gray-200/50 dark:hover:bg-white/10 transition-all hover:scale-105 duration-200">
                                     <div>
                                         <div className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Mentor Success</div>
                                         <div className="text-2xl font-black text-[#4DA3FF] mt-1">{data.mentorshipSuccessRate}%</div>
@@ -10658,10 +10658,10 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                 </h3>
                                 <div className="space-y-3 pr-1 flex-1">
                                     {/* Action 1: Parent Notification */}
-                                    <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
+                                    <div className="border border-gray-200/60 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-gray-100/30 dark:bg-white/5">
                                         <div 
                                             onClick={() => setExpandedAction(expandedAction === 'parent' ? null : 'parent')}
-                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-gray-200/30 dark:hover:bg-white/5"
                                         >
                                             <div className="flex flex-col">
                                                 <span className="text-[11px] font-bold text-gray-900 dark:text-white leading-tight">Needing Parent Notification</span>
@@ -10673,13 +10673,13 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                             </div>
                                         </div>
                                         {expandedAction === 'parent' && (
-                                            <div className="p-2 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1 max-h-36 overflow-y-auto">
+                                            <div className="p-2 bg-gray-50/50 dark:bg-black/20 border-t border-gray-200/50 dark:border-white/5 space-y-1 max-h-36 overflow-y-auto">
                                                 {data.needingParentList.length > 0 ? (
                                                     data.needingParentList.map(s => (
                                                         <div 
                                                             key={s.id} 
                                                             onClick={() => openStudentDetail && openStudentDetail(s)}
-                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-gray-200/30 dark:hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
                                                         >
                                                             <span>{s.name} ({s.dept})</span>
                                                             <span className="text-gray-500 dark:text-gray-400 font-normal">Score: {calculateRiskScore(s).score}</span>
@@ -10693,10 +10693,10 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                     </div>
 
                                     {/* Action 2: Mentor Assignment */}
-                                    <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
+                                    <div className="border border-gray-200/60 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-gray-100/30 dark:bg-white/5">
                                         <div 
                                             onClick={() => setExpandedAction(expandedAction === 'mentor' ? null : 'mentor')}
-                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-gray-200/30 dark:hover:bg-white/5"
                                         >
                                             <div className="flex flex-col">
                                                 <span className="text-[11px] font-bold text-gray-900 dark:text-white leading-tight">Requiring Mentor Assignment</span>
@@ -10708,13 +10708,13 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                             </div>
                                         </div>
                                         {expandedAction === 'mentor' && (
-                                            <div className="p-2 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1 max-h-36 overflow-y-auto">
+                                            <div className="p-2 bg-gray-50/50 dark:bg-black/20 border-t border-gray-200/50 dark:border-white/5 space-y-1 max-h-36 overflow-y-auto">
                                                 {data.requiringMentorList.length > 0 ? (
                                                     data.requiringMentorList.map(s => (
                                                         <div 
                                                             key={s.id} 
                                                             onClick={() => openStudentDetail && openStudentDetail(s)}
-                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-gray-200/30 dark:hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
                                                         >
                                                             <span>{s.name} ({s.dept})</span>
                                                             <span className="text-gray-500 dark:text-gray-400 font-normal">Delays: {s.assignmentDelays}</span>
@@ -10728,10 +10728,10 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                     </div>
 
                                     {/* Action 3: Remedial Support */}
-                                    <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
+                                    <div className="border border-gray-200/60 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-gray-100/30 dark:bg-white/5">
                                         <div 
                                             onClick={() => setExpandedAction(expandedAction === 'remedial' ? null : 'remedial')}
-                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-gray-200/30 dark:hover:bg-white/5"
                                         >
                                             <div className="flex flex-col">
                                                 <span className="text-[11px] font-bold text-gray-900 dark:text-white leading-tight">Requiring Remedial Support</span>
@@ -10743,13 +10743,13 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                             </div>
                                         </div>
                                         {expandedAction === 'remedial' && (
-                                            <div className="p-2 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1 max-h-36 overflow-y-auto">
+                                            <div className="p-2 bg-gray-50/50 dark:bg-black/20 border-t border-gray-200/50 dark:border-white/5 space-y-1 max-h-36 overflow-y-auto">
                                                 {data.requiringRemedialList.length > 0 ? (
                                                     data.requiringRemedialList.map(s => (
                                                         <div 
                                                             key={s.id} 
                                                             onClick={() => openStudentDetail && openStudentDetail(s)}
-                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-gray-200/30 dark:hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
                                                         >
                                                             <span>{s.name} ({s.dept})</span>
                                                             <span className="text-gray-500 dark:text-gray-400 font-normal">Marks: {s.marks[s.marks.length - 1]}%</span>
@@ -10763,10 +10763,10 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                     </div>
 
                                     {/* Action 4: Immediate Attention */}
-                                    <div className="border border-white/5 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-white/5">
+                                    <div className="border border-gray-200/60 dark:border-white/5 rounded-xl overflow-hidden transition-all bg-gray-100/30 dark:bg-white/5">
                                         <div 
                                             onClick={() => setExpandedAction(expandedAction === 'immediate' ? null : 'immediate')}
-                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-white/5"
+                                            className="p-3 flex justify-between items-center cursor-pointer hover:bg-gray-200/30 dark:hover:bg-white/5"
                                         >
                                             <div className="flex flex-col">
                                                 <span className="text-[11px] font-bold text-gray-900 dark:text-white leading-tight">Requiring Immediate Attention</span>
@@ -10778,13 +10778,13 @@ const AdminDashboard = ({ students, interventions, onNavigate, currentStudentId,
                                             </div>
                                         </div>
                                         {expandedAction === 'immediate' && (
-                                            <div className="p-2 bg-black/10 dark:bg-black/20 border-t border-white/5 space-y-1 max-h-36 overflow-y-auto">
+                                            <div className="p-2 bg-gray-50/50 dark:bg-black/20 border-t border-gray-200/50 dark:border-white/5 space-y-1 max-h-36 overflow-y-auto">
                                                 {data.immediateAttentionList.length > 0 ? (
                                                     data.immediateAttentionList.map(s => (
                                                         <div 
                                                             key={s.id} 
                                                             onClick={() => openStudentDetail && openStudentDetail(s)}
-                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
+                                                            className="flex justify-between items-center text-[10px] p-1 rounded hover:bg-gray-200/30 dark:hover:bg-white/5 text-[#4DA3FF] hover:underline cursor-pointer font-medium"
                                                         >
                                                             <span>{s.name} ({s.dept})</span>
                                                             <span className="text-gray-500 dark:text-gray-400 font-normal text-[#EF4444]">Risk: {calculateRiskScore(s).score}</span>
@@ -11335,7 +11335,7 @@ const ParentDashboard = ({ students, child }) => {
                         <div className="text-sm text-gray-500">Overall Attendance</div>
 
                         <div className="mt-6 space-y-3">
-                            <div className="flex justify-between items-center text-sm border-b border-white/5 pb-2">
+                            <div className="flex justify-between items-center text-sm border-b border-gray-200 dark:border-white/5 pb-2">
                                 <span className="text-gray-600 dark:text-gray-400">Classes Attended</span>
                                 <span className="text-gray-900 dark:text-white font-bold">{Math.round((attendancePercent / 100) * 40)}</span>
                             </div>
@@ -11370,7 +11370,7 @@ const ParentDashboard = ({ students, child }) => {
                         </ResponsiveContainer>
                     </div>
 
-                    <div className="mt-4 pt-4 border-t border-white/5">
+                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-white/5">
                         <div className="text-xs text-gray-600 dark:text-gray-400 mb-2 font-semibold">Latest Subjects</div>
                         <div className="flex justify-between items-center text-sm">
                             <span className="text-gray-700 dark:text-gray-300">Mathematics</span>
@@ -11436,14 +11436,14 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                             <input
                                 type="text" placeholder="Search by name or ID..."
                                 value={search} onChange={e => setSearch(e.target.value)}
-                                className="w-full bg-[#0B0B0C]/60 border border-gray-300 dark:border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:border-[#4DA3FF]/50 transition-colors backdrop-blur-md"
+                                className="w-full bg-white/60 dark:bg-[#0B0B0C]/60 border border-gray-300 dark:border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:border-[#4DA3FF]/50 transition-colors backdrop-blur-md"
                             />
                         </div>
 
                         <div className="flex gap-2">
                             {["All", "HIGH", "MODERATE", "SAFE"].map(r => (
                                 <button key={r} onClick={() => setFilterRisk(r)}
-                                    className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${filterRisk === r ? 'bg-white/10 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white hover:bg-white/5'
+                                    className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${filterRisk === r ? 'bg-gray-200/50 dark:bg-white/10 text-gray-900 dark:text-white shadow-sm' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-white/5'
                                         }`}
                                 >
                                     <div className="flex items-center gap-2">
@@ -11464,7 +11464,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                             <select
                                 value={selectedDepartment}
                                 onChange={(e) => setSelectedDepartment(e.target.value)}
-                                className="bg-slate-800 dark:bg-slate-800 bg-white border border-gray-700 dark:border-gray-700 border-gray-300 text-gray-100 dark:text-gray-100 text-gray-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
                                 <option value="All">All Departments</option>
                                 <option value="CSE">CSE</option>
@@ -11478,7 +11478,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                         <select
                             value={selectedYear}
                             onChange={(e) => setSelectedYear(e.target.value)}
-                            className="bg-slate-800 dark:bg-slate-800 bg-white border border-gray-700 dark:border-gray-700 border-gray-300 text-gray-100 dark:text-gray-100 text-gray-900 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="bg-white dark:bg-slate-800 border border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="All">{role === 'FACULTY' ? 'All Scoped Years' : 'All Years'}</option>
                             <option value="1">Year 1</option>
@@ -11510,7 +11510,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                         <div className="overflow-x-auto w-full">
                             <table className="w-full text-left border-collapse min-w-[800px]">
                                 <thead>
-                                    <tr className="border-b border-white/5 text-gray-500 dark:text-gray-600 dark:text-gray-400 text-sm">
+                                    <tr className="border-b border-gray-200/50 dark:border-white/5 text-gray-500 dark:text-gray-400 text-sm">
                                         <th className="p-4 font-semibold w-12 text-center">#</th>
                                         <th className="p-4 font-semibold">Student</th>
                                         <th className="p-4 font-semibold">Dept</th>
@@ -11527,7 +11527,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                                             const isHigh = s.risk.level === "HIGH";
                                             const isSafe = s.risk.level === "SAFE";
                                             return (
-                                                <tr key={s.id} className={`border-b border-white/5 smart-table-row risk-${s.risk.level.toLowerCase()}`}
+                                                <tr key={s.id} className={`border-b border-gray-200/50 dark:border-white/5 smart-table-row risk-${s.risk.level.toLowerCase()}`}
                                                     onMouseEnter={e => {
                                                         e.currentTarget.style.transform = 'translateX(3px)';
                                                         e.currentTarget.style.transition = 'all 0.2s ease';
@@ -11541,7 +11541,7 @@ const FacultyDashboard = ({ students, onSelectStudent, can, currentStudentId, op
                                                     <td className="p-4 text-center text-gray-500">{idx + 1}</td>
                                                     <td className="p-4">
                                                         <div className="flex items-center gap-3">
-                                                            <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-[#0B0B0C]"
+                                                            <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-gray-100 dark:bg-[#0B0B0C]"
                                                                 style={getBadgeStyle(s.risk.level)}>
                                                                 {s.name.split(' ').map(n => n[0]).join('')}
                                                             </div>
@@ -13408,7 +13408,7 @@ const App = () => {
             <div className="ambient-glow-topRight"></div>
 
             {currentPage !== "login" && currentPage !== "reset-password" && (
-                <nav className="w-full border-b border-white/10 bg-[#10293F]/80 backdrop-blur-lg sticky top-0 z-40 transition-colors duration-300">
+                <nav className="w-full border-b border-gray-200 dark:border-white/10 bg-white dark:bg-[#10293F]/80 backdrop-blur-lg sticky top-0 z-40 transition-colors duration-300">
                     <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                         <div className="cursor-pointer" onClick={() => handleNavigate(role === 'STUDENT' ? 'student' : role === 'PARENT' ? 'parent' : 'admin')}>
                             <HackSpaceLogo size="small" variant="full" />
@@ -13464,7 +13464,7 @@ const App = () => {
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
+                            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10">
                                 <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#FBBF24] to-[#EF4444]"></div>
                                 <span className="text-xs font-bold uppercase tracking-wider">{role}</span>
                             </div>
